@@ -4,39 +4,54 @@ body {
   margin: 0px;
 }
 
-.pages {
-  overflow: hidden;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
-}
-
-/* style the buttons inside the tab */
-.pages button {
-  background-color: inherit;
-  float: left;
+.pagemenu {
+  background-color: #aaa;
+  color: white;
+  padding: 12px;
+  font-size: 16px;
   border: none;
-  outline: none;
   cursor: pointer;
-  padding: 14px 16px;
-  transition: 0.3s;
-  font-size: 17px;
+  position: fixed;
+  top: 0;
+  right:0;
 }
 
-/* Change background color of buttons on hover */
-.pages button:hover {
-  background-color: #ddd;
+.pagemenu:hover, .pagemenu:focus {
+  background-color: #777;
+  border: none;
 }
 
-/* Create an active/current tablink class */
-.pages button.active {
-  background-color: #ccc;
+.dropdown-content {
+  display: none;
+  position: absolute;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  top: 42px;  /* font-size=16 + 2 * padding=2 + 2*border=1 */
+  right:0;
+  z-index: 1;
 }
 
-/* Style the tab content */
+.dropdown-content a {
+  color: white;
+  background-color: #aaa;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  min-width: 160px;
+  border: none;
+}
+
+.dropdown-content a:hover {
+  background-color: #777;
+}
+
+.show {display: block;}
+
 .pagecontent {
+  overflow: hidden;
   display: none;
   padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-top: none;
+  border: 0px;
 }
 

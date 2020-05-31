@@ -1,7 +1,23 @@
 function initUI() {
   document.getElementById("defaultPage").click();
+  window.onclick = function(event) {
+    if (!event.target.matches('.pagemenu')) {
+      var items = document.getElementsByClassName("dropdown-content");
+      var i;
+      for (i = 0; i < items.length; i++) {
+        var openItem = items[i];
+        if (openItem.classList.contains('show')) {
+          openItem.classList.remove('show');
+        }
+      }
+    }
+  }
 }
 
+function showMenu() {
+  document.getElementById("pages").classList.toggle("show");
+}
+  
 function openPage(evt, pageName) {
   var i, tabcontent, tablinks;
   pages = document.getElementsByClassName("pagecontent");

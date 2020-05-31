@@ -10,11 +10,12 @@
     <script src="index.js"></script>
   </head>
   <body onload="initUI();">
-    <div class="pages">
-      <button class="pagelink" onclick="openPage(event, 'tab-page1')" id="defaultPage">Page 1</button>
-      <button class="pagelink" onclick="openPage(event, 'tab-page2')">Page 2</button>
-      <button class="pagelink" onclick="openPage(event, 'tab-settings')">Settings</button>
-      <button class="pagelink" onclick="openPage(event, 'tab-help')">Help</button>
+    <a onclick="showMenu()" class="pagemenu">#</a>
+    <div id="pages" class="dropdown-content">
+      <a class="pagelink" onclick="openPage(event, 'tab-page1')" id="defaultPage">Page 1</a>
+      <a class="pagelink" onclick="openPage(event, 'tab-page2')">Page 2</a>
+      <a class="pagelink" onclick="openPage(event, 'tab-settings')">Settings</a>
+      <a class="pagelink" onclick="openPage(event, 'tab-help')">Help</a>
     </div>
 
     <div id="tab-page1" class="pagecontent">
