@@ -2,8 +2,32 @@
   <head>
     <title>app skeleton</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="images/icon48.png" sizes="48x48">
+    <script src="index.js"></script>
   </head>
-  <body>
-    Add content.
+  <body onload="initUI();">
+    <div class="pages">
+      <button class="pagelink" onclick="openPage(event, 'tab-page1')" id="defaultPage">Page 1</button>
+      <button class="pagelink" onclick="openPage(event, 'tab-page2')">Page 2</button>
+      <button class="pagelink" onclick="openPage(event, 'tab-settings')">Settings</button>
+      <button class="pagelink" onclick="openPage(event, 'tab-help')">Help</button>
+    </div>
+
+    <div id="tab-page1" class="pagecontent">
+      Page 1
+    </div>
+
+    <div id="tab-page2" class="pagecontent">
+      Page 2
+    </div>
+
+    <div id="tab-settings" class="pagecontent">
+      Settings
+    </div>
+
+    <div id="tab-help" class="pagecontent">
+      Help
+    </div>
   </body>
 </html>
