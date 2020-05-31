@@ -7,8 +7,8 @@
   "orientation": "landscape",
   "description": "Web app skeleton that is suitable for mobile devices.",
   "icons": [{
-    "src": "images/icon48.png",
-    "sizes": "48x48",
+    "src": "images/icon144.png",
+    "sizes": "144x144",
     "type": "image/png"
   }]
 }
