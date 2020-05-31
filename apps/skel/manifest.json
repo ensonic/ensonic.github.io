@@ -2,8 +2,9 @@
   "name": "App Skeleton",
   "short_name": "AppSkel",
   "start_url": ".",
-  "display": "standalone",
-  "background_color" : "#fff" ,
+  "display": "fullscreen",
+  "background_color": "#fff",
+  "orientation": "landscape",
   "description": "Web app skeleton that is suitable for mobile devices.",
   "icons": [{
     "src": "images/icon48.png",

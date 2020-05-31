@@ -8,7 +8,7 @@ function openPage(evt, pageName) {
   for (i = 0; i < pages.length; i++) {
     pages[i].style.display = "none";
   }
-  links = document.getElementsByClassName("pagelinks");
+  links = document.getElementsByClassName("pagelink");
   for (i = 0; i < links.length; i++) {
     links[i].className = links[i].className.replace(" active", "");
   }
