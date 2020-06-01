@@ -1,0 +1,14 @@
+{
+  "name": "Midi Keyboard",
+  "short_name": "MidiKeys",
+  "start_url": ".",
+  "display": "fullscreen",
+  "background_color": "#fff",
+  "orientation": "landscape",
+  "description": "Midi keyboard that can be used as a controller (it does not play sound itself).",
+  "icons": [{
+    "src": "images/icon256.png",
+    "sizes": "256x256",
+    "type": "image/png"
+  }]
+}
