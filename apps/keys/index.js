@@ -51,7 +51,7 @@ function connect() {
 
 function midiReady(midi) {
   // Also react to device changes.
-  midi.addEventListener('statechange', (event) => initDevices(event.target));
+  midi.addEventListener('statechange', (event) => initDevices(event.target), {passive: true});
   initDevices(midi);
 }
 
@@ -105,7 +105,7 @@ function startListening() {
 
   // Start listening to MIDI messages.
   for (const input of midiIn) {
-    input.addEventListener('midimessage', midiMessageReceived);;
+    input.addEventListener('midimessage', midiMessageReceived, {passive: true});
   }
 }
 
@@ -390,7 +390,7 @@ function AudioSynthView() {
                 keyCode: _temp
               });
             }
-          })(reverseLookup[n + ',' + i]));
+          })(reverseLookup[n + ',' + i]), {passive: true});
           visualKeyboard[n + ',' + i] = thisKey;
           visualKeyboard.appendChild(thisKey);
           iKeys++;
@@ -407,7 +407,7 @@ function AudioSynthView() {
           keyCode: keysPressed[n]
         });
       }
-    });
+    }, {passive: true});
 
   };
   
@@ -493,14 +493,14 @@ function AudioSynthView() {
 
   // Set up global event listeners
 
-  window.addEventListener('keydown', fnPlayKeyboard);
-  window.addEventListener('keyup', fnRemoveKeyBinding);
+  window.addEventListener('keydown', fnPlayKeyboard, {passive: true});
+  window.addEventListener('keyup', fnRemoveKeyBinding, {passive: true});
   document.getElementById('-_OCTAVE').addEventListener('click', function() {
     fnChangeOctave(-1);
-  });
+  }, {passive: true});
   document.getElementById('+_OCTAVE').addEventListener('click', function() {
     fnChangeOctave(1);
-  });
+  }, {passive: true});
 
   Object.defineProperty(this, 'draw', {
     value: fnCreateKeyboard
