@@ -200,7 +200,6 @@ function AudioSynthView() {
     x |= 0;
 
     __octave += x;
-
     __octave = Math.min(5, Math.max(3, __octave));
 
     var octaveName = document.getElementsByName('OCTAVE_LABEL');
@@ -215,150 +214,102 @@ function AudioSynthView() {
 
   };
 
-  // Key bindings, notes to keyCodes.
-  var keyboard = {
-    /* 2 */
-    50: 'C#,-1',
-    /* 3 */
-    51: 'D#,-1',
-    /* 5 */
-    53: 'F#,-1',
-    /* 6 */
-    54: 'G#,-1',
-    /* 7 */
-    55: 'A#,-1',
-    /* 9 */
-    57: 'C#,0',
-    /* 0 */
-    48: 'D#,0',
-    /* + */
-    187: 'F#,0',
-    61: 'F#,0',
-    /* Q */
-    81: 'C,-1',
-    /* W */
-    87: 'D,-1',
-    /* E */
-    69: 'E,-1',
-    /* R */
-    82: 'F,-1',
-    /* T */
-    84: 'G,-1',
-    /* Y */
-    89: 'A,-1',
-    /* U */
-    85: 'B,-1',
-    /* I */
-    73: 'C,0',
-    /* O */
-    79: 'D,0',
-    /* P */
-    80: 'E,0',
-    /* [ */
-    219: 'F,0',
-    /* ] */
-    221: 'G,0',
-    /* A */
-    65: 'G#,0',
-    /* S */
-    83: 'A#,0',
-    /* F */
-    70: 'C#,1',
-    /* G */
-    71: 'D#,1',
-    /* J */
-    74: 'F#,1',
-    /* K */
-    75: 'G#,1',
-    /* L */
-    76: 'A#,1',
-    /* Z */
-    90: 'A,0',
-    /* X */
-    88: 'B,0',
-    /* C */
-    67: 'C,1',
-    /* V */
-    86: 'D,1',
-    /* B */
-    66: 'E,1',
-    /* N */
-    78: 'F,1',
-    /* M */
-    77: 'G,1',
-    /* , */
-    188: 'A,1',
-    /* . */
-    190: 'B,1'
+  // Note key names
+	const keys = {
+    'C': 0,
+    'C#': 1,
+    'D': 2,
+    'D#': 3,
+    'E': 4,
+    'F': 5,
+    'F#': 6,
+    'G': 7,
+    'G#': 8,
+    'A': 9,
+    'A#': 10,
+    'B': 11
   };
 
-  var reverseLookupText = {};
-  var reverseLookup = {};
+  // Key bindings, notes to keyCodes.
+  const keyboard = {
+    50: 'C#,-1',  /* 2 */
+    51: 'D#,-1',  /* 3 */
+    53: 'F#,-1',  /* 5 */
+    54: 'G#,-1',  /* 6 */
+    55: 'A#,-1',  /* 7 */
+    57: 'C#,0',   /* 9 */
+    48: 'D#,0',   /* 0 */
+    187: 'F#,0',  /* + */
+    61: 'F#,0',
+    81: 'C,-1',  /* Q */
+    87: 'D,-1',  /* W */
+    69: 'E,-1',  /* E */
+    82: 'F,-1',  /* R */
+    84: 'G,-1',  /* T */
+    89: 'A,-1',  /* Y */
+    85: 'B,-1',  /* U */
+    73: 'C,0',   /* I */
+    79: 'D,0',   /* O */
+    80: 'E,0',   /* P */
+    219: 'F,0',  /* [ */
+    221: 'G,0',  /* ] */
+    65: 'G#,0',  /* A */
+    83: 'A#,0',  /* S */
+    70: 'C#,1',  /* F */
+    71: 'D#,1',  /* G */
+    74: 'F#,1',  /* J */
+    75: 'G#,1',  /* K */
+    76: 'A#,1',  /* L */
+    90: 'A,0',   /* Z */
+    88: 'B,0',   /* X */
+    67: 'C,1',   /* C */
+    86: 'D,1',   /* V */
+    66: 'E,1',   /* B */
+    78: 'F,1',   /* N */
+    77: 'G,1',   /* M */
+    188: 'A,1',  /* , */
+    190: 'B,1'   /* . */
+  };
 
   // Create a reverse lookup table.
+  var reverseLookupText = {};
+  var reverseLookup = {};
   for (var i in keyboard) {
-
     var val;
-
     switch (i | 0) {
-
       case 187:
         val = 61;
         break;
-
       case 219:
         val = 91;
         break;
-
       case 221:
         val = 93;
         break;
-
       case 188:
         val = 44;
         break;
-
       case 190:
         val = 46;
         break;
-
       default:
         val = i;
         break;
-
     }
-
     reverseLookupText[keyboard[i]] = val;
     reverseLookup[keyboard[i]] = i;
-
   }
 
   // Keys you have pressed down.
   var keysPressed = [];
   var visualKeyboard = null;
-  var selectSound = null;
-
+  
   var fnCreateKeyboard = function(keyboardElement) {
     // Generate keyboard
     // This is our main keyboard element! It's populated dynamically based on what you've set above.
     visualKeyboard = document.getElementById('keyboard');
 
-    var iKeys = 0;
     var iWhite = 0;
-    var notes = {
-      'C': 261.63,
-      'C#': 277.18,
-      'D': 293.66,
-      'D#': 311.13,
-      'E': 329.63,
-      'F': 349.23,
-      'F#': 369.99,
-      'G': 392.00,
-      'G#': 415.30,
-      'A': 440.00,
-      'A#': 466.16,
-      'B': 493.88
-    };
     
     /* key sizes */
     // TODO: add to settings and make configurable
@@ -367,43 +318,41 @@ function AudioSynthView() {
     const bkoff = bkw / 1.6;
 
     for (var i = -1; i <= 1; i++) {
-      for (var n in notes) {
-        if (n[2] != 'b') {
-          var thisKey = document.createElement('div');
-          if (n.length > 1) {
-            thisKey.className = 'black key';
-            thisKey.style.width = wkw + 'px';
-            thisKey.style.height = '120px';
-            thisKey.style.left = (bkw * (iWhite - 1)) + bkoff + 'px';
-          } else {
-            thisKey.className = 'white key';
-            thisKey.style.width = bkw + 'px';
-            thisKey.style.height = '200px';
-            thisKey.style.left = bkw * iWhite + 'px';
-            iWhite++;
-          }
-          var label = document.createElement('div');
-          label.className = 'label';
-          label.innerHTML = '<b>' + String.fromCharCode(reverseLookupText[n + ',' + i]) + '</b>' + '<br /><br />' + n.substr(0, 1) +
-            '<span name="OCTAVE_LABEL" value="' + i + '">' + (__octave + parseInt(i)) + '</span>' + (n.substr(1, 1) ? n.substr(1, 1) : '');
-          thisKey.appendChild(label);
-          thisKey.setAttribute('ID', 'KEY_' + n + ',' + i);
-          thisKey.addEventListener(evtListener[0], (function(_temp) {
-            return function() {
-              fnPlayKeyboard({
-                keyCode: _temp
-              });
-            }
-          })(reverseLookup[n + ',' + i]), {passive: true});
-          visualKeyboard[n + ',' + i] = thisKey;
-          visualKeyboard.appendChild(thisKey);
-          iKeys++;
+      for (var n in keys) {
+        var thisKey = document.createElement('div');
+        if (n.length > 1) {
+          thisKey.className = 'black key';
+          thisKey.style.width = wkw + 'px';
+          thisKey.style.height = '120px';
+          thisKey.style.left = (bkw * (iWhite - 1)) + bkoff + 'px';
+        } else {
+          thisKey.className = 'white key';
+          thisKey.style.width = bkw + 'px';
+          thisKey.style.height = '200px';
+          thisKey.style.left = bkw * iWhite + 'px';
+          iWhite++;
         }
+        var label = document.createElement('div');
+        label.className = 'label';
+        label.innerHTML = '<b>' + String.fromCharCode(reverseLookupText[n + ',' + i]) + '</b>' + '<br /><br />' + n.substr(0, 1) +
+          '<span name="OCTAVE_LABEL" value="' + i + '">' + (__octave + i) + '</span>' + (n.substr(1, 1) ? n.substr(1, 1) : '');
+        thisKey.appendChild(label);
+        thisKey.setAttribute('ID', 'KEY_' + n + ',' + i);
+        thisKey.addEventListener(evtListener[0], (function(_temp) {
+          return function() {
+            fnPlayKeyboard({
+              keyCode: _temp
+            });
+          }
+        })(reverseLookup[n + ',' + i]), {passive: true});
+        visualKeyboard[n + ',' + i] = thisKey;
+        visualKeyboard.appendChild(thisKey);
       }
     }
 
     visualKeyboard.style.width = iWhite * bkw + 'px';
 
+    // TODO: why global and not per key?
     window.addEventListener(evtListener[1], function() {
       n = keysPressed.length;
       while (n--) {
@@ -418,25 +367,11 @@ function AudioSynthView() {
   // Convert keys to midi note numbers
   
   var fnNoteToMidiNum = function(arrPlayNote) {
-  	var keys = {
-      'C': 0,
-      'C#': 1,
-      'D': 2,
-      'D#': 3,
-      'E': 4,
-      'F': 5,
-      'F#': 6,
-      'G': 7,
-      'G#': 8,
-      'A': 9,
-      'A#': 10,
-      'B': 11
-    };
     var note = arrPlayNote[0];
     var octaveModifier = arrPlayNote[1] | 0;
     var octave = __octave + octaveModifier
     var key = keys[note];
-    console.log("note: " + note + ", oct: " + __octave + " + " + octaveModifier + ", key: " + key)
+    //console.log("note: " + note + ", oct: " + __octave + " + " + octaveModifier + ", key: " + key)
     return (octave * 12) + key;
   };
 
