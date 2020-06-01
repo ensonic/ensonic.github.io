@@ -8,6 +8,10 @@
   "orientation": "landscape",
   "description": "Midi keyboard that can be used as a controller (it does not play sound itself).",
   "icons": [{
+    "src": "images/icon512.png",
+    "sizes": "512x512",
+    "type": "image/png"
+  },{
     "src": "images/icon256.png",
     "sizes": "256x256",
     "type": "image/png"
