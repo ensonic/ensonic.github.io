@@ -12,7 +12,7 @@ function initUI() {
   }
 
   var asv = new AudioSynthView();
-  connect();
+  connectMidi();
   asv.draw();
 }
 
@@ -46,7 +46,7 @@ function openPage(evt, pageName) {
 }
 
 // Start up WebMidi.
-function connect() {
+function connectMidi() {
   navigator.requestMIDIAccess()
     .then(
       (midi) => midiReady(midi),
