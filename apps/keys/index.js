@@ -355,6 +355,12 @@ function AudioSynthView() {
       'A#': 466.16,
       'B': 493.88
     };
+    
+    /* key sizes */
+    // TODO: add to settings and make configurable
+    const bkw = 32;
+    const wkw = 25;
+    const bkoff = bkw / 1.6;
 
     for (var i = -1; i <= 1; i++) {
       for (var n in notes) {
@@ -362,14 +368,14 @@ function AudioSynthView() {
           var thisKey = document.createElement('div');
           if (n.length > 1) {
             thisKey.className = 'black key';
-            thisKey.style.width = '30px';
+            thisKey.style.width = wkw + 'px';
             thisKey.style.height = '120px';
-            thisKey.style.left = (40 * (iWhite - 1)) + 25 + 'px';
+            thisKey.style.left = (bkw * (iWhite - 1)) + bkoff + 'px';
           } else {
             thisKey.className = 'white key';
-            thisKey.style.width = '40px';
+            thisKey.style.width = bkw + 'px';
             thisKey.style.height = '200px';
-            thisKey.style.left = 40 * iWhite + 'px';
+            thisKey.style.left = bkw * iWhite + 'px';
             iWhite++;
           }
           var label = document.createElement('div');
@@ -392,7 +398,7 @@ function AudioSynthView() {
       }
     }
 
-    visualKeyboard.style.width = iWhite * 40 + 'px';
+    visualKeyboard.style.width = iWhite * bkw + 'px';
 
     window.addEventListener(evtListener[1], function() {
       n = keysPressed.length;

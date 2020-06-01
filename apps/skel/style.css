@@ -42,6 +42,7 @@ a.pagemenu:after {
   position: fixed;
   top: 0;
   right:0;
+  z-index: 100;
 }
 
 .pagemenu:hover, .pagemenu:focus {
