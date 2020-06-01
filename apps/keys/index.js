@@ -4,6 +4,16 @@ let midiOut = [];
 let notesOn = new Map();
 
 function initUI() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./service-worker.js')
+        .then(reg =>
+          console.log('Service worker successfully registered for ${reg.scope}')
+        )
+        .catch(err => 
+          console.log('Service worker registration failed: ${err}')
+        );
+  }
+
   document.getElementById("defaultPage").click();
   window.onclick = function(event) {
     if (!event.target.matches('.pagemenu')) {
