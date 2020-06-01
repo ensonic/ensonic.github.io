@@ -4,6 +4,7 @@
   "start_url": ".",
   "display": "fullscreen",
   "background_color": "#fff",
+  "theme_color": "#222",
   "orientation": "landscape",
   "description": "Midi keyboard that can be used as a controller (it does not play sound itself).",
   "icons": [{

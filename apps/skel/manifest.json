@@ -4,6 +4,7 @@
   "start_url": ".",
   "display": "fullscreen",
   "background_color": "#fff",
+  "theme_color": "#222",
   "orientation": "landscape",
   "description": "Web app skeleton that is suitable for mobile devices.",
   "icons": [{
