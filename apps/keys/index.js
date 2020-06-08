@@ -322,11 +322,11 @@ function AudioSynthView() {
     visualKeyboard = document.getElementById('keyboard');
 
     var iWhite = 0;
-    
-    /* key sizes */
-    // TODO: add to settings and make configurable
-    const wkw = 32;
-    const bkw = 26;
+    // TODO: add to settings to configure how many keys to show
+    const numKeys = 21;
+    // key sizes
+    const wkw = 100 / numKeys;
+    const bkw = wkw * 0.8;
     const bkoff = wkw / 1.8;
 
     for (var i = -1; i <= 1; i++) {
@@ -334,14 +334,14 @@ function AudioSynthView() {
         var thisKey = document.createElement('div');
         if (n.length > 1) {
           thisKey.className = 'black key';
-          thisKey.style.width = bkw + 'px';
+          thisKey.style.width = bkw + '%';
           thisKey.style.height = '120px';
-          thisKey.style.left = (wkw * (iWhite - 1)) + bkoff + 'px';
+          thisKey.style.left = (wkw * (iWhite - 1)) + bkoff + '%';
         } else {
           thisKey.className = 'white key';
-          thisKey.style.width = wkw + 'px';
+          thisKey.style.width = wkw + '%';
           thisKey.style.height = '200px';
-          thisKey.style.left = wkw * iWhite + 'px';
+          thisKey.style.left = wkw * iWhite + '%';
           iWhite++;
         }
         var label = document.createElement('div');
@@ -375,8 +375,6 @@ function AudioSynthView() {
         visualKeyboard.appendChild(thisKey);
       }
     }
-
-    visualKeyboard.style.width = iWhite * wkw + 'px';
   };
   
   // Convert keys to midi note numbers

@@ -30,7 +30,6 @@
     </div>
 
     <div id="tab-keyboard" class="pagecontent">
-      <div id="keyboard" class="keyboard-holder"></div>
       <div class="keyboard-options">
         <input type="button" id="-_OCTAVE" class="btn" value="<" title="use arrow left to adjust with keyboard"/>
         Range [C<span ID="OCTAVE_LOWER">3</span>-B<span id="OCTAVE_UPPER">5</span>]
@@ -40,6 +39,7 @@
         <input id="inputVelocity" type="range" min="0" max="127" value="100" size="4" title="Key velocity value (0...127)" oninput="velocityValue.value = inputVelocity.value"/>
         <output id="velocityValue">100</output>
       </div>
+      <div id="keyboard" class="keyboard-holder"></div>
     </div>
 
     <div id="tab-monitor" class="pagecontent">
