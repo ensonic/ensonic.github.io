@@ -352,46 +352,29 @@ function AudioSynthView() {
         thisKey.addEventListener(evtListener[0], (function(keycode) {
           return function(e) {
             // console.log("press: " + keycode);
-            // e.changedTouches is a TouchList object tl:
-            // - tl.length
-            // - tl.item(i) is a Touch object t with t.identifier
+            // e.changedTouches is a TouchList object tl with  tl.length and
+            // tl.item(i) is a Touch object t with t.identifier
             fnPlayKeyboard({
               keyCode: keycode
             });
           }
         })(reverseLookup[keyid]), {passive: true});
-        
         thisKey.addEventListener(evtListener[1], (function(keycode) {
           return function(e) {
             // console.log("release: " + keycode);
-            // e.changedTouches is a TouchList object tl:
-            // - tl.length
-            // - tl.item(i) is a Touch object t with t.identifier
+            // e.changedTouches is a TouchList object tl with  tl.length and
+            // tl.item(i) is a Touch object t with t.identifier
             fnRemoveKeyBinding({
               keyCode: keycode
             });
           }
         })(reverseLookup[keyid]), {passive: true});
-        
         visualKeyboard[keyid] = thisKey;
         visualKeyboard.appendChild(thisKey);
       }
     }
 
     visualKeyboard.style.width = iWhite * bkw + 'px';
-
-    // TODO: why global and not per key?
-    /*
-    window.addEventListener(evtListener[1], function(e) {
-      console.log("release: " + e.changedTouches.length);
-      n = keysPressed.length;
-      while (n--) {
-        fnRemoveKeyBinding({
-          keyCode: keysPressed[n]
-        });
-      }
-    }, {passive: true});
-    */
   };
   
   // Convert keys to midi note numbers
