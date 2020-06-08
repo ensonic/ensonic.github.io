@@ -388,11 +388,8 @@ function AudioSynthView() {
   // Detect keypresses, play notes.
 
   var fnPlayKeyboard = function(e) {
-    var i = keysPressed.length;
-    while (i--) {
-      if (keysPressed[i] == e.keyCode) {
-        return false;
-      }
+    if (keysPressed.includes(e.keyCode)) {
+      return false;
     }
     keysPressed.push(e.keyCode);
 
