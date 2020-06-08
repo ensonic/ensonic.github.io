@@ -343,19 +343,37 @@ function AudioSynthView() {
           iWhite++;
         }
         var label = document.createElement('div');
+        var keyid = n + ',' + i;
         label.className = 'label';
         label.innerHTML = '<b>' + String.fromCharCode(reverseLookupText[n + ',' + i]) + '</b>' + '<br /><br />' + n.substr(0, 1) +
           '<span name="OCTAVE_LABEL" value="' + i + '">' + (__octave + i) + '</span>' + (n.substr(1, 1) ? n.substr(1, 1) : '');
         thisKey.appendChild(label);
-        thisKey.setAttribute('ID', 'KEY_' + n + ',' + i);
-        thisKey.addEventListener(evtListener[0], (function(_temp) {
-          return function() {
+        thisKey.setAttribute('ID', 'KEY_' + keyid);
+        thisKey.addEventListener(evtListener[0], (function(keycode) {
+          return function(e) {
+            // console.log("press: " + keycode);
+            // e.changedTouches is a TouchList object tl:
+            // - tl.length
+            // - tl.item(i) is a Touch object t with t.identifier
             fnPlayKeyboard({
-              keyCode: _temp
+              keyCode: keycode
             });
           }
-        })(reverseLookup[n + ',' + i]), {passive: true});
-        visualKeyboard[n + ',' + i] = thisKey;
+        })(reverseLookup[keyid]), {passive: true});
+        
+        thisKey.addEventListener(evtListener[1], (function(keycode) {
+          return function(e) {
+            // console.log("release: " + keycode);
+            // e.changedTouches is a TouchList object tl:
+            // - tl.length
+            // - tl.item(i) is a Touch object t with t.identifier
+            fnRemoveKeyBinding({
+              keyCode: keycode
+            });
+          }
+        })(reverseLookup[keyid]), {passive: true});
+        
+        visualKeyboard[keyid] = thisKey;
         visualKeyboard.appendChild(thisKey);
       }
     }
@@ -363,7 +381,9 @@ function AudioSynthView() {
     visualKeyboard.style.width = iWhite * bkw + 'px';
 
     // TODO: why global and not per key?
-    window.addEventListener(evtListener[1], function() {
+    /*
+    window.addEventListener(evtListener[1], function(e) {
+      console.log("release: " + e.changedTouches.length);
       n = keysPressed.length;
       while (n--) {
         fnRemoveKeyBinding({
@@ -371,7 +391,7 @@ function AudioSynthView() {
         });
       }
     }, {passive: true});
-
+    */
   };
   
   // Convert keys to midi note numbers
@@ -391,6 +411,7 @@ function AudioSynthView() {
     if (keysPressed.includes(e.keyCode)) {
       return false;
     }
+    // console.log("play: " + e.keyCode);
     keysPressed.push(e.keyCode);
 
     switch (e.keyCode) {
