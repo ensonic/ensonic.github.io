@@ -345,8 +345,8 @@ function AudioSynthView() {
         var label = document.createElement('div');
         var keyid = n + ',' + i;
         label.className = 'label';
-        label.innerHTML = '<b>' + String.fromCharCode(reverseLookupText[n + ',' + i]) + '</b>' + '<br /><br />' + n.substr(0, 1) +
-          '<span name="OCTAVE_LABEL" value="' + i + '">' + (__octave + i) + '</span>' + (n.substr(1, 1) ? n.substr(1, 1) : '');
+        var pcKeyLabel = isMobile ? '' : '<b>' + String.fromCharCode(reverseLookupText[keyid]) + '</b>';
+        label.innerHTML = pcKeyLabel + '<br /><br />' + n[0] + '<span name="OCTAVE_LABEL" value="' + i + '">' + (__octave + i) + '</span>' + (n.length>1 ? n[1] : '');
         thisKey.appendChild(label);
         thisKey.setAttribute('ID', 'KEY_' + keyid);
         thisKey.addEventListener(evtListener[0], (function(keycode) {
@@ -410,9 +410,10 @@ function AudioSynthView() {
 
     if (keyboard[e.keyCode]) {
       if (visualKeyboard[keyboard[e.keyCode]]) {
-        visualKeyboard[keyboard[e.keyCode]].style.backgroundColor = '#ff0000';
-        visualKeyboard[keyboard[e.keyCode]].style.marginTop = '5px';
-        visualKeyboard[keyboard[e.keyCode]].style.boxShadow = 'none';
+        var thisKey = visualKeyboard[keyboard[e.keyCode]];
+        thisKey.style.backgroundColor = thisKey.className.includes('black') ? '#333' : '#ddd';
+        thisKey.style.marginTop = '5px';
+        thisKey.style.boxShadow = 'none';
       }
       sendMidiNoteOn(fnNoteToMidiNum(keyboard[e.keyCode].split(',')), inputVelocity.value)
     } else {
@@ -428,9 +429,10 @@ function AudioSynthView() {
     while (i--) {
       if (keysPressed[i] == e.keyCode) {
         if (visualKeyboard[keyboard[e.keyCode]]) {
-          visualKeyboard[keyboard[e.keyCode]].style.backgroundColor = '';
-          visualKeyboard[keyboard[e.keyCode]].style.marginTop = '';
-          visualKeyboard[keyboard[e.keyCode]].style.boxShadow = '';
+          var thisKey = visualKeyboard[keyboard[e.keyCode]];
+          thisKey.style.backgroundColor = '';
+          thisKey.style.marginTop = '';
+          thisKey.style.boxShadow = '';
         }
         keysPressed.splice(i, 1);
         if (keyboard[e.keyCode]) {

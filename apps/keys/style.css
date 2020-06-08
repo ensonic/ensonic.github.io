@@ -142,9 +142,9 @@ select option:before {
   -webkit-transition: margin 0.05s ease, background-color 0.05s ease, box-shadow 0.05s ease;
 }
 
-.key:hover {
+/*.key:hover {
   background-color: rgb(255, 192, 32);
-}
+}*/
 
 .key .label {
   position: absolute;
