@@ -1,5 +1,6 @@
 body {
   font-family: Sans;
+  font-size: 14px;
   padding: 0px;
   margin: 0px;
   background-color: black;
@@ -82,11 +83,40 @@ a.pagemenu:after {
   border: 0px;
 }
 
+label {
+  display: inline-block;
+  width: 100px;
+  padding: 0px 6px 0px 0px;
+  text-align: right;
+}
+
+/* TODO: styling the options does not work
+ * https://stackoverflow.com/questions/7208786/how-to-style-the-option-of-an-html-select-element
+ */
+select, select option {
+  background-color: #222;
+  color: white;
+  padding: 12px;
+  border: none;
+}
+
+select option:before {
+  padding: 12px;
+  border: none;
+}
+
+.btn {
+  background-color: #222;
+  color: white;
+  padding: 12px;
+  margin: 0px 6px;
+  border: none;
+  cursor: pointer;
+}
+
 .keyboard-options {
   margin: 10px auto;
-  width: auto;
-  text-align: center;
-  font-size: 12px;
+  text-align: left;
   font-weight: 200;
   padding: 10px;
 }
@@ -99,11 +129,6 @@ a.pagemenu:after {
   -webkit-user-select: none;
   -moz-user-select: none;
   -o-user-select: none;
-}
-
-.btn {
-  padding: 5px 8px 5px 8px;
-  margin: 0px 3px 0px 3px;
 }
 
 .key {

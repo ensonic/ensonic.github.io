@@ -32,11 +32,13 @@
     <div id="tab-keyboard" class="pagecontent">
       <div id="keyboard" class="keyboard-holder"></div>
       <div class="keyboard-options">
-        Range [C<span ID="OCTAVE_LOWER">3</span>-B<span id="OCTAVE_UPPER">5</span>]
         <input type="button" id="-_OCTAVE" class="btn" value="<" title="use arrow left to adjust with keyboard"/>
+        Range [C<span ID="OCTAVE_LOWER">3</span>-B<span id="OCTAVE_UPPER">5</span>]
         <input type="button" id="+_OCTAVE" class="btn" value=">"  title="use arrow right to adjust with keyboard"/>
-        &nbsp;
-        Velocity: <input id="inputVelocity" value="100" size="4" title="Key velocity value (0...127)" />
+        &nbsp;&nbsp;&nbsp;
+        Velocity: 
+        <input id="inputVelocity" type="range" min="0" max="127" value="100" size="4" title="Key velocity value (0...127)" oninput="velocityValue.value = inputVelocity.value"/>
+        <output id="velocityValue">100</output>
       </div>
     </div>
 
@@ -45,9 +47,15 @@
     </div>
 
     <div id="tab-settings" class="pagecontent">
-      Inputs: <select id="selectIn"></select>
-      Outputs: <select id="selectOut"></select>
-      <button onclick="saveDefaults()">SaveAsDefault</button>
+      <p>
+        <label>Inputs:</label><select id="selectIn"></select>
+      </p/>
+      <p>
+        <label>Outputs:</label><select id="selectOut"></select>
+      <p/>
+      <p>
+        <label>&nbsp;</label><button onclick="saveDefaults()" class="btn">Save as default</button>
+      </p>
     </div>
 
     <div id="tab-help" class="pagecontent">
