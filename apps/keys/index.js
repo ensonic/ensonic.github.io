@@ -325,23 +325,23 @@ function AudioSynthView() {
     
     /* key sizes */
     // TODO: add to settings and make configurable
-    const bkw = 32;
-    const wkw = 25;
-    const bkoff = bkw / 1.6;
+    const wkw = 32;
+    const bkw = 26;
+    const bkoff = wkw / 1.8;
 
     for (var i = -1; i <= 1; i++) {
       for (var n in keys) {
         var thisKey = document.createElement('div');
         if (n.length > 1) {
           thisKey.className = 'black key';
-          thisKey.style.width = wkw + 'px';
+          thisKey.style.width = bkw + 'px';
           thisKey.style.height = '120px';
-          thisKey.style.left = (bkw * (iWhite - 1)) + bkoff + 'px';
+          thisKey.style.left = (wkw * (iWhite - 1)) + bkoff + 'px';
         } else {
           thisKey.className = 'white key';
-          thisKey.style.width = bkw + 'px';
+          thisKey.style.width = wkw + 'px';
           thisKey.style.height = '200px';
-          thisKey.style.left = bkw * iWhite + 'px';
+          thisKey.style.left = wkw * iWhite + 'px';
           iWhite++;
         }
         var label = document.createElement('div');
@@ -376,7 +376,7 @@ function AudioSynthView() {
       }
     }
 
-    visualKeyboard.style.width = iWhite * bkw + 'px';
+    visualKeyboard.style.width = iWhite * wkw + 'px';
   };
   
   // Convert keys to midi note numbers
