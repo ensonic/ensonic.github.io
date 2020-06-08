@@ -241,6 +241,7 @@ function AudioSynthView() {
   };
 
   // Key bindings, notes to keyCodes.
+  // TODO: this is for a US keyboard
   const keyboard = {
     50: 'C#,-1',  /* 2 */
     51: 'D#,-1',  /* 3 */
@@ -250,7 +251,7 @@ function AudioSynthView() {
     57: 'C#,0',   /* 9 */
     48: 'D#,0',   /* 0 */
     187: 'F#,0',  /* + */
-    61: 'F#,0',
+    61: 'F#,0',  /* = */
     81: 'C,-1',  /* Q */
     87: 'D,-1',  /* W */
     69: 'E,-1',  /* E */
@@ -286,21 +287,22 @@ function AudioSynthView() {
   var reverseLookup = {};
   for (var i in keyboard) {
     var val;
+    // Alternate mappings for international keyboard layouts
     switch (i | 0) {
-      case 187:
-        val = 61;
+      case 187:   // »
+        val = 61; // +
         break;
       case 219:
-        val = 91;
+        val = 91; // [
         break;
       case 221:
-        val = 93;
+        val = 93; // ]
         break;
       case 188:
-        val = 44;
+        val = 44; // ,
         break;
       case 190:
-        val = 46;
+        val = 46; // ,
         break;
       default:
         val = i;
@@ -398,12 +400,10 @@ function AudioSynthView() {
     keysPressed.push(e.keyCode);
 
     switch (e.keyCode) {
-      // left
-      case 37:
+      case 37: // left
         fnChangeOctave(-1);
         break;
-        // right
-      case 39:
+      case 39: // right
         fnChangeOctave(1);
         break;
     }
