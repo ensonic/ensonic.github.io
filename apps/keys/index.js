@@ -102,13 +102,13 @@ function setSelectedValue(selectObj, valueToSet) {
 function displayDevices() {
   selectIn.innerHTML = midiIn.map(device => `<option>${device.name}</option>`).join('');
   const defaultInput = readCookie('defaultInput');
-  console.log("default input: " + defaultInput);
+  //console.log("default input: " + defaultInput);
   if (defaultInput) {
 	  setSelectedValue(selectIn, defaultInput);
   }
   selectOut.innerHTML = midiOut.map(device => `<option>${device.name}</option>`).join('');
   const defaultOutput = readCookie('defaultOutput');
-  console.log("default output: " + defaultOutput);
+  //console.log("default output: " + defaultOutput);
   if (defaultOutput) {
   	setSelectedValue(selectOut, defaultOutput);
   }
