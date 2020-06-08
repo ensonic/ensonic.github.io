@@ -140,9 +140,13 @@ select option:before {
   cursor: pointer;
   box-shadow: 0px 5px 1px rgba(32, 32, 32, 0.2);
   -webkit-transition: margin 0.05s ease, background-color 0.05s ease, box-shadow 0.05s ease;
+  /* disable blue highlight on touch event */
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: transparent;
 }
 
-/*.key:hover {
+/*
+.key:hover {
   background-color: rgb(255, 192, 32);
 }*/
 
