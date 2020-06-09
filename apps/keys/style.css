@@ -7,6 +7,8 @@ body {
   color: white;
 }
 
+/* -------------------- */
+
 .icon {
     display: inline-flex;
     align-self: center;
@@ -24,6 +26,8 @@ body {
     fill: currentColor;
 }
 
+/* -------------------- */
+
 a.pagemenu:after {
   content: ""; 
   position: absolute; 
@@ -34,7 +38,7 @@ a.pagemenu:after {
 }
 
 .pagemenu {
-  background-color: #222;
+  background-color: #333;
   color: white;
   padding: 12px;
   font-size: 16px;
@@ -50,8 +54,10 @@ a.pagemenu:after {
 }
 
 .pagemenu:hover, .pagemenu:focus {
-  background-color: #555;
+  background-color: #666;
 }
+
+/* -------------------- */
 
 .dropdown-content {
   display: none;
@@ -65,7 +71,7 @@ a.pagemenu:after {
 
 .dropdown-content a {
   color: white;
-  background-color: #222;
+  background-color: #333;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
@@ -73,10 +79,12 @@ a.pagemenu:after {
 }
 
 .dropdown-content a:hover {
-  background-color: #555;
+  background-color: #666;
 }
 
 .show {display: block;}
+
+/* -------------------- */
 
 .pagecontent {
   overflow: hidden;
@@ -85,6 +93,8 @@ a.pagemenu:after {
   border: 0px;
 }
 
+/* -------------------- */
+
 label {
   display: inline-block;
   width: 100px;
@@ -92,11 +102,13 @@ label {
   text-align: right;
 }
 
+/* -------------------- */
+
 /* TODO: styling the options does not work
  * https://stackoverflow.com/questions/7208786/how-to-style-the-option-of-an-html-select-element
  */
 select, select option {
-  background-color: #222;
+  background-color: #333;
   color: white;
   padding: 12px;
   border: none;
@@ -112,8 +124,51 @@ select option:before {
   border: none;
 }
 
+/* -------------------- */
+
+.slider {
+  -webkit-appearance: none;
+  height: 14px;
+  background: #aaa;
+  outline: none;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 40px;
+  height: 40px;
+  background: #333;
+  cursor: pointer;
+  /* disable blue highlight on touch event */
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.slider::-webkit-slider-thumb:active {
+  background-color: #666;
+}
+
+.slider::-moz-range-thumb {
+  width: 40px;
+  height: 40px;
+  background: #333;
+  cursor: pointer;
+  /* disable blue highlight on touch event */
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.slider::-moz-range-thumb:active {
+  background-color: #666;
+}
+
+/* -------------------- */
+
 .btn {
-  background-color: #222;
+  background-color: #333;
   color: white;
   padding: 12px;
   margin: 0px 6px;
@@ -127,8 +182,10 @@ select option:before {
 }
 
 .btn:active {
-  background-color: #555;
+  background-color: #666;
 }
+
+/* -------------------- */
 
 .keyboard-options {
   margin: 10px auto;
@@ -161,11 +218,6 @@ select option:before {
   -webkit-tap-highlight-color: transparent;
 }
 
-/*
-.key:hover {
-  background-color: rgb(255, 192, 32);
-}*/
-
 .key .label {
   position: absolute;
   bottom: 5px;
@@ -188,4 +240,4 @@ select option:before {
   text-shadow: 0px 1px 1px rgba(32, 32, 32, 0.5);
 }
 
-
+/* -------------------- */
