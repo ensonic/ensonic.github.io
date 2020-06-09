@@ -1,5 +1,6 @@
 body {
-  font-family: Sans;
+  font-family: 'RobotoRegular', 'Droid Sans', sans-serif;
+  font-size: 14px;
   padding: 0px;
   margin: 0px;
   background-color: black;
@@ -43,11 +44,13 @@ a.pagemenu:after {
   top: 0;
   right:0;
   z-index: 100;
+  /* disable blue highlight on touch event */
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .pagemenu:hover, .pagemenu:focus {
   background-color: #555;
-  border: none;
 }
 
 .dropdown-content {
@@ -78,7 +81,7 @@ a.pagemenu:after {
 .pagecontent {
   overflow: hidden;
   display: none;
-  padding: 6px 12px;
+  padding: 12px;
   border: 0px;
 }
 
