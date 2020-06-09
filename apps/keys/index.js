@@ -225,43 +225,43 @@ function AudioSynthView() {
   // Key bindings, notes to keyCodes.
   // TODO: this is for a US keyboard
   const keyboard = {
-    50: 'C#,-1',  /* 2 */
-    51: 'D#,-1',  /* 3 */
-    53: 'F#,-1',  /* 5 */
-    54: 'G#,-1',  /* 6 */
-    55: 'A#,-1',  /* 7 */
-    57: 'C#,0',   /* 9 */
-    48: 'D#,0',   /* 0 */
-    187: 'F#,0',  /* + */
-    61: 'F#,0',  /* = */
-    81: 'C,-1',  /* Q */
-    87: 'D,-1',  /* W */
-    69: 'E,-1',  /* E */
-    82: 'F,-1',  /* R */
-    84: 'G,-1',  /* T */
-    89: 'A,-1',  /* Y */
-    85: 'B,-1',  /* U */
-    73: 'C,0',   /* I */
-    79: 'D,0',   /* O */
-    80: 'E,0',   /* P */
-    219: 'F,0',  /* [ */
-    221: 'G,0',  /* ] */
-    65: 'G#,0',  /* A */
-    83: 'A#,0',  /* S */
-    70: 'C#,1',  /* F */
-    71: 'D#,1',  /* G */
-    74: 'F#,1',  /* J */
-    75: 'G#,1',  /* K */
-    76: 'A#,1',  /* L */
-    90: 'A,0',   /* Z */
-    88: 'B,0',   /* X */
-    67: 'C,1',   /* C */
-    86: 'D,1',   /* V */
-    66: 'E,1',   /* B */
-    78: 'F,1',   /* N */
-    77: 'G,1',   /* M */
-    188: 'A,1',  /* , */
-    190: 'B,1'   /* . */
+    50: 'C#,0',  /* 2 */
+    51: 'D#,0',  /* 3 */
+    53: 'F#,0',  /* 5 */
+    54: 'G#,0',  /* 6 */
+    55: 'A#,0',  /* 7 */
+    57: 'C#,1',   /* 9 */
+    48: 'D#,1',   /* 0 */
+    187: 'F#,1',  /* + */
+    61: 'F#,1',  /* = */
+    81: 'C,0',  /* Q */
+    87: 'D,0',  /* W */
+    69: 'E,0',  /* E */
+    82: 'F,0',  /* R */
+    84: 'G,0',  /* T */
+    89: 'A,0',  /* Y */
+    85: 'B,0',  /* U */
+    73: 'C,1',   /* I */
+    79: 'D,1',   /* O */
+    80: 'E,1',   /* P */
+    219: 'F,1',  /* [ */
+    221: 'G,1',  /* ] */
+    65: 'G#,1',  /* A */
+    83: 'A#,1',  /* S */
+    70: 'C#,2',  /* F */
+    71: 'D#,2',  /* G */
+    74: 'F#,2',  /* J */
+    75: 'G#,2',  /* K */
+    76: 'A#,2',  /* L */
+    90: 'A,1',   /* Z */
+    88: 'B,1',   /* X */
+    67: 'C,2',   /* C */
+    86: 'D,2',   /* V */
+    66: 'E,2',   /* B */
+    78: 'F,2',   /* N */
+    77: 'G,2',   /* M */
+    188: 'A,2',  /* , */
+    190: 'B,2'   /* . */
   };
 
   // Create a reverse lookup table.
@@ -404,9 +404,14 @@ function AudioSynthView() {
   var fnNoteToMidiNum = function(arrPlayNote) {
     var note = arrPlayNote[0];
     var octaveModifier = arrPlayNote[1] | 0;
-    var octave = __octave + octaveModifier
+    var octave = __octave + octaveModifier + 1;
     var key = keys[note];
-    //console.log("note: " + note + ", oct: " + __octave + " + " + octaveModifier + ", key: " + key)
+
+    console.log("note: " + note + ", oct: " + __octave + " + " + octaveModifier + ", key: " + key)
+    /*
+     * 36 - C2 - 65.41 Hz - https://www.inspiredacoustics.com/en/MIDI_note_numbers_and_center_frequencies
+     *                    - https://newt.phys.unsw.edu.au/jw/notes.html
+     */
     return (octave * 12) + key;
   };
 
