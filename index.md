@@ -4,6 +4,18 @@ On this page I'll host some articles and publish some web experiemnts.
 
 ### Web app experiments
 
+When you open any of those below in a modern browser (tested with chome) you
+should get a banner asking wheter you'd like to install the app. If such a 
+banner does not show up, open the 3-dots menu on the top-right and select
+"Install 'App Name'" / or "Add as a desktop shortcut". When you start the app
+though the newly created shortcut they will open in fullscreen and work
+offline. The apps will also auto update (when online).
+To force an update delete cached ontent for the app from chrome. On Android
+open the page, tap the 3-dots menu, select the circled 'i', select website-
+settings and there tap the trashcan to delete cached files. Then close the
+dialogs and swipe the page down to reload. This will update the cache for the
+pinned app.
+
 * [app skeleton](apps/skel/index.html)
 * [midi keyboard](apps/keys/index.html)
   * Based on these [webmidi-examples](https://webmidi-examples.glitch.me/) and
@@ -15,4 +27,3 @@ To serve an app for local development, run:
 cd apps/<appname>
 python3 -m http.server 8000
 ```
-
