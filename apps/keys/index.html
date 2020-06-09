@@ -31,13 +31,23 @@
 
     <div id="tab-keyboard" class="pagecontent">
       <div class="keyboard-options">
-        <input type="button" id="-_OCTAVE" class="btn" value="<" title="use arrow left to adjust with keyboard"/>
-        Range [C<span ID="OCTAVE_LOWER">3</span>-B<span id="OCTAVE_UPPER">5</span>]
-        <input type="button" id="+_OCTAVE" class="btn" value=">"  title="use arrow right to adjust with keyboard"/>
-        &nbsp;&nbsp;&nbsp;
-        Velocity: 
-        <input id="inputVelocity" type="range" min="0" max="127" value="100" size="4" title="Key velocity value (0...127)" oninput="velocityValue.value = inputVelocity.value"/>
-        <output id="velocityValue">100</output>
+        <div class="keyboard-option">
+          <label class="vlabel">
+            Range: C<span ID="oct-lower">3</span>-<span id="key-upper">E</span><span id="oct-upper">5</span>
+          </label>
+          <div style="display: inline">
+            <input type="button" id="oct-down" class="btn" value="<" title="use arrow left to adjust with keyboard"/>
+            Oct
+            <input type="button" id="oct-up" class="btn" value=">" title="use arrow right to adjust with keyboard"/>
+            <input type="button" id="num-down" class="btn" value="<" title="use arrow up to adjust with keyboard"/>
+            Keys
+            <input type="button" id="num-up" class="btn" value=">" title="use arrow down to adjust with keyboard"/>
+          </div>
+        </div>
+        <div class="keyboard-option" style="flex-grow: 1">
+          <label class="vlabel">Velocity: <output id="velocityValue">100</output></label>
+          <input id="inputVelocity" type="range" class="slider" min="0" max="127" value="100" size="4" title="Key velocity value (0...127)" oninput="velocityValue.value = inputVelocity.value"/>
+        </div>
       </div>
       <div id="keyboard" class="keyboard-holder"></div>
     </div>
@@ -48,13 +58,13 @@
 
     <div id="tab-settings" class="pagecontent">
       <p>
-        <label>Inputs:</label><select id="selectIn"></select>
+        <label class="hlabel">Input</label><select id="selectIn"></select>
       </p/>
       <p>
-        <label>Outputs:</label><select id="selectOut"></select>
+        <label class="hlabel">Output</label><select id="selectOut"></select>
       <p/>
       <p>
-        <label>&nbsp;</label><button onclick="saveDefaults()" class="btn">Save as default</button>
+        <label class="hlabel">&nbsp;</label><button onclick="saveDefaults()" class="btn">Save as default</button>
       </p>
     </div>
 

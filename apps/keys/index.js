@@ -202,27 +202,9 @@ function AudioSynthView() {
     var evtListener = ['mousedown', 'mouseup'];
   }
 
-  var __octave = 4;
-
-  // Change octave
-  var fnChangeOctave = function(x) {
-
-    x |= 0;
-
-    __octave += x;
-    __octave = Math.min(5, Math.max(3, __octave));
-
-    var octaveName = document.getElementsByName('OCTAVE_LABEL');
-    var i = octaveName.length;
-    while (i--) {
-      var val = parseInt(octaveName[i].getAttribute('value'));
-      octaveName[i].innerHTML = (val + __octave);
-    }
-
-    document.getElementById('OCTAVE_LOWER').innerHTML = __octave - 1;
-    document.getElementById('OCTAVE_UPPER').innerHTML = __octave + 1;
-
-  };
+  var __octave = 3;
+  var __keys = 3;
+  const nKeysChoices = [7,10,14,17,21];
 
   // Note key names
 	const keys = {
@@ -315,22 +297,62 @@ function AudioSynthView() {
   // Keys you have pressed down.
   var keysPressed = [];
   var visualKeyboard = null;
+
+  // Change octave
+  var fnChangeOctave = function(x) {
+    __octave += x | 0;
+    // TODO: if we only show one or two octaves, bump upper limmit
+    __octave = Math.min(5, Math.max(1, __octave));
+
+    var octaveName = document.getElementsByName('OCTAVE_LABEL');
+    var i = octaveName.length;
+    while (i--) {
+      var val = parseInt(octaveName[i].getAttribute('value'));
+      octaveName[i].innerHTML = (val + __octave);
+    }
+    fnUpdateKeyRange();
+  };
+
+  // Change keys shown
+  var fnChangeKeys = function(x) {
+    __keys += x | 0;
+    __keys = Math.min(nKeysChoices.length - 1, Math.max(0, __keys));
+    // TODO: if we increase this, check if we need to adjust __octave
+
+    document.getElementById('keyboard').innerHTML = '';    
+    fnCreateKeyboard();
+    fnUpdateKeyRange();
+  };
+
+  var fnUpdateKeyRange = function() {
+    var nOctavesFlt = (nKeysChoices[__keys] / 7) - 1;
+    var nOctaves = Math.trunc(nOctavesFlt);
+
+    document.getElementById('oct-lower').innerHTML = __octave;
+    document.getElementById('oct-upper').innerHTML = __octave + nOctaves;
+    document.getElementById('key-upper').innerHTML = (nOctaves == nOctavesFlt) ? 'B' : 'E';
+  }
+
   
-  var fnCreateKeyboard = function(keyboardElement) {
-    // Generate keyboard
-    // This is our main keyboard element! It's populated dynamically based on what you've set above.
+  // Generate keyboard
+  // This is our main keyboard element! It's populated dynamically based on what you've set above.
+  var fnCreateKeyboard = function() {
     visualKeyboard = document.getElementById('keyboard');
 
     var iWhite = 0;
-    // TODO: add to settings to configure how many keys to show
-    const numKeys = 21;
+    const nWhite = nKeysChoices[__keys];
     // key sizes
-    const wkw = 100 / numKeys;
+    const wkw = 100 / nWhite;
     const bkw = wkw * 0.8;
     const bkoff = wkw / 1.8;
 
-    for (var i = -1; i <= 1; i++) {
+    while (iWhite < nWhite) {
       for (var n in keys) {
+        if (iWhite >= nWhite) {
+          break;
+        }
+
+        var oct = Math.trunc(iWhite / 7);
         var thisKey = document.createElement('div');
         if (n.length > 1) {
           thisKey.className = 'black key';
@@ -345,10 +367,10 @@ function AudioSynthView() {
           iWhite++;
         }
         var label = document.createElement('div');
-        var keyid = n + ',' + i;
+        var keyid = n + ',' + oct;
         label.className = 'label';
         var pcKeyLabel = isMobile ? '' : '<b>' + String.fromCharCode(reverseLookupText[keyid]) + '</b>';
-        label.innerHTML = pcKeyLabel + '<br /><br />' + n[0] + '<span name="OCTAVE_LABEL" value="' + i + '">' + (__octave + i) + '</span>' + (n.length>1 ? n[1] : '');
+        label.innerHTML = pcKeyLabel + '<br /><br />' + n[0] + '<span name="OCTAVE_LABEL" value="' + oct + '">' + (__octave + oct) + '</span>' + (n.length>1 ? n[1] : '');
         thisKey.appendChild(label);
         thisKey.setAttribute('ID', 'KEY_' + keyid);
         thisKey.addEventListener(evtListener[0], (function(keycode) {
@@ -445,11 +467,18 @@ function AudioSynthView() {
 
   window.addEventListener('keydown', fnPlayKeyboard, {passive: true});
   window.addEventListener('keyup', fnRemoveKeyBinding, {passive: true});
-  document.getElementById('-_OCTAVE').addEventListener('click', function() {
+  document.getElementById('oct-down').addEventListener('click', function() {
     fnChangeOctave(-1);
   }, {passive: true});
-  document.getElementById('+_OCTAVE').addEventListener('click', function() {
+  document.getElementById('oct-up').addEventListener('click', function() {
     fnChangeOctave(1);
+  }, {passive: true});
+
+  document.getElementById('num-down').addEventListener('click', function() {
+    fnChangeKeys(-1);
+  }, {passive: true});
+  document.getElementById('num-up').addEventListener('click', function() {
+    fnChangeKeys(1);
   }, {passive: true});
 
   Object.defineProperty(this, 'draw', {

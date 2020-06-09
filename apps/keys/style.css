@@ -95,11 +95,17 @@ a.pagemenu:after {
 
 /* -------------------- */
 
-label {
+.hlabel {
   display: inline-block;
   width: 100px;
   padding: 0px 6px 0px 0px;
   text-align: right;
+}
+
+.vlabel {
+  display: inline-block;
+  padding: 0px 0px 6px 0px;
+  text-align: center;
 }
 
 /* -------------------- */
@@ -129,6 +135,7 @@ select option:before {
 .slider {
   -webkit-appearance: none;
   height: 14px;
+  margin: 12px;
   background: #aaa;
   outline: none;
   -webkit-transition: .2s;
@@ -189,8 +196,15 @@ select option:before {
 
 .keyboard-options {
   margin: 10px auto;
-  text-align: left;
-  font-weight: 200;
+  display: flex;
+  flex-direction: row;
+  align-content: stretch;
+}
+
+.keyboard-option {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 12px;
 }
 
 .keyboard-holder {
