@@ -158,7 +158,7 @@ function midiMessageReceived(event) {
 }
 
 function sendMidiNoteOn(pitch, velocity) {
-	const NOTE_ON = 0x90;
+  const NOTE_ON = 0x90;  // last four bits is channel
   const msg = [NOTE_ON, pitch, velocity];
 
   const device = midiOut[selectOut.selectedIndex];
@@ -166,7 +166,7 @@ function sendMidiNoteOn(pitch, velocity) {
 }
 
 function sendMidiNoteOff(pitch, velocity) {
-	const NOTE_OFF = 0x80;
+  const NOTE_OFF = 0x80;  // last four bits is channel
   const msg = [NOTE_OFF, pitch, velocity];
 
   const device = midiOut[selectOut.selectedIndex];
