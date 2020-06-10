@@ -458,7 +458,7 @@ function PianoKeyboard() {
   // Detect keypresses, play notes.
   var playNote = function(e) {
     if (keysPressed.includes(e.keyCode)) {
-      return false;
+      return;
     }
     // console.log("play: " + e.keyCode);
     keysPressed.push(e.keyCode);
@@ -480,26 +480,26 @@ function PianoKeyboard() {
         thisKey.style.boxShadow = 'none';
       }
       sendMidiNoteOn(noteToMidiNum(keyboard[e.keyCode].split(',')), inputVelocity.value)
-    } else {
-      return false;
     }
   }
 
   // Remove key bindings once note is done.
   var stopNote = function(e) {
     var ix = keysPressed.indexOf(e.keyCode);
+    if (ix === -1 ) {
+      return;
+    }
+    // console.log("stop: " + e.keyCode);
 
-    if (ix !== -1 ) {
+    if (keyboard[e.keyCode]) {
       if (visualKeyboard[keyboard[e.keyCode]]) {
         var thisKey = visualKeyboard[keyboard[e.keyCode]];
         thisKey.style.backgroundColor = '';
         thisKey.style.marginTop = '';
         thisKey.style.boxShadow = '';
       }
+      sendMidiNoteOff(noteToMidiNum(keyboard[e.keyCode].split(',')), inputVelocity.value)        
       keysPressed.splice(ix, 1);
-      if (keyboard[e.keyCode]) {
-          sendMidiNoteOff(noteToMidiNum(keyboard[e.keyCode].split(',')), inputVelocity.value)        
-      }
     }
   }
 
