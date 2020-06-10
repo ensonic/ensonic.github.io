@@ -212,13 +212,15 @@ function readCookie(name) {
 }
 
 function PianoKeyboard() {
+  // Settings
+  var __octave = 3;
+  var __keys = 3;
+  var __hasPitchBend = true;  // TODO: add UI to enable/disable
+
+  const nKeysChoices = [7,10,14,17,21];
 
   const isMobile = !!navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i);
   const evtListener = isMobile ? ['touchstart', 'touchend'] :['mousedown', 'mouseup'];
-
-  var __octave = 3;
-  var __keys = 3;
-  const nKeysChoices = [7,10,14,17,21];
 
   // Note key names
   const keys = {
@@ -346,7 +348,6 @@ function PianoKeyboard() {
     document.getElementById('oct-upper').innerHTML = __octave + nOctaves;
     document.getElementById('key-upper').innerHTML = (nOctaves === nOctavesFlt) ? 'B' : 'E';
   }
-
   
   // Generate keyboard
   // This is our main keyboard element! It's populated dynamically based on what you've set above.
@@ -354,11 +355,36 @@ function PianoKeyboard() {
     visualKeyboard = document.getElementById('keyboard');
 
     var iWhite = 0;
-    const nWhite = nKeysChoices[__keys];
+    const nWhite = nKeysChoices[__keys] + (__hasPitchBend ? 1 : 0);
+
     // key sizes
     const wkw = 100 / nWhite;
     const bkw = wkw * 0.8;
     const bkoff = wkw / 1.8;
+
+    if (__hasPitchBend) {
+      var wheel = document.createElement('div');
+      //wheel.className = 'key';
+      wheel.style.position = 'absolute';
+      wheel.style.width = wkw + '%';
+      wheel.style.height = '202px';
+      wheel.style.left = wkw * iWhite + '%';
+
+      wheel.innerHTML = '<input id="pitch-bend" type="range" class="vslider" min="-100" max="100" value="0" size="4" orient="vertical" title="Ptch bend value"/>';
+
+      // oninput="showVal(this.value)" onchange="showVal(this.value)"
+      wheel.addEventListener('input', handlePitchbend, {passive: true});
+      wheel.addEventListener('change', function(e) {
+          handlePitchbend(e);
+          document.getElementById('pitch-bend').value=0;
+          handlePitchbend(e);
+        },
+        {passive: true}
+      );
+
+      visualKeyboard.appendChild(wheel);
+      iWhite++;
+    }
 
     while (iWhite < nWhite) {
       for (var n in keys) {
@@ -474,6 +500,12 @@ function PianoKeyboard() {
           sendMidiNoteOff(noteToMidiNum(keyboard[e.keyCode].split(',')), inputVelocity.value)        
       }
     }
+  }
+
+  var handlePitchbend = function(e) {
+    var value = document.getElementById('pitch-bend').value / 100.0;
+    //console.log("pitch-bend: " + value);
+    sendMidiPitchBend(value);
   }
 
   // Set up global event listeners
