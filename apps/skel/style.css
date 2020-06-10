@@ -5,6 +5,8 @@ body {
   margin: 0px;
   background-color: black;
   color: white;
+  /* disable pull-down to refresh guesture */
+  overscroll-behavior: contain;
 }
 
 /* -------------------- */
