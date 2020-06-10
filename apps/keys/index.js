@@ -355,7 +355,8 @@ function PianoKeyboard() {
     visualKeyboard = document.getElementById('keyboard');
 
     var iWhite = 0;
-    const nWhite = nKeysChoices[__keys] + (__hasPitchBend ? 1 : 0);
+    const iExtra = __hasPitchBend ? 1 : 0;
+    const nWhite = nKeysChoices[__keys] + iExtra;
 
     // key sizes
     const wkw = 100 / nWhite;
@@ -392,7 +393,7 @@ function PianoKeyboard() {
           break;
         }
 
-        var oct = Math.trunc(iWhite / 7);
+        var oct = Math.trunc((iWhite - iExtra) / 7);
         var thisKey = document.createElement('div');
         if (n.length > 1) {
           thisKey.className = 'black key';
