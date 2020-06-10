@@ -21,7 +21,7 @@ function initUI() {
     }
   }
 
-  var asv = new AudioSynthView();
+  var asv = new PianoKeyboard();
   connectMidi();
   asv.draw();
 }
@@ -211,21 +211,17 @@ function readCookie(name) {
     return result;
 }
 
-function AudioSynthView() {
+function PianoKeyboard() {
 
-  var isMobile = !!navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i);
-  if (isMobile) {
-    var evtListener = ['touchstart', 'touchend'];
-  } else {
-    var evtListener = ['mousedown', 'mouseup'];
-  }
+  const isMobile = !!navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i);
+  const evtListener = isMobile ? ['touchstart', 'touchend'] :['mousedown', 'mouseup'];
 
   var __octave = 3;
   var __keys = 3;
   const nKeysChoices = [7,10,14,17,21];
 
   // Note key names
-	const keys = {
+  const keys = {
     'C': 0,
     'C#': 1,
     'D': 2,
@@ -317,44 +313,44 @@ function AudioSynthView() {
   var visualKeyboard = null;
 
   // Change octave
-  var fnChangeOctave = function(x) {
+  var changeOctave = function(x) {
     __octave += x | 0;
     // TODO: if we only show one or two octaves, bump upper limmit
     __octave = Math.min(5, Math.max(1, __octave));
 
-    var octaveName = document.getElementsByName('OCTAVE_LABEL');
+    var octaveName = document.getElementsByName('oct-label');
     var i = octaveName.length;
     while (i--) {
       var val = parseInt(octaveName[i].getAttribute('value'));
       octaveName[i].innerHTML = (val + __octave);
     }
-    fnUpdateKeyRange();
+    updateKeyRange();
   };
 
   // Change keys shown
-  var fnChangeKeys = function(x) {
+  var changeNumKeysShown = function(x) {
     __keys += x | 0;
     __keys = Math.min(nKeysChoices.length - 1, Math.max(0, __keys));
     // TODO: if we increase this, check if we need to adjust __octave
 
     document.getElementById('keyboard').innerHTML = '';    
-    fnCreateKeyboard();
-    fnUpdateKeyRange();
+    create();
+    updateKeyRange();
   };
 
-  var fnUpdateKeyRange = function() {
+  var updateKeyRange = function() {
     var nOctavesFlt = (nKeysChoices[__keys] / 7) - 1;
     var nOctaves = Math.trunc(nOctavesFlt);
 
     document.getElementById('oct-lower').innerHTML = __octave;
     document.getElementById('oct-upper').innerHTML = __octave + nOctaves;
-    document.getElementById('key-upper').innerHTML = (nOctaves == nOctavesFlt) ? 'B' : 'E';
+    document.getElementById('key-upper').innerHTML = (nOctaves === nOctavesFlt) ? 'B' : 'E';
   }
 
   
   // Generate keyboard
   // This is our main keyboard element! It's populated dynamically based on what you've set above.
-  var fnCreateKeyboard = function() {
+  var create = function() {
     visualKeyboard = document.getElementById('keyboard');
 
     var iWhite = 0;
@@ -388,15 +384,15 @@ function AudioSynthView() {
         var keyid = n + ',' + oct;
         label.className = 'label';
         var pcKeyLabel = isMobile ? '' : '<b>' + String.fromCharCode(reverseLookupText[keyid]) + '</b>';
-        label.innerHTML = pcKeyLabel + '<br /><br />' + n[0] + '<span name="OCTAVE_LABEL" value="' + oct + '">' + (__octave + oct) + '</span>' + (n.length>1 ? n[1] : '');
+        label.innerHTML = pcKeyLabel + '<br /><br />' + n[0] + '<span name="oct-label" value="' + oct + '">' + (__octave + oct) + '</span>' + (n.length>1 ? n[1] : '');
         thisKey.appendChild(label);
-        thisKey.setAttribute('ID', 'KEY_' + keyid);
+        thisKey.setAttribute('id', 'KEY_' + keyid);
         thisKey.addEventListener(evtListener[0], (function(keycode) {
           return function(e) {
             // console.log("press: " + keycode);
             // e.changedTouches is a TouchList object tl with  tl.length and
             // tl.item(i) is a Touch object t with t.identifier
-            fnPlayKeyboard({
+            playNote({
               keyCode: keycode
             });
           }
@@ -406,7 +402,7 @@ function AudioSynthView() {
             // console.log("release: " + keycode);
             // e.changedTouches is a TouchList object tl with  tl.length and
             // tl.item(i) is a Touch object t with t.identifier
-            fnRemoveKeyBinding({
+            stopNote({
               keyCode: keycode
             });
           }
@@ -418,8 +414,7 @@ function AudioSynthView() {
   };
   
   // Convert keys to midi note numbers
-  
-  var fnNoteToMidiNum = function(arrPlayNote) {
+  var noteToMidiNum = function(arrPlayNote) {
     var note = arrPlayNote[0];
     var octaveModifier = arrPlayNote[1] | 0;
     var octave = __octave + octaveModifier + 1;
@@ -434,8 +429,7 @@ function AudioSynthView() {
   };
 
   // Detect keypresses, play notes.
-
-  var fnPlayKeyboard = function(e) {
+  var playNote = function(e) {
     if (keysPressed.includes(e.keyCode)) {
       return false;
     }
@@ -444,10 +438,10 @@ function AudioSynthView() {
 
     switch (e.keyCode) {
       case 37: // left
-        fnChangeOctave(-1);
+        changeOctave(-1);
         break;
       case 39: // right
-        fnChangeOctave(1);
+        changeOctave(1);
         break;
     }
 
@@ -458,54 +452,49 @@ function AudioSynthView() {
         thisKey.style.marginTop = '5px';
         thisKey.style.boxShadow = 'none';
       }
-      sendMidiNoteOn(fnNoteToMidiNum(keyboard[e.keyCode].split(',')), inputVelocity.value)
+      sendMidiNoteOn(noteToMidiNum(keyboard[e.keyCode].split(',')), inputVelocity.value)
     } else {
       return false;
     }
-
   }
 
   // Remove key bindings once note is done.
+  var stopNote = function(e) {
+    var ix = keysPressed.indexOf(e.keyCode);
 
-  var fnRemoveKeyBinding = function(e) {
-    var i = keysPressed.length;
-    while (i--) {
-      if (keysPressed[i] == e.keyCode) {
-        if (visualKeyboard[keyboard[e.keyCode]]) {
-          var thisKey = visualKeyboard[keyboard[e.keyCode]];
-          thisKey.style.backgroundColor = '';
-          thisKey.style.marginTop = '';
-          thisKey.style.boxShadow = '';
-        }
-        keysPressed.splice(i, 1);
-        if (keyboard[e.keyCode]) {
-        	sendMidiNoteOff(fnNoteToMidiNum(keyboard[e.keyCode].split(',')), inputVelocity.value)        
-        }
+    if (ix !== -1 ) {
+      if (visualKeyboard[keyboard[e.keyCode]]) {
+        var thisKey = visualKeyboard[keyboard[e.keyCode]];
+        thisKey.style.backgroundColor = '';
+        thisKey.style.marginTop = '';
+        thisKey.style.boxShadow = '';
+      }
+      keysPressed.splice(i, 1);
+      if (keyboard[e.keyCode]) {
+          sendMidiNoteOff(noteToMidiNum(keyboard[e.keyCode].split(',')), inputVelocity.value)        
       }
     }
-
   }
 
   // Set up global event listeners
-
-  window.addEventListener('keydown', fnPlayKeyboard, {passive: true});
-  window.addEventListener('keyup', fnRemoveKeyBinding, {passive: true});
+  window.addEventListener('keydown', playNote, {passive: true});
+  window.addEventListener('keyup', stopNote, {passive: true});
   document.getElementById('oct-down').addEventListener('click', function() {
-    fnChangeOctave(-1);
+    changeOctave(-1);
   }, {passive: true});
   document.getElementById('oct-up').addEventListener('click', function() {
-    fnChangeOctave(1);
+    changeOctave(1);
   }, {passive: true});
 
   document.getElementById('num-down').addEventListener('click', function() {
-    fnChangeKeys(-1);
+    changeNumKeysShown(-1);
   }, {passive: true});
   document.getElementById('num-up').addEventListener('click', function() {
-    fnChangeKeys(1);
+    changeNumKeysShown(1);
   }, {passive: true});
 
   Object.defineProperty(this, 'draw', {
-    value: fnCreateKeyboard
+    value: create
   });
 
 }
