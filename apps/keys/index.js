@@ -161,16 +161,32 @@ function sendMidiNoteOn(pitch, velocity) {
   const NOTE_ON = 0x90;  // last four bits is channel
   const msg = [NOTE_ON, pitch, velocity];
 
-  const device = midiOut[selectOut.selectedIndex];
-	device.send(msg); // this can take a Date.now() + duration in ms as a 2nd param
+  midiOut[selectOut.selectedIndex].send(msg);
 }
 
 function sendMidiNoteOff(pitch, velocity) {
   const NOTE_OFF = 0x80;  // last four bits is channel
   const msg = [NOTE_OFF, pitch, velocity];
 
-  const device = midiOut[selectOut.selectedIndex];
-	device.send(msg); // this can take a Date.now() + duration in ms as a 2nd param
+  midiOut[selectOut.selectedIndex].send(msg);
+}
+
+function sendMidiPitchBend(value) {
+  var pitchbend = Math.trunc(4096 + (value * 4096));
+  var msb = pitchbend >> 7;
+  var lsb = pitchbend & 0x7F;
+
+  const PITCH_BEND = 0xE0;  // last four bits is channel
+  const msg = [PITCH_BEND, lsb, msb];
+
+  midiOut[selectOut.selectedIndex].send(msg);
+}
+
+function sendMidiControlChange(controller, value) {
+  const CONTROL_CHANGE = 0xB0;  // last four bits is channel
+  const msg = [CONTROL_CHANGE, controller, value];
+
+  midiOut[selectOut.selectedIndex].send(msg);
 }
 
 // settiings
@@ -407,7 +423,7 @@ function AudioSynthView() {
     var octave = __octave + octaveModifier + 1;
     var key = keys[note];
 
-    console.log("note: " + note + ", oct: " + __octave + " + " + octaveModifier + ", key: " + key)
+    //console.log("note: " + note + ", oct: " + __octave + " + " + octaveModifier + ", key: " + key)
     /*
      * 36 - C2 - 65.41 Hz - https://www.inspiredacoustics.com/en/MIDI_note_numbers_and_center_frequencies
      *                    - https://newt.phys.unsw.edu.au/jw/notes.html
