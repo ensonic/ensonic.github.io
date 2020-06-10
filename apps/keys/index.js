@@ -496,7 +496,7 @@ function PianoKeyboard() {
         thisKey.style.marginTop = '';
         thisKey.style.boxShadow = '';
       }
-      keysPressed.splice(i, 1);
+      keysPressed.splice(ix, 1);
       if (keyboard[e.keyCode]) {
           sendMidiNoteOff(noteToMidiNum(keyboard[e.keyCode].split(',')), inputVelocity.value)        
       }
