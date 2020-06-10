@@ -192,6 +192,8 @@ function sendMidiControlChange(controller, value) {
 // settiings
 
 function saveDefaults() {
+  // one cookie can take up to 4096 bytes
+
   const input = selectIn.options[selectIn.selectedIndex].text;
   saveCookie('defaultInput', input)
   const output = selectOut.options[selectOut.selectedIndex].text;
