@@ -364,21 +364,29 @@ function PianoKeyboard() {
     const bkoff = wkw / 1.8;
 
     if (__hasPitchBend) {
-      var wheel = document.createElement('div');
-      //wheel.className = 'key';
+      var wheel = document.createElement('input');
+      wheel.className = 'vslider';
+      wheel.id = 'pitch-bend';
+      wheel.max = 100;
+      wheel.min = -100;
       wheel.style.position = 'absolute';
-      wheel.style.width = wkw + '%';
-      wheel.style.height = '202px';
-      wheel.style.left = wkw * iWhite + '%';
+      // swap width/height since we'll rotate it
+      wheel.style.height = wkw + '%';
+      wheel.style.width = '202px';
+      // 'left' and 'margin-top' determined by experiments :/
+      wheel.style.left = 'calc(' + (wkw * iWhite) + '% - 70px)';
+      wheel.style.margin = '94px 0px 0px 0px';
+      wheel.title = 'Pitch bend value';
+      wheel.type = 'range'
+      wheel.value = 0;
+      // for debugging
+      // wheel.style.zIndex = 100;
 
-      wheel.innerHTML = '<input id="pitch-bend" type="range" class="vslider" min="-100" max="100" value="0" size="4" orient="vertical" title="Ptch bend value"/>';
-
-      // oninput="showVal(this.value)" onchange="showVal(this.value)"
       wheel.addEventListener('input', handlePitchbend, {passive: true});
       wheel.addEventListener('change', function(e) {
-          handlePitchbend(e);
-          document.getElementById('pitch-bend').value=0;
-          handlePitchbend(e);
+          handlePitchbend.apply(wheel,e);
+          wheel.value=0;
+          handlePitchbend.apply(wheel,e);
         },
         {passive: true}
       );
@@ -504,8 +512,9 @@ function PianoKeyboard() {
   }
 
   var handlePitchbend = function(e) {
-    var value = document.getElementById('pitch-bend').value / 100.0;
-    //console.log("pitch-bend: " + value);
+    var value = this.value / 100.0;
+    console.log("pitch-bend: " + this.value + " / 100 = " + value);
+    //console.log(this + ', ' + document.getElementById('pitch-bend'));
     sendMidiPitchBend(value);
   }
 
