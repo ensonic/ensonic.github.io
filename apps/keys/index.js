@@ -215,7 +215,9 @@ function PianoKeyboard() {
   // Settings
   var __octave = 3;
   var __keys = 3;
-  var __hasPitchBend = true;  // TODO: add UI to enable/disable
+  // TODO: add UI to enable/disable
+  var __hasPitchBend = true;
+  var __hasModWheel = true;
 
   const nKeysChoices = [7,10,14,17,21];
 
@@ -355,7 +357,7 @@ function PianoKeyboard() {
     visualKeyboard = document.getElementById('keyboard');
 
     var iWhite = 0;
-    const iExtra = __hasPitchBend ? 1 : 0;
+    const iExtra = (__hasPitchBend ? 1 : 0) + (__hasModWheel ? 1 : 0);
     const nWhite = nKeysChoices[__keys] + iExtra;
 
     // key sizes
@@ -376,7 +378,7 @@ function PianoKeyboard() {
       // 'left' and 'margin-top' determined by experiments :/
       wheel.style.left = 'calc(' + (wkw * iWhite) + '% - 70px)';
       wheel.style.margin = '94px 0px 0px 0px';
-      wheel.title = 'Pitch bend value';
+      wheel.title = 'Pitchbend value';
       wheel.type = 'range'
       wheel.value = 0;
       // for debugging
@@ -390,6 +392,31 @@ function PianoKeyboard() {
         },
         {passive: true}
       );
+
+      visualKeyboard.appendChild(wheel);
+      iWhite++;
+    }
+    if (__hasModWheel) {
+      var wheel = document.createElement('input');
+      wheel.className = 'vslider';
+      wheel.id = 'mod-wheel';
+      wheel.max = 200;
+      wheel.min = 0;
+      wheel.style.position = 'absolute';
+      // swap width/height since we'll rotate it
+      wheel.style.height = wkw + '%';
+      wheel.style.width = '202px';
+      // 'left' and 'margin-top' determined by experiments :/
+      wheel.style.left = 'calc(' + (wkw * iWhite) + '% - 70px)';
+      wheel.style.margin = '94px 0px 0px 0px';
+      wheel.title = 'Modwheel value';
+      wheel.type = 'range'
+      wheel.value = 0;
+      // for debugging
+      // wheel.style.zIndex = 100;
+
+      wheel.addEventListener('input', handleModwheel, {passive: true});
+      wheel.addEventListener('change', handleModwheel, {passive: true});
 
       visualKeyboard.appendChild(wheel);
       iWhite++;
@@ -513,9 +540,14 @@ function PianoKeyboard() {
 
   var handlePitchbend = function(e) {
     var value = this.value / 100.0;
-    console.log("pitch-bend: " + this.value + " / 100 = " + value);
-    //console.log(this + ', ' + document.getElementById('pitch-bend'));
+    //console.log("pitch-bend: " + this.value + " / 100 = " + value);
     sendMidiPitchBend(value);
+  }
+
+  var handleModwheel = function(e) {
+    var value = Math.trunc(this.value * 127.0 / 200.0);
+    //console.log("mod-wheel: " + this.value + " * 127 / 200 = " + value);
+    sendMidiControlChange(1, value);
   }
 
   // Set up global event listeners

@@ -13,13 +13,10 @@
     * highlight: shade keys in scale
     * filter: highlight + only send notes for keys in scale
   * scale selection is key + {major, minor, ... }
-* add pitch-bend and mod wheel
-  * should we show both all the time?
-    * maybe add check-boxes to show/hide them (store via settings)
-    * or add a button above to cycle though the configured controllers {pb,mod,...}, when cycling we should store/restore the previous value
-  * for mod-wheel(s) we could also offer to add 0,1,2, ... sliders with any controller number (mod-wheel is 1)
-  * https://www.midi.org/specifications-old/item/table-1-summary-of-midi-message
-  * https://www.midi.org/specifications-old/item/table-3-control-change-messages-data-bytes-2
+* pitch-bend and mod wheel visibility, should we show both all the time?
+  * maybe add check-boxes to show/hide them (store via settings)
+  * or add a button above to cycle though the configured controllers {pb,mod,...}, when cycling we should store/restore the previous value
+  * for mod-wheel(s) we could also offer to add 0,1,2, ... sliders with any controller number (mod-wheel is 1) and cycle them trough
 * add "Polyphonic Key Pressure" support by sliding up/down on the key?
 * add "MIDI Polyphonic Expression" support
   * need to deactivate the channel selector
@@ -27,6 +24,10 @@
   * this will cause the keys to stick also when releasing
   * turning 'hold' off will release the keys
 * turn the keyboard into a webcomponent for better code style (and learning how to do it)
+
+Links:
+  * https://www.midi.org/specifications-old/item/table-1-summary-of-midi-message
+  * https://www.midi.org/specifications-old/item/table-3-control-change-messages-data-bytes-2
 
 
 ## apps/pads
