@@ -386,9 +386,9 @@ function PianoKeyboard() {
 
       wheel.addEventListener('input', handlePitchbend, {passive: true});
       wheel.addEventListener('change', function(e) {
-          handlePitchbend.apply(wheel,e);
-          wheel.value=0;
-          handlePitchbend.apply(wheel,e);
+          handlePitchbend.apply(this,e);
+          this.value=0;
+          handlePitchbend.apply(this,e);
         },
         {passive: true}
       );
