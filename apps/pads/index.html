@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="theme-color" content="#222"/>
+        <meta name="description" content="Midi pads that can be used to control clips in a DAW).">
+    <title>midi pads</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="images/icon256.png" sizes="256x256">
+    <link rel="apple-touch-icon" href="images/icon256.png">
+    <script src="index.js"></script>
+  </head>
+  <body onload="initUI();">
+    <div class="icon baseline">
+      <a onclick="showMenu()" class="pagemenu">
+        <!-- hamburger menu icon -->
+        <svg height="32px" id="Layer_1" style="enable-background:new 0 0 32 32;" version="1.1" viewBox="0 0 32 32" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/>
+        </svg>
+      </a>
+    </div>
+    <div id="pages" class="dropdown-content">
+      <a class="pagelink" onclick="openPage(event, 'tab-pads')" id="defaultPage">Pads</a>
+      <a class="pagelink" onclick="openPage(event, 'tab-monitor')">Monitor</a>
+      <a class="pagelink" onclick="openPage(event, 'tab-settings')">Settings</a>
+      <a class="pagelink" onclick="openPage(event, 'tab-help')">Help</a>
+    </div>
+
+    <div id="tab-pads" class="pagecontent">
+    </div>
+
+    <div id="tab-monitor" class="pagecontent">
+      <p class="output" id="outputIn"></p>
+    </div>
+
+    <div id="tab-settings" class="pagecontent">
+      <p>
+        <label class="hlabel">Input</label><select id="selectIn"></select>
+      </p/>
+      <p>
+        <label class="hlabel">Output</label><select id="selectOut"></select>
+      <p/>
+      <p>
+        <label class="hlabel">&nbsp;</label><button onclick="saveDefaults()" class="btn">Save as default</button>
+      </p>
+    </div>
+
+    <div id="tab-help" class="pagecontent">
+      <p>
+        This app can be used as a midi controller, it does not play sound itself. When using the app
+        on an Android device connect it via usb to your computer, swipe down the top menu and select
+        the usb options. There select <b>'MIDI'</b>.
+      </p>
+      <p>
+        When using the app for the first time, choose the midi in/out devices in the
+        'Settings' tab.
+      </p>
+      <p> 
+        Once configured select the 'Pads' tab to trigger clips.
+      </p>
+    </div>
+  </body>
+</html>

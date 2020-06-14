@@ -1,0 +1,21 @@
+{
+  "name": "Midi Pad Matrix",
+  "short_name": "MidiPads",
+  "start_url": ".",
+  "display": "fullscreen",
+  "background_color": "#fff",
+  "theme_color": "#222",
+  "orientation": "landscape",
+  "description": "Midi pads that can be used to control clips in a DAW.",
+  "icons": [{
+    "src": "images/icon512.png",
+    "sizes": "512x512",
+    "type": "image/png",
+    "purpose": "any maskable" 
+  },{
+    "src": "images/icon256.png",
+    "sizes": "256x256",
+    "type": "image/png",
+    "purpose": "any maskable" 
+  }]
+}
