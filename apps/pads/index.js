@@ -241,7 +241,7 @@ function createMatirx() {
   container.innerHTML = '';
 
   /* 8 times pad marging + 2 time pagecontent margin + 1 unknown top marging */
-  const margin = 8 * (2+2) + 2 * 12 + 30;
+  const margin = 8 * (2+2) + 2 * 12 + 20;
 
   console.log("window.w/h: " + window.innerWidth + ", " + window.innerHeight);
 

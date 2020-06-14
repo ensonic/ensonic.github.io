@@ -1,8 +1,10 @@
-body {
+html, body {
   font-family: 'RobotoRegular', 'Droid Sans', sans-serif;
   font-size: 14px;
   padding: 0px;
   margin: 0px;
+  width: 100%;
+  height: 100%;
   background-color: black;
   color: white;
   /* disable pull-down to refresh guesture */
@@ -91,9 +93,13 @@ a.pagemenu:after {
 .pagecontent {
   overflow: hidden;
   display: none;
-  padding: 12px;
+  padding: 12px 12px 12px 12px;
   border: 0px;
-  /* top: 0; */
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
 }
 
 /* -------------------- */
@@ -158,7 +164,7 @@ select option:before {
 .pad {
   margin: 2px;
   padding: 0px;
-  display:inline-block;
+  display: inline-block;
 }
 
 /* -------------------- */
