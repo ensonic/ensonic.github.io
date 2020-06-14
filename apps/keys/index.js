@@ -21,9 +21,9 @@ function initUI() {
     }
   }
 
-  var asv = new PianoKeyboard();
+  var piano = new PianoKeyboard();
   connectMidi();
-  asv.draw();
+  piano.draw();
 }
 
 function showMenu() {
