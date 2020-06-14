@@ -127,40 +127,50 @@ function startListening() {
 function midiMessageReceived(event) {
   // MIDI commands we care about. See
   // http://webaudio.github.io/web-midi-api/#a-simple-monophonic-sine-wave-midi-synthesizer.
-  const NOTE_ON = 9;
-  const NOTE_OFF = 8;
+  const NOTE_ON = 0x9;
+  const NOTE_OFF = 0x8;
+  const SYSEX = 0xF;
 
-  const cmd = event.data[0] >> 4;
-  const channel = event.data[0] & 0x0f;
-  const pitch = event.data[1];
-  const velocity = (event.data.length > 2) ? event.data[2] : 0;
+  const data = event.data;
+
+  const cmd = data[0] >> 4;
+  const channel = data[0] & 0x0f;
+  const pitch = data[1];
+  const velocity = (data.length > 2) ? data[2] : 0;
 
   // You can use the timestamp to figure out the duration of each note.
   const timestamp = Date.now();
 
   // Note that not all MIDI controllers send a separate NOTE_OFF command for every NOTE_ON.
   if (cmd === NOTE_OFF || (cmd === NOTE_ON && velocity === 0)) {
-    outputIn.innerHTML += `🎧 from ${event.srcElement.name} @channel ${channel}: note off: pitch:<b>${pitch}</b>, velocity: <b>${velocity}</b> <br/>`;
+    outputIn.innerHTML += `🎧 from ${event.srcElement.name} @ch ${channel}: note off: pitch:<b>${pitch}</b>, velocity: <b>${velocity}</b> <br/>`;
 
     // Complete the note!
     const note = notesOn.get(pitch);
     if (note) {
-      outputIn.innerHTML += `🎵 pitch:<b>${pitch}</b>, duration:<b>${timestamp - note}</b> ms. <br>`;
+      // outputIn.innerHTML += `🎵 pitch:<b>${pitch}</b>, duration:<b>${timestamp - note}</b> ms. <br>`;
       notesOn.delete(pitch);
     }
     setPadColor(channel, pitch, velocity);
 
   } else if (cmd === NOTE_ON) {
-    outputIn.innerHTML += `🎧 from ${event.srcElement.name} @channel ${channel}: note on: pitch:<b>${pitch}</b>, velocity: <b>${velocity}</b> <br/>`;
+    outputIn.innerHTML += `🎧 from ${event.srcElement.name} @ch ${channel}: note on: pitch:<b>${pitch}</b>, velocity: <b>${velocity}</b> <br/>`;
 
     // One note can only be on at once.
     notesOn.set(pitch, timestamp);
 
     setPadColor(channel, pitch, velocity);
-    
+  } else if (cmd === SYSEX) {
+    if ((data.length === 6) && (data === [0xf0, 0x7e, 0x7f, 0x06, 0x01, 0xf7])) {
+      const appversion = 0x01; // no idea :/
+      midiOut[selectOut.selectedIndex].send([0xf0, 0x7e, 0x00, 0x06, 0x02, 0x00, 0x20, 0x29, 0x13, 0x01, 0x00, 0x00, appversion, 0xf7]);
+    } else {
+      var hexstr = Array.prototype.map.call(new Uint8Array(data), x => ('x00' + x.toString(16)).slice(-2)).join(' ');
+      outputIn.innerHTML += "⚙ unhandled sysex midi message: len: " + data.length + ", data: " + hexstr + " <br/>";
+    }
   } else {
-    var hexstr = Array.prototype.map.call(new Uint8Array(event.data), x => ('x00' + x.toString(16)).slice(-2)).join(' ');
-    outputIn.innerHTML += "⚙ unhandled midi message: len: " + event.data.length + ", data: " + hexstr;
+    var hexstr = Array.prototype.map.call(new Uint8Array(data), x => ('x00' + x.toString(16)).slice(-2)).join(' ');
+    outputIn.innerHTML += "? unhandled midi message: len: " + data.length + ", data: " + hexstr + " <br/>";
   }
 
   // Scroll to the bottom of this div.
