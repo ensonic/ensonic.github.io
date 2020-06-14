@@ -124,6 +124,10 @@ function startListening() {
   }
 }
 
+function arrayToHexStr(data) {
+  return Array.prototype.map.call(new Uint8Array(data), x => ('x00' + x.toString(16)).slice(-2)).join(' ');
+}
+
 function midiMessageReceived(event) {
   // MIDI commands we care about. See
   // http://webaudio.github.io/web-midi-api/#a-simple-monophonic-sine-wave-midi-synthesizer.
@@ -162,16 +166,14 @@ function midiMessageReceived(event) {
     setPadColor(channel, pitch, velocity);
   } else if (cmd === SYSEX) {
     // HACK to compare arrays :/
-    if ((data.length === 6) && (JSON.stringify(data) === JSON.stringify([0xf0, 0x7e, 0x7f, 0x06, 0x01, 0xf7]))) {
+    if ((data.length === 6) && (arrayToHexStr(data) === arrayToHexStr([0xf0, 0x7e, 0x7f, 0x06, 0x01, 0xf7]))) {
       const appversion = 0x01; // no idea :/
       midiOut[selectOut.selectedIndex].send([0xf0, 0x7e, 0x00, 0x06, 0x02, 0x00, 0x20, 0x29, 0x13, 0x01, 0x00, 0x00, appversion, 0xf7]);
     } else {
-      var hexstr = Array.prototype.map.call(new Uint8Array(data), x => ('x00' + x.toString(16)).slice(-2)).join(' ');
-      outputIn.innerHTML += "⚙ unhandled sysex midi message: len: " + data.length + ", data: " + hexstr + " <br/>";
+      outputIn.innerHTML += "⚙ unhandled sysex midi message: len: " + data.length + ", data: " + arrayToHexStr(data) + " <br/>";
     }
   } else {
-    var hexstr = Array.prototype.map.call(new Uint8Array(data), x => ('x00' + x.toString(16)).slice(-2)).join(' ');
-    outputIn.innerHTML += "? unhandled midi message: len: " + data.length + ", data: " + hexstr + " <br/>";
+    outputIn.innerHTML += "? unhandled midi message: len: " + data.length + ", data: " + arrayToHexStr(data) + " <br/>";
   }
 
   // Scroll to the bottom of this div.
