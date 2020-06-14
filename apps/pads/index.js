@@ -161,7 +161,8 @@ function midiMessageReceived(event) {
 
     setPadColor(channel, pitch, velocity);
   } else if (cmd === SYSEX) {
-    if ((data.length === 6) && (data === [0xf0, 0x7e, 0x7f, 0x06, 0x01, 0xf7])) {
+    // HACK to compare arrays :/
+    if ((data.length === 6) && (JSON.stringify(data) === JSON.stringify([0xf0, 0x7e, 0x7f, 0x06, 0x01, 0xf7]))) {
       const appversion = 0x01; // no idea :/
       midiOut[selectOut.selectedIndex].send([0xf0, 0x7e, 0x00, 0x06, 0x02, 0x00, 0x20, 0x29, 0x13, 0x01, 0x00, 0x00, appversion, 0xf7]);
     } else {
