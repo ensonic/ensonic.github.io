@@ -22,6 +22,7 @@ function initUI() {
   }
 
   createMatirx();
+  window.addEventListener('resize', createMatirx, {passive: true});
 
   connectMidi();
 }
@@ -130,6 +131,7 @@ function midiMessageReceived(event) {
   const NOTE_OFF = 8;
 
   const cmd = event.data[0] >> 4;
+  const channel = event.data[0] & 0x0f;
   const pitch = event.data[1];
   const velocity = (event.data.length > 2) ? event.data[2] : 1;
 
@@ -138,7 +140,7 @@ function midiMessageReceived(event) {
 
   // Note that not all MIDI controllers send a separate NOTE_OFF command for every NOTE_ON.
   if (cmd === NOTE_OFF || (cmd === NOTE_ON && velocity === 0)) {
-    outputIn.innerHTML += `🎧 from ${event.srcElement.name} note off: pitch:<b>${pitch}</b>, velocity: <b>${velocity}</b> <br/>`;
+    outputIn.innerHTML += `🎧 from ${event.srcElement.name} @channel ${channel}: note off: pitch:<b>${pitch}</b>, velocity: <b>${velocity}</b> <br/>`;
 
     // Complete the note!
     const note = notesOn.get(pitch);
@@ -149,20 +151,92 @@ function midiMessageReceived(event) {
 
 
   } else if (cmd === NOTE_ON) {
-    outputIn.innerHTML += `🎧 from ${event.srcElement.name} note off: pitch:<b>${pitch}</b>, velocity: <b>${velocity}</b> <br/>`;
+    outputIn.innerHTML += `🎧 from ${event.srcElement.name} @channel ${channel}: note on: pitch:<b>${pitch}</b>, velocity: <b>${velocity}</b> <br/>`;
 
     // One note can only be on at once.
     notesOn.set(pitch, timestamp);
 
+    // TODO: move to function
     // Channel 0: static color
     // Channel 1: flashing color
     // Channel 2: pulsing color
     // pitch -> pad
     // velocity -> color
+   const padColors = [
+      /* 000 */ 'black',
+      /* 001 */ 'darkgray',
+      /* 002 */ 'lightgray',
+      /* 003 */ 'white',
+      /* 004 */ 'black', //
+      /* 005 */ 'black', //
+      /* 006 */ 'black', //
+      /* 007 */ 'rgb(39, 4, 1)',
+      /* 008 */ 'rgb(45, 34, 21)',
+      /* 009 */ 'black', //
+      /* 010 */ 'black', //
+      /* 011 */ 'black', //
+      /* 012 */ 'black', //
+      /* 013 */ 'rgb(253, 250, 1)',
+      /* 014 */ 'rgb(107, 105, 1)',
+      /* 015 */ 'rgb(37, 36, 1)',
+      /* 016 */ 'rgb(141, 248, 57)',
+      /* 017 */ 'rgb(70, 247, 1)',
+      /* 018 */ 'rgb(29, 104, 1)',
+      /* 019 */ 'black', //
+      /* 020 */ 'rgb(53, 248, 58)',
+      /* 021 */ 'rgb(1, 247, 1)',
+      /* 022 */ 'rgb(1, 104, 1)',
+      /* 023 */ 'rgb(1, 36, 1)',
+      /* 024 */ 'rgb(52, 248, 88)',
+      /* 025 */ 'black', //
+      /* 026 */ 'black', //
+      /* 027 */ 'black', //
+      /* 028 */ 'black', //
+      /* 029 */ 'black', //
+      /* 030 */ 'black', //
+      /* 031 */ 'black', //
+      /* 032 */ 'black', //
+      /* 033 */ 'black', //
+      /* 034 */ 'black', //
+      /* 035 */ 'black', //
+      /* 036 */ 'black', //
+      /* 037 */ 'black', //
+      /* 038 */ 'black', //
+      /* 039 */ 'black', //
+      /* 040 */ 'black', //
+      /* 041 */ 'black', //
+      /* 042 */ 'black', //
+      /* 043 */ 'black', //
+      /* 044 */ 'black', //
+      /* 045 */ 'black', //
+      /* 046 */ 'black', //
+      /* 047 */ 'black', //
+      /* 048 */ 'black', //
+      /* 049 */ 'black', //
+      /* 050 */ 'black', //
+      /* 051 */ 'black', //
+      /* 052 */ 'black', //
+      /* 053 */ 'black', //
+      /* 054 */ 'black', //
+      /* 055 */ 'black', //
+      /* 056 */ 'black', //
+      /* 057 */ 'black', //
+      /* 058 */ 'black', //
+      /* 059 */ 'black', //
+      /* 060 */ 'rgb(255, 87, 6)',
+      /* 061 */ 'black', //
+      /* 062 */ 'black', //
+      /* 063 */ 'black', //
+      /* 064 */ 'black', //
+      /* 065 */ 'black', //
+      /* 066 */ 'black', //
+      /* 067 */ 'black', //
+      /* 068 */ 'black', //
+      /* 069 */ 'black', //
+    ];
     var pad = document.getElementById('pad-' + pitch);
     if (pad !== undefined) {
-      // TODO: map velocity to color
-      pad.style.backgroundColor = '#fff';
+      pad.style.backgroundColor = (velocity < padColors.length) ? padColors[velocity]: '#fff';
     }
 
     
