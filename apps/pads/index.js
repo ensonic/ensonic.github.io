@@ -58,7 +58,7 @@ function openPage(evt, pageName) {
 
 // Start up WebMidi.
 function connectMidi() {
-  navigator.requestMIDIAccess()
+  navigator.requestMIDIAccess({ sysex: true })
     .then(
       (midi) => midiReady(midi),
       (err) => console.log('Something went wrong', err));
@@ -160,9 +160,7 @@ function midiMessageReceived(event) {
     
   } else {
     var hexstr = Array.prototype.map.call(new Uint8Array(event.data), x => ('x00' + x.toString(16)).slice(-2)).join(' ');
-  
-    console.log("Unhandled midi message: len: " + event.data.length + ", data: " + hexstr);
-    outputIn.innerHTML += "Unhandled midi message: len: " + event.data.length + ", data: " + hexstr;
+    outputIn.innerHTML += "⚙ unhandled midi message: len: " + event.data.length + ", data: " + hexstr;
   }
 
   // Scroll to the bottom of this div.
@@ -248,8 +246,10 @@ function createMatirx() {
       pad.style.backgroundColor = '#000';
       pad.style.border = '3px outset #333';
       pad.style.boxSizing = 'border-box';
+      // ids as used in 'Programmer mode layout', there are also other layouts
       pad.setAttribute('id', 'pad-' + ((8-y) * 10 + (x+1)));
       container.appendChild(pad);
+      // TODO: add touch handlers to send midi
     }
     container.appendChild(document.createElement('br'));
   }
