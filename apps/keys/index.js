@@ -314,7 +314,7 @@ function PianoKeyboard() {
 
   // Keys you have pressed down.
   var keysPressed = [];
-  var visualKeyboard = null;
+  var keyboardDiv = null;
 
   // Change octave
   var changeOctave = function(x) {
@@ -354,16 +354,8 @@ function PianoKeyboard() {
   // Generate keyboard
   // This is our main keyboard element! It's populated dynamically based on what you've set above.
   var create = function() {
-    visualKeyboard = document.getElementById('keyboard');
-
-    var iWhite = 0;
-    const iExtra = (__hasPitchBend ? 1 : 0) + (__hasModWheel ? 1 : 0);
-    const nWhite = nKeysChoices[__keys] + iExtra;
-
-    // key sizes
-    const wkw = 100 / nWhite;
-    const bkw = wkw * 0.8;
-    const bkoff = wkw / 1.8;
+    var wheelsDiv = document.getElementById('wheels');
+    var iWheel = 0;
 
     if (__hasPitchBend) {
       var wheel = document.createElement('input');
@@ -373,11 +365,11 @@ function PianoKeyboard() {
       wheel.min = -100;
       wheel.style.position = 'absolute';
       // swap width/height since we'll rotate it
-      wheel.style.height = wkw + '%';
+      //wheel.style.height = wkw + '%';
       wheel.style.width = '202px';
       // 'left' and 'margin-top' determined by experiments :/
-      wheel.style.left = 'calc(' + (wkw * iWhite) + '% - 70px)';
-      wheel.style.margin = '94px 0px 0px 0px';
+      wheel.style.left = 'calc(' + ((40 + 6) * iWheel) + 'px - 49px)';
+      wheel.style.margin = '82px 0px 0px 0px';
       wheel.title = 'Pitchbend value';
       wheel.type = 'range'
       wheel.value = 0;
@@ -393,8 +385,8 @@ function PianoKeyboard() {
         {passive: true}
       );
 
-      visualKeyboard.appendChild(wheel);
-      iWhite++;
+      wheelsDiv.appendChild(wheel);
+      iWheel++;
     }
     if (__hasModWheel) {
       var wheel = document.createElement('input');
@@ -404,11 +396,11 @@ function PianoKeyboard() {
       wheel.min = 0;
       wheel.style.position = 'absolute';
       // swap width/height since we'll rotate it
-      wheel.style.height = wkw + '%';
+      //wheel.style.height = wkw + '%';
       wheel.style.width = '202px';
       // 'left' and 'margin-top' determined by experiments :/
-      wheel.style.left = 'calc(' + (wkw * iWhite) + '% - 70px)';
-      wheel.style.margin = '94px 0px 0px 0px';
+      wheel.style.left = 'calc(' + ((40 + 6) * iWheel) + 'px - 49px)';
+      wheel.style.margin = '82px 0px 0px 0px';
       wheel.title = 'Modwheel value';
       wheel.type = 'range'
       wheel.value = 0;
@@ -418,9 +410,23 @@ function PianoKeyboard() {
       wheel.addEventListener('input', handleModwheel, {passive: true});
       wheel.addEventListener('change', handleModwheel, {passive: true});
 
-      visualKeyboard.appendChild(wheel);
-      iWhite++;
+      wheelsDiv.appendChild(wheel);
+      iWheel++;
     }
+
+    keyboardDiv = document.getElementById('keyboard');
+    var wheelWidth = (40 + 6) * iWheel;
+    keyboardDiv.style.marginLeft = wheelWidth + 'px';
+    keyboardDiv.style.width = 'calc(100% - ' + wheelWidth + 'px)';
+
+
+    var iWhite = 0;
+    const nWhite = nKeysChoices[__keys];
+
+    // key sizes
+    const wkw = 100 / nWhite;
+    const bkw = wkw * 0.8;
+    const bkoff = wkw / 1.8;
 
     while (iWhite < nWhite) {
       for (var n in keys) {
@@ -428,7 +434,7 @@ function PianoKeyboard() {
           break;
         }
 
-        var oct = Math.trunc((iWhite - iExtra) / 7);
+        var oct = Math.trunc(iWhite / 7);
         var thisKey = document.createElement('div');
         if (n.length > 1) {
           thisKey.className = 'black key';
@@ -469,8 +475,8 @@ function PianoKeyboard() {
             });
           }
         })(reverseLookup[keyid]), {passive: true});
-        visualKeyboard[keyid] = thisKey;
-        visualKeyboard.appendChild(thisKey);
+        keyboardDiv[keyid] = thisKey;
+        keyboardDiv.appendChild(thisKey);
       }
     }
   };
@@ -508,8 +514,8 @@ function PianoKeyboard() {
     }
 
     if (keyboard[e.keyCode]) {
-      if (visualKeyboard[keyboard[e.keyCode]]) {
-        var thisKey = visualKeyboard[keyboard[e.keyCode]];
+      if (keyboardDiv[keyboard[e.keyCode]]) {
+        var thisKey = keyboardDiv[keyboard[e.keyCode]];
         thisKey.style.backgroundColor = thisKey.className.includes('black') ? '#333' : '#ddd';
         thisKey.style.marginTop = '5px';
         thisKey.style.boxShadow = 'none';
@@ -527,8 +533,8 @@ function PianoKeyboard() {
     // console.log("stop: " + e.keyCode);
 
     if (keyboard[e.keyCode]) {
-      if (visualKeyboard[keyboard[e.keyCode]]) {
-        var thisKey = visualKeyboard[keyboard[e.keyCode]];
+      if (keyboardDiv[keyboard[e.keyCode]]) {
+        var thisKey = keyboardDiv[keyboard[e.keyCode]];
         thisKey.style.backgroundColor = '';
         thisKey.style.marginTop = '';
         thisKey.style.boxShadow = '';
