@@ -173,10 +173,10 @@ function midiMessageReceived(event) {
         '0', '1', '0', '0', // app-version - no idea if this will be interpretes as eg. '01.00'
         0xf7
       ];
+      // See https://github.com/git-moss/DrivenByMoss/blob/958a9c73472bf146b8dee5857f6da095236a9234/src/main/java/de/mossgrabers/controller/launchkey/controller/LaunchkeyMiniMk3ControlSurface.java#L223
       if (data[0] != 0xF0 || data[1] != 0x7E || data[3] != 0x06 || data[4] != 0x02 || data[data.length - 1] != 0xF7) {
         console.log("Bad reply");  
       }
-      // See https://github.com/git-moss/DrivenByMoss/blob/958a9c73472bf146b8dee5857f6da095236a9234/src/main/java/de/mossgrabers/controller/launchkey/controller/LaunchkeyMiniMk3ControlSurface.java#L223
       midiOut[selectOut.selectedIndex].send(data);
       console.log("Replied to 'device inquiry' on " + midiOut[selectOut.selectedIndex].name);
     } else {
