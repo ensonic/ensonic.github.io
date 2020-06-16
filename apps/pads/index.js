@@ -167,14 +167,18 @@ function midiMessageReceived(event) {
   } else if (cmd === SYSEX) {
     // HACK to compare arrays :/
     if ((data.length === 6) && (arrayToHexStr(data) === arrayToHexStr([0xf0, 0x7e, 0x7f, 0x06, 0x01, 0xf7]))) {
-      midiOut[selectOut.selectedIndex].send(
-        [
-          0xf0, 0x7e, 0x00, 0x06, 0x02, 0x00, 0x20, 0x29, 0x13, 0x01, 0x00, 0x00, 
-          0x00, 0x01, 0x00, 0x00, // app-version - no idea if this will be interpretes as eg. '01.00'  
-          0xf7
-        ]
-      );
-      console.log("Replied to 'Device Inquiry'");
+      console.log("Got 'device inquiry' on ch: " + channel);
+      const data = [
+        0xf0, 0x7e, 0x00, 0x06, 0x02, 0x00, 0x20, 0x29, 0x13, 0x01, 0x00, 0x00, 
+        '0', '1', '0', '0', // app-version - no idea if this will be interpretes as eg. '01.00'
+        0xf7
+      ];
+      if (data[0] != 0xF0 || data[1] != 0x7E || data[3] != 0x06 || data[4] != 0x02 || data[data.length - 1] != 0xF7) {
+        console.log("Bad reply");  
+      }
+      // See https://github.com/git-moss/DrivenByMoss/blob/958a9c73472bf146b8dee5857f6da095236a9234/src/main/java/de/mossgrabers/controller/launchkey/controller/LaunchkeyMiniMk3ControlSurface.java#L223
+      midiOut[selectOut.selectedIndex].send(data);
+      console.log("Replied to 'device inquiry' on " + midiOut[selectOut.selectedIndex].name);
     } else {
       outputIn.innerHTML += "⚙ unhandled sysex midi message: len: " + data.length + ", data: " + arrayToHexStr(data) + " <br/>";
     }
