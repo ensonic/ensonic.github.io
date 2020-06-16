@@ -167,8 +167,13 @@ function midiMessageReceived(event) {
   } else if (cmd === SYSEX) {
     // HACK to compare arrays :/
     if ((data.length === 6) && (arrayToHexStr(data) === arrayToHexStr([0xf0, 0x7e, 0x7f, 0x06, 0x01, 0xf7]))) {
-      const appversion = 0x01; // no idea :/
-      midiOut[selectOut.selectedIndex].send([0xf0, 0x7e, 0x00, 0x06, 0x02, 0x00, 0x20, 0x29, 0x13, 0x01, 0x00, 0x00, appversion, 0xf7]);
+      midiOut[selectOut.selectedIndex].send(
+        [
+          0xf0, 0x7e, 0x00, 0x06, 0x02, 0x00, 0x20, 0x29, 0x13, 0x01, 0x00, 0x00, 
+          0x00, 0x01, 0x00, 0x00, // app-version - no idea if this will be interpretes as eg. '01.00'  
+          0xf7
+        ]
+      );
     } else {
       outputIn.innerHTML += "⚙ unhandled sysex midi message: len: " + data.length + ", data: " + arrayToHexStr(data) + " <br/>";
     }
