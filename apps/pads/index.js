@@ -174,6 +174,7 @@ function midiMessageReceived(event) {
           0xf7
         ]
       );
+      console.log("Replied to 'Device Inquiry'");
     } else {
       outputIn.innerHTML += "⚙ unhandled sysex midi message: len: " + data.length + ", data: " + arrayToHexStr(data) + " <br/>";
     }
@@ -350,7 +351,7 @@ function setPadColor(channel, note, velocity) {
     // Channel 1: flashing color
     // Channel 2: pulsing color
     var pad = document.getElementById('pad-' + note);
-    if (pad !== undefined) {
+    if (pad !== null) {
       pad.style.backgroundColor = (velocity < padColors.length) ? padColors[velocity]: '#fff';
     } 
 }
