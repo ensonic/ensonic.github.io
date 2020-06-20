@@ -133,7 +133,9 @@ function midiMessageReceived(event) {
   // http://webaudio.github.io/web-midi-api/#a-simple-monophonic-sine-wave-midi-synthesizer.
   const NOTE_ON = 0x9;
   const NOTE_OFF = 0x8;
+  const CC = 0xB;
   const SYSEX = 0xF;
+  const LP_MINI_MK3_SYSEX_HDR = 'f0 00 20 29 02 0d';
 
   const data = event.data;
 
@@ -155,7 +157,7 @@ function midiMessageReceived(event) {
       // outputIn.innerHTML += `🎵 pitch:<b>${pitch}</b>, duration:<b>${timestamp - note}</b> ms. <br>`;
       notesOn.delete(pitch);
     }
-    setPadColor(channel, pitch, velocity);
+    setPadColor(channel, pitch, indexColor(velocity));
 
   } else if (cmd === NOTE_ON) {
     outputIn.innerHTML += `🎧 from ${event.srcElement.name} @ch ${channel}: note on: pitch:<b>${pitch}</b>, velocity: <b>${velocity}</b> <br/>`;
@@ -163,22 +165,120 @@ function midiMessageReceived(event) {
     // One note can only be on at once.
     notesOn.set(pitch, timestamp);
 
-    setPadColor(channel, pitch, velocity);
+    setPadColor(channel, pitch, indexColor(velocity));
+  } else if (cmd === CC) {
+    console.log("Got control change: " + data[1]);
+    // ctrl 91 - 98 top row
+    // ctrl 99 top right
+    // ctrl 19/29/39.../89) right side
+
+    // NOTE: also the top/right buttons could send notes, as well as the pads could send cc messages
   } else if (cmd === SYSEX) {
-    // HACK to compare arrays :/
-    if ((data.length === 6) && (arrayToHexStr(data) === arrayToHexStr([0xf0, 0x7e, 0x7f, 0x06, 0x01, 0xf7]))) {
+    // console.log("Got sysex command, len: " + data.length + ' hdr? ' + arrayToHexStr(data.slice(0,6)) + ' end? ' + arrayToHexStr(data.slice(-1)));
+    if ((data.length === 6) && (arrayToHexStr(data) === 'f0 7e 7f 06 01 f7')) {
       console.log("Got 'device inquiry' on ch: " + channel);
-      const data = [
+      const app_data = [
         0xf0, 0x7e, 0x00, 0x06, 0x02, 0x00, 0x20, 0x29, 0x13, 0x01, 0x00, 0x00, 
-        '0', '1', '0', '0', // app-version - no idea if this will be interpretes as eg. '01.00'
+        0x00, 0x01, 0x00, 0x00, // app-version - no idea if this will be interpretes as eg. '01.00'
         0xf7
       ];
-      // See https://github.com/git-moss/DrivenByMoss/blob/958a9c73472bf146b8dee5857f6da095236a9234/src/main/java/de/mossgrabers/controller/launchkey/controller/LaunchkeyMiniMk3ControlSurface.java#L223
-      if (data[0] != 0xF0 || data[1] != 0x7E || data[3] != 0x06 || data[4] != 0x02 || data[data.length - 1] != 0xF7) {
-        console.log("Bad reply");  
-      }
-      midiOut[selectOut.selectedIndex].send(data);
+      midiOut[selectOut.selectedIndex].send(app_data);
+      const boot_data = [
+        0xf0, 0x7e, 0x00, 0x06, 0x02, 0x00, 0x20, 0x29, 0x13, 0x11, 0x00, 0x00, 
+        0x00, 0x01, 0x00, 0x00, // bootloader-version - no idea if this will be interpretes as eg. '01.00'
+        0xf7
+      ];
+      midiOut[selectOut.selectedIndex].send(boot_data);
       console.log("Replied to 'device inquiry' on " + midiOut[selectOut.selectedIndex].name);
+    } else if ((data.length > 6) && (arrayToHexStr(data.slice(0,6)) === LP_MINI_MK3_SYSEX_HDR) && (data.slice(-1)[0] === 0xF7)) {
+      // console.log("Got sysex command for 'launchpad mini mk3' on ch: " + channel);
+      subdata = data.slice(6,-1)
+      switch (subdata.length) {
+        case 1:
+          switch (subdata[0]) {
+            case 0x00:
+              console.log("Got 'read layout'");
+              break;
+            default:
+              console.log("Unhandled sysex command for 'launchpad mini mk3' sublen: 1, data: " + arrayToHexStr(subdata));
+              outputIn.innerHTML += "⚙ unhandled sysex midi message: len: " + data.length + ", data: " + arrayToHexStr(data) + " <br/>";
+              break;
+          }
+          break;
+        case 2:
+          switch (subdata[0]) {
+            case 0x00: // Select Layout
+              console.log("Got 'select layout' " + arrayToHexStr([subdata[1]]));
+              break;
+            case 0x0E: // Live/Programmer mode
+              // 0x00 live mode, *0x01* programmer mode
+              console.log("Got 'select prog/live mode' " + arrayToHexStr([subdata[1]]));
+              break;
+            case 0x10: // Standalone/DAW mode
+              // *0x00* standalone, 0x01 daw mode
+              console.log("Got 'enable/disable daw mode' " + arrayToHexStr([subdata[1]]));
+              break;
+            default:
+              console.log("Unhandled sysex command for 'launchpad mini mk3' sublen: 2, data: " + arrayToHexStr(subdata));
+              outputIn.innerHTML += "⚙ unhandled sysex midi message: len: " + data.length + ", data: " + arrayToHexStr(data) + " <br/>";
+              break;
+          }
+          break;
+        default:
+          if (subdata.length > 1) {
+            switch (subdata[0]) {
+              case 0x03:  // LED lightin
+                // var lts = [0,0,0,0];
+                // up to 81 (9x9) pad colors
+                var ix = 1;
+                while ((ix + 2) <= subdata.length) {
+                  var lt = subdata[ix++];
+                  var led_ix = subdata[ix++];
+                  //
+                  // lts[lt]++;
+                  //
+                  switch (lt) {
+                    case 0: // static
+                      if ((ix + 1) <= subdata.length) {
+                        setPadColor(0, led_ix, indexColor(subdata[ix++]));
+                      }
+                      break;
+                    case 1: // flashing
+                      if ((ix + 2) <= subdata.length) {
+                        setPadColor(1, led_ix, indexColor(subdata[ix++]));
+                        ix++; // TODO: use 2nd color
+                      }
+                      break;
+                    case 2: // pulsing
+                      if ((ix + 1) <= subdata.length) {
+                        setPadColor(2, led_ix, indexColor(subdata[ix++]));
+                      }
+                      break;
+                    case 3: // rgb
+                      if ((ix + 3) <= subdata.length) {
+                        var rgb = [2 * subdata[ix++], 2 * subdata[ix++], 2 * subdata[ix++]].join(',');
+                        setPadColor(0, led_ix, 'rgb('+ rgb + ')');
+                      }
+                      break;
+                    default:
+                      console.log("Bad colorspec: ix=" + ix);
+                      break;
+                  }
+                }
+                // we seem to get just static colors
+                // console.log("lts: " + lts.join(','));
+                break;
+              default:
+                console.log("Unhandled sysex command for 'launchpad mini mk3' sublen: " + subdata.length);
+                outputIn.innerHTML += "⚙ unhandled sysex midi message: len: " + data.length + ", data: " + arrayToHexStr(data) + " <br/>";
+                break;
+            }
+          } else {
+            console.log("Unhandled sysex command for 'launchpad mini mk3' sublen: " + subdata.length);
+            outputIn.innerHTML += "⚙ unhandled sysex midi message: len: " + data.length + ", data: " + arrayToHexStr(data) + " <br/>";
+          }
+          break;
+      }
     } else {
       outputIn.innerHTML += "⚙ unhandled sysex midi message: len: " + data.length + ", data: " + arrayToHexStr(data) + " <br/>";
     }
@@ -250,18 +350,20 @@ function createMatirx() {
   var container = document.getElementById('tab-pads');
   container.innerHTML = '';
 
-  /* 8 times pad marging + 2 time pagecontent margin + 1 unknown top marging */
-  const margin = 8 * (2+2) + 2 * 12 + 20;
+  /* consider layouts with rectangullar pads to make things better fit the screen */ 
+
+  /* 9 times pad marging + 2 time pagecontent margin + 1 unknown top marging */
+  const margin = 9 * (2+2) + 2 * 12 + 20;
 
   console.log("window.w/h: " + window.innerWidth + ", " + window.innerHeight);
 
-  var xs = Math.floor((window.innerWidth - margin)/8);
-  var ys = Math.floor((window.innerHeight - margin)/8);
+  var xs = Math.floor((window.innerWidth - margin)/9);
+  var ys = Math.floor((window.innerHeight - margin)/9);
   var ms = Math.min(xs,ys);
   console.log("xs: " + xs + ", ys: " + ys + ", ms: " + ms);
 
-  for(var y = 0; y < 8; y++){
-    for(var x = 0; x < 8; x++){
+  for(var y = 0; y < 9; y++){
+    for(var x = 0; x < 9; x++){
   	  var pad = document.createElement('div');
       pad.className = 'pad';
       pad.style.width = ms + 'px';
@@ -270,15 +372,17 @@ function createMatirx() {
       pad.style.border = '3px outset #333';
       pad.style.boxSizing = 'border-box';
       // ids as used in 'Programmer mode layout', there are also other layouts
-      pad.setAttribute('id', 'pad-' + ((8-y) * 10 + (x+1)));
+      pad.setAttribute('id', 'pad-' + ((9-y) * 10 + (x+1)));
       container.appendChild(pad);
       // TODO: add touch handlers to send midi
+      // TODO: add a dict with labels for the pads
+      // TODO: when setting colors: set color for pads with labels an background otherwise
     }
     container.appendChild(document.createElement('br'));
   }
 }
 
-function setPadColor(channel, note, velocity) {
+function indexColor(color_ix) {
    const padColors = [
       /* 000 */ 'black',
       /* 001 */ 'darkgray',
@@ -351,11 +455,19 @@ function setPadColor(channel, note, velocity) {
       /* 068 */ 'black', //
       /* 069 */ 'black', //
     ];
-    // Channel 0: static color
-    // Channel 1: flashing color
-    // Channel 2: pulsing color
-    var pad = document.getElementById('pad-' + note);
+  return (color_ix < padColors.length) ? padColors[color_ix]: '#fff';
+}
+
+function setPadColor(lighting_type, led_ix, color) {
+    // TODO: lighting_type:
+    // 0: static color
+    // 1: flashing color (b/a)
+    // 2: pulsing color (2nd color is black)
+    var pad = document.getElementById('pad-' + led_ix);
     if (pad !== null) {
-      pad.style.backgroundColor = (velocity < padColors.length) ? padColors[velocity]: '#fff';
-    } 
+      pad.style.backgroundColor = color
+    } else {
+      // also the top + right pads can send/receive notes (e.g. to set the color)
+      console.log('Unhandled note "' + note + '"')
+    }
 }
