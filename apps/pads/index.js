@@ -348,54 +348,105 @@ function readCookie(name) {
 
 const isMobile = !!navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i);
 const evtListener = isMobile ? ['touchstart', 'touchend'] :['mousedown', 'mouseup'];
+// https://www.fileformat.info/info/unicode/block/geometric_shapes/list.htm
+const padLabels = {
+  '19': '■|m|s',
+  '29': '▷',
+  '39': '▷',
+  '49': '▷',
+  '59': '▷',
+  '69': '▷',
+  '79': '▷',
+  '89': '▷',
+  '91': '▲',
+  '92': '▼',
+  '93': '◀',
+  '94': '▶',
+  '95': 'session',
+  '96': 'drums',
+  '97': 'keys',
+  '98': 'user',
+  '99': '🚀',
+};
 
 function handlePadDown(e) {
+  var led_ix = parseInt(this.id.substring(4), 10);
   // TODO: pads can send note events or control-changes, figure how this is configured
-  sendMidiNoteOn(parseInt(this.id.substring(4), 10), 127);
+  sendMidiNoteOn(led_ix, 127);
+  //this.addClass("active");
   this.style.borderStyle = 'inset';
+  if (padLabels[led_ix]) {
+    // set inverted colors
+    //pad.style.color = '#000';
+    this.style.backgroundColor = '#777';
+  } else {
+    // set normal colors
+    this.style.color = '#777';
+    //pad.style.backgroundColor = '#000';
+  }
 }
 
 function handlePadUp(e) {
   // TODO: pads can send note events or control-changes, figure how this is configured
-  sendMidiNoteOn(parseInt(this.id.substring(4), 10), 0);
+  var led_ix = parseInt(this.id.substring(4), 10);
+  sendMidiNoteOn(led_ix, 0);
+  //this.removeClass("active");
   this.style.borderStyle = 'outset';
+  if (padLabels[led_ix]) {
+    // set inverted colors
+    //pad.style.color = '#000';
+    this.style.backgroundColor = '#777';
+  } else {
+    // set normal colors
+    this.style.color = '#777';
+    //pad.style.backgroundColor = '#000';
+  }
 }
 
 function createMatirx() {
-  var container = document.getElementById('tab-pads');
+  var container = document.getElementById('pad-matrix');
   container.innerHTML = '';
 
   /* consider layouts with rectangullar pads to make things better fit the screen */ 
 
-  /* 9 times pad marging + 2 time pagecontent margin + 1 unknown top marging */
-  const margin = 9 * (2+2) + 2 * 12 + 20;
+  /* 8 times grid spacing + 2 times pagecontent margin + 1 unknown top marging */
+  const margin = 8 * 2 + 2 * 12 + 20;
 
   console.log("window.w/h: " + window.innerWidth + ", " + window.innerHeight);
 
   var xs = Math.floor((window.innerWidth - margin)/9);
   var ys = Math.floor((window.innerHeight - margin)/9);
-  var ms = Math.min(xs,ys);
-  console.log("xs: " + xs + ", ys: " + ys + ", ms: " + ms);
+  //var ms = Math.min(xs,ys);
+  console.log("xs: " + xs + ", ys: " + ys);
 
   for(var y = 0; y < 9; y++){
     for(var x = 0; x < 9; x++){
   	  var pad = document.createElement('div');
+      // as used in 'Programmer mode layout', there are also other layouts
+  	  var led_ix = (9-y) * 10 + (x+1);
       pad.className = 'pad';
-      pad.style.width = ms + 'px';
-      pad.style.height = ms + 'px';
-      pad.style.backgroundColor = '#000';
-      pad.style.border = '3px outset #333';
-      pad.style.boxSizing = 'border-box';
-      // ids as used in 'Programmer mode layout', there are also other layouts
-      pad.setAttribute('id', 'pad-' + ((9-y) * 10 + (x+1)));
-      // send midi events
+      pad.setAttribute('id', 'pad-' + led_ix);
+      // handlers to send midi events
       pad.addEventListener(evtListener[0], handlePadDown, {passive: true});
       pad.addEventListener(evtListener[1], handlePadUp, {passive: true});
+
+      if (padLabels[led_ix]) {
+        var text = padLabels[led_ix];
+        var fs = (text.length === 1) ? (ys * 0.8) : (xs * 0.25);
+        pad.style.fontSize = Math.trunc(fs) + 'px';
+        pad.innerHTML = text;
+        // set inverted colors
+        pad.style.color = '#000';
+        pad.style.backgroundColor = '#777';
+      } else {
+        pad.style.fontSize = Math.trunc(ys * 0.8) + 'px';
+        pad.innerHTML = '&nbsp';
+        // set normal colors
+        pad.style.color = '#777';
+        pad.style.backgroundColor = '#000';
+      }
       container.appendChild(pad);
-      // TODO: add a dict with labels for the pads
-      // TODO: when setting colors: set color for pads with labels an background otherwise
     }
-    container.appendChild(document.createElement('br'));
   }
 }
 
@@ -482,9 +533,12 @@ function setPadColor(lighting_type, led_ix, color) {
     // 2: pulsing color (2nd color is black)
     var pad = document.getElementById('pad-' + led_ix);
     if (pad !== null) {
-      pad.style.backgroundColor = color
+      if (padLabels[led_ix]) {
+        pad.style.backgroundColor = color;
+      } else {
+        pad.style.color = color;
+      }
     } else {
-      // also the top + right pads can send/receive notes (e.g. to set the color)
       console.log('Unhandled note "' + note + '"')
     }
 }
