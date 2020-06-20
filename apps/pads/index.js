@@ -346,6 +346,21 @@ function readCookie(name) {
 
 // pad-matrix
 
+const isMobile = !!navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i);
+const evtListener = isMobile ? ['touchstart', 'touchend'] :['mousedown', 'mouseup'];
+
+function handlePadDown(e) {
+  // TODO: pads can send note events or control-changes, figure how this is configured
+  sendMidiNoteOn(parseInt(this.id.substring(4), 10), 127);
+  this.style.borderStyle = 'inset';
+}
+
+function handlePadUp(e) {
+  // TODO: pads can send note events or control-changes, figure how this is configured
+  sendMidiNoteOn(parseInt(this.id.substring(4), 10), 0);
+  this.style.borderStyle = 'outset';
+}
+
 function createMatirx() {
   var container = document.getElementById('tab-pads');
   container.innerHTML = '';
@@ -373,8 +388,10 @@ function createMatirx() {
       pad.style.boxSizing = 'border-box';
       // ids as used in 'Programmer mode layout', there are also other layouts
       pad.setAttribute('id', 'pad-' + ((9-y) * 10 + (x+1)));
+      // send midi events
+      pad.addEventListener(evtListener[0], handlePadDown, {passive: true});
+      pad.addEventListener(evtListener[1], handlePadUp, {passive: true});
       container.appendChild(pad);
-      // TODO: add touch handlers to send midi
       // TODO: add a dict with labels for the pads
       // TODO: when setting colors: set color for pads with labels an background otherwise
     }
