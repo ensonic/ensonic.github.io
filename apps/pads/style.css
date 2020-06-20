@@ -183,6 +183,11 @@ select option:before {
   /* disable blue highlight on touch event */
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   -webkit-tap-highlight-color: transparent;
+  /* avoid selection on long-press */
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
 }
 
 /* attempt to avoid the background color to be changed when clicking
