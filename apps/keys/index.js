@@ -520,7 +520,7 @@ function PianoKeyboard() {
         thisKey.style.marginTop = '5px';
         thisKey.style.boxShadow = 'none';
       }
-      sendMidiNoteOn(noteToMidiNum(keyboard[e.keyCode].split(',')), inputVelocity.value)
+      sendMidiNoteOn(noteToMidiNum(keyboard[e.keyCode].split(',')), inputVelocity.value);
     }
   }
 
@@ -539,7 +539,7 @@ function PianoKeyboard() {
         thisKey.style.marginTop = '';
         thisKey.style.boxShadow = '';
       }
-      sendMidiNoteOff(noteToMidiNum(keyboard[e.keyCode].split(',')), inputVelocity.value)        
+      sendMidiNoteOff(noteToMidiNum(keyboard[e.keyCode].split(',')), inputVelocity.value);
       keysPressed.splice(ix, 1);
     }
   }
