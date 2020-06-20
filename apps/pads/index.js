@@ -520,9 +520,9 @@ function setPadColor(lighting_type, led_ix, color) {
     var pad = document.getElementById('pad-' + led_ix);
     if (pad !== null) {
       if (padLabels[led_ix]) {
-        pad.style.backgroundColor = color;
-      } else {
         pad.style.color = color;
+      } else {
+        pad.style.backgroundColor = color;
       }
     } else {
       console.log('Unhandled note "' + note + '"')
