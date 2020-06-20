@@ -372,35 +372,23 @@ const padLabels = {
 function handlePadDown(e) {
   var led_ix = parseInt(this.id.substring(4), 10);
   // TODO: pads can send note events or control-changes, figure how this is configured
-  sendMidiNoteOn(led_ix, 127);
-  //this.addClass("active");
-  this.style.borderStyle = 'inset';
   if (padLabels[led_ix]) {
-    // set inverted colors
-    //pad.style.color = '#000';
-    this.style.backgroundColor = '#777';
+    sendMidiControlChange(led_ix, 127);
   } else {
-    // set normal colors
-    this.style.color = '#777';
-    //pad.style.backgroundColor = '#000';
+    sendMidiNoteOn(led_ix, 127);
   }
+  this.style.borderStyle = 'inset';
 }
 
 function handlePadUp(e) {
   // TODO: pads can send note events or control-changes, figure how this is configured
   var led_ix = parseInt(this.id.substring(4), 10);
-  sendMidiNoteOn(led_ix, 0);
-  //this.removeClass("active");
-  this.style.borderStyle = 'outset';
   if (padLabels[led_ix]) {
-    // set inverted colors
-    //pad.style.color = '#000';
-    this.style.backgroundColor = '#777';
+    sendMidiControlChange(led_ix, 0);
   } else {
-    // set normal colors
-    this.style.color = '#777';
-    //pad.style.backgroundColor = '#000';
+    sendMidiNoteOn(led_ix, 0);
   }
+  this.style.borderStyle = 'outset';
 }
 
 function createMatirx() {
@@ -409,8 +397,8 @@ function createMatirx() {
 
   /* consider layouts with rectangullar pads to make things better fit the screen */ 
 
-  /* 8 times grid spacing + 2 times pagecontent margin + 1 unknown top marging */
-  const margin = 8 * 2 + 2 * 12 + 20;
+  /* 8 times grid spacing + 9 times border + 2 times pagecontent margin + 1 unknown top marging */
+  const margin = 8 * 2 + 9 * 6 + 2 * 12 + 20;
 
   console.log("window.w/h: " + window.innerWidth + ", " + window.innerHeight);
 
