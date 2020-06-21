@@ -128,18 +128,27 @@ function arrayToHexStr(data) {
   return Array.prototype.map.call(new Uint8Array(data), x => ('x00' + x.toString(16)).slice(-2)).join(' ');
 }
 
+// for midi clock analysis
+var cur_ts = 0, prev_ts = 0;
+var bpm_counter = 0;
+var bpm = 10000000.0;
+
 function midiMessageReceived(event) {
-  // MIDI commands we care about. See
-  // http://webaudio.github.io/web-midi-api/#a-simple-monophonic-sine-wave-midi-synthesizer.
-  const NOTE_ON = 0x9;
-  const NOTE_OFF = 0x8;
-  const CC = 0xB;
-  const SYSEX = 0xF;
+  // MIDI commands we care about.
+  const NOTE_ON = 0x90;
+  const NOTE_OFF = 0x80;
+  const CC = 0xB0;
+  const SYSEX = 0xF0;
+  const CLOCK = 0xF8;
+  const START = 0xFA;
+  const CONT = 0xFB;
+  const STOP = 0xFC;
   const LP_MINI_MK3_SYSEX_HDR = 'f0 00 20 29 02 0d';
 
   const data = event.data;
 
-  const cmd = data[0] >> 4;
+  // commands >= 0xF0 are channel independent and use the lower 4 bit for message types too
+  const cmd = (data[0]<0xF0) ? (data[0] & 0xf0) : data[0];
   const channel = data[0] & 0x0f;
   const pitch = data[1];
   const velocity = (data.length > 2) ? data[2] : 0;
@@ -245,8 +254,7 @@ function midiMessageReceived(event) {
                       break;
                     case 1: // flashing
                       if ((ix + 2) <= subdata.length) {
-                        setPadColor(1, led_ix, indexColor(subdata[ix++]));
-                        ix++; // TODO: use 2nd color
+                        setPadColor(1, led_ix, indexColor(subdata[ix++]), indexColor(subdata[ix++]));
                       }
                       break;
                     case 2: // pulsing
@@ -282,6 +290,20 @@ function midiMessageReceived(event) {
     } else {
       outputIn.innerHTML += "⚙ unhandled sysex midi message: len: " + data.length + ", data: " + arrayToHexStr(data) + " <br/>";
     }
+  } else if (cmd === CLOCK) {
+    // Sent 24 times per quarter note
+    if (bpm_counter == 23) {
+      prev_ts = cur_ts;
+      cur_ts = timestamp;
+      bpm = (60.0 * 1000.0) / (cur_ts - prev_ts);
+      // Only use if value < 1000
+      console.log("bpm : " + bpm);
+      bpm_counter = 0;
+    } else {
+      bpm_counter++;    
+    }
+
+
   } else {
     outputIn.innerHTML += "? unhandled midi message: len: " + data.length + ", data: " + arrayToHexStr(data) + " <br/>";
   }
@@ -515,19 +537,24 @@ function indexColor(color_ix) {
   return (color_ix < padColors.length) ? padColors[color_ix]: '#000';
 }
 
-function setPadColor(lighting_type, led_ix, color) {
+function setPadColor(lighting_type, led_ix, color1, color2) {
     // TODO: lighting_type:
     // 0: static color
-    // 1: flashing color (b/a)
-    // 2: pulsing color (2nd color is black)
+    // 1: flashing color (color2/color1, modulated with rectangle)
+    // 2: pulsing color (color2 is black, modulated with triangle)
+    // DEBUG
+    if (lighting_type != 0) {
+      console.log('Unhandled lighting_type ' + lighting_type + ' for note ' + led_ix);
+    }
+
     var pad = document.getElementById('pad-' + led_ix);
     if (pad !== null) {
       if (padLabels[led_ix]) {
-        pad.style.color = color;
+        pad.style.color = color1;
       } else {
-        pad.style.backgroundColor = color;
+        pad.style.backgroundColor = color1;
       }
     } else {
-      console.log('Unhandled note "' + note + '"')
+      console.log('Unhandled note "' + led_ix + '"')
     }
 }
