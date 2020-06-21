@@ -548,11 +548,13 @@ function setPadColor(lighting_type, led_ix, color1, color2) {
       pad.style.setProperty('--color1', color1);
       pad.style.setProperty('--color2', color2);
       if (bpm < 1000) {
-        /* - for  60 bpm: animation-duration: (4/60)s;
-         * - for 120 bpm: animation-duration: (4/120)s;
-         * => animation-duration: (1/bpm)s;
+        /* bpm -> x beat per minute
+         *
+         * - for  60 bpm: animation-duration: (4*60/60)s;
+         * - for 120 bpm: animation-duration: (4*60/120)s;
+         * => animation-duration: (4*60/bpm)s;
          */
-        pad.style.setProperty('--duration', 4.0/bpm + 's');
+        pad.style.setProperty('--duration', ((4.0 * 60.0)/bpm) + 's');
       }
       pad.classList.remove("flashing");
       pad.classList.remove("pulsing");
