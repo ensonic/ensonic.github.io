@@ -549,9 +549,10 @@ function setPadColor(lighting_type, led_ix, color1, color2) {
       pad.style.setProperty('--color2', color2);
       if (bpm < 1000) {
         /* bpm -> x beats per minute
-         * => animation-duration: (60/bpm)s;
+         * we want pulsing on each of the quarters of the beat.
+         * => animation-duration: ((60/4)/bpm)s;
          */
-        pad.style.setProperty('--duration', (60.0/bpm) + 's');
+        pad.style.setProperty('--duration', ((60.0/4.0)/bpm) + 's');
       }
       pad.classList.remove("flashing");
       pad.classList.remove("pulsing");
