@@ -398,7 +398,10 @@ function createMatirx() {
   /* consider layouts with rectangullar pads to make things better fit the screen */ 
 
   /* 8 times grid spacing + 9 times border + 2 times pagecontent margin + 1 unknown top marging */
-  const margin = 8 * 2 + 9 * 6 + 2 * 12 + 20;
+  const margin = (8 * 2) + (9 * 6) + (2 * 12) + 20;
+  /* fon-scaling factors, determined by experiments */
+  const yfs = 0.75;
+  const xfs = 0.25;
 
   console.log("window.w/h: " + window.innerWidth + ", " + window.innerHeight);
 
@@ -420,14 +423,14 @@ function createMatirx() {
 
       if (padLabels[led_ix]) {
         var text = padLabels[led_ix];
-        var fs = (text.length === 1) ? (ys * 0.8) : (xs * 0.25);
+        var fs = (text.length === 1) ? (ys * yfs) : (xs * xfs);
         pad.style.fontSize = Math.trunc(fs) + 'px';
         pad.innerHTML = text;
         // set inverted colors
         pad.style.color = '#000';
         pad.style.backgroundColor = '#777';
       } else {
-        pad.style.fontSize = Math.trunc(ys * 0.8) + 'px';
+        pad.style.fontSize = Math.trunc(ys * yfs) + 'px';
         pad.innerHTML = '&nbsp';
         // set normal colors
         pad.style.color = '#777';
