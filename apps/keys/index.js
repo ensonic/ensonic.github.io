@@ -124,12 +124,12 @@ function startListening() {
 }
 
 function midiMessageReceived(event) {
-  // MIDI commands we care about. See
-  // http://webaudio.github.io/web-midi-api/#a-simple-monophonic-sine-wave-midi-synthesizer.
-  const NOTE_ON = 9;
-  const NOTE_OFF = 8;
+  // MIDI commands we care about.
+  const NOTE_ON = 0x90;
+  const NOTE_OFF = 0x80;
 
-  const cmd = event.data[0] >> 4;
+  // commands >= 0xF0 are channel independent and use the lower 4 bit for message types too
+  const cmd = (data[0]<0xF0) ? (data[0] & 0xf0) : data[0];
   const pitch = event.data[1];
   const velocity = (event.data.length > 2) ? event.data[2] : 1;
 
