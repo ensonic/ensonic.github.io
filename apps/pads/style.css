@@ -190,11 +190,53 @@ select option:before {
   -o-user-select: none;
 }
 
-/* attempt to avoid the background color to be changed when clicking
-.pad:hover, .pad:active {
-  color: inherit;
-  background-color: inherit;
+@keyframes bg-flash {
+  0%, 50% {
+    background: var(--color1);
+  }
+  51%, 100% {
+    background: var(--color2);
+  }
 }
-*/
+
+@keyframes fg-flash {
+  0%, 50% {
+    color: var(--color1);
+  }
+  51%, 100% {
+    color: var(--color2);
+  }
+}
+
+.flashing {
+  animation-duration: var(--duration);
+  animation-iteration-count: infinite;
+  animation-name: var(--anim);
+}
+
+@keyframes bg-pulse {
+  from {
+    background: var(--color1);
+  }
+  to {
+    background: #000;
+  }
+}
+
+@keyframes fg-pulse {
+  from {
+    color: var(--color1);
+  }
+  to {
+    color: #000;
+  }
+}
+
+.pulsing {
+  animation-duration: var(--duration);
+  animation-iteration-count: infinite;
+   animation-direction: alternate;
+  animation-name: var(--anim);
+}
 
 /* -------------------- */

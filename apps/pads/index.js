@@ -538,22 +538,44 @@ function indexColor(color_ix) {
 }
 
 function setPadColor(lighting_type, led_ix, color1, color2) {
-    // TODO: lighting_type:
-    // 0: static color
-    // 1: flashing color (color2/color1, modulated with rectangle)
-    // 2: pulsing color (color2 is black, modulated with triangle)
-    // DEBUG
-    if (lighting_type != 0) {
-      console.log('Unhandled lighting_type ' + lighting_type + ' for note ' + led_ix);
-    }
-
+    /* handle lighting_type:
+     * 0: static color
+     * 1: flashing color (color2/color1, modulated with rectangle)
+     * 2: pulsing color (color2 is black, modulated with triangle)
+     */
     var pad = document.getElementById('pad-' + led_ix);
     if (pad !== null) {
+      pad.style.setProperty('--color1', color1);
+      pad.style.setProperty('--color2', color2);
+      if (bpm < 1000) {
+        /* - for  60 bpm: animation-duration: (4/60)s;
+         * - for 120 bpm: animation-duration: (4/120)s;
+         * => animation-duration: (1/bpm)s;
+         */
+        pad.style.setProperty('--duration', 4.0/bpm + 's');
+      }
+      pad.classList.remove("flashing");
+      pad.classList.remove("pulsing");
+      var anim = "";
+      switch (lighting_type) {
+        case 1:
+          pad.classList.add("flashing");
+          anim = "flash";
+          break;
+        case 2:
+          pad.classList.add("pulsing");
+          anim = "pulse";
+          break;
+      }
+
       if (padLabels[led_ix]) {
         pad.style.color = color1;
+        anim = "fg-" + anim;
       } else {
         pad.style.backgroundColor = color1;
+        anim = "bg-" + anim;
       }
+      pad.style.setProperty('--anim', anim);
     } else {
       console.log('Unhandled note "' + led_ix + '"')
     }
