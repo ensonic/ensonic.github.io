@@ -180,8 +180,7 @@ function midiMessageReceived(event) {
     // ctrl 91 - 98 top row
     // ctrl 99 top right
     // ctrl 19/29/39.../89) right side
-
-    // NOTE: also the top/right buttons could send notes, as well as the pads could send cc messages
+    setPadColor(channel, data[1], indexColor(data[2]));
   } else if (cmd === SYSEX) {
     // console.log("Got sysex command, len: " + data.length + ' hdr? ' + arrayToHexStr(data.slice(0,6)) + ' end? ' + arrayToHexStr(data.slice(-1)));
     if ((data.length === 6) && (arrayToHexStr(data) === 'f0 7e 7f 06 01 f7')) {
