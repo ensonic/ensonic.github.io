@@ -356,14 +356,17 @@ function saveDefaults() {
 }
 
 function saveCookie(name, value) {
-    var cookie = name + '=' + JSON.stringify(value) + "; secure; samesite=none";
-    document.cookie = cookie;
+  var host = window.location.href.split("/")[2].split(':')[0];
+  var flags = (host === 'localhost') ? "" : "; secure; samesite=none";
+
+  var cookie = name + '=' + JSON.stringify(value) + flags;
+  document.cookie = cookie;
 }
 
 function readCookie(name) {
-    var result = document.cookie.match(new RegExp(name + '=([^;]+)'));
-    result && (result = JSON.parse(result[1]));
-    return result;
+  var result = document.cookie.match(new RegExp(name + '=([^;]+)'));
+  result && (result = JSON.parse(result[1]));
+  return result;
 }
 
 // pad-matrix
