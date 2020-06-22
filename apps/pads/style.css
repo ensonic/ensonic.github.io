@@ -215,19 +215,19 @@ select option:before {
 }
 
 @keyframes bg-pulse {
-  from {
+  0%,100% {
     background: var(--color1);
   }
-  to {
+  50% {
     background: #000;
   }
 }
 
 @keyframes fg-pulse {
-  from {
+  0%,100% {
     color: var(--color1);
   }
-  to {
+  50% {
     color: #000;
   }
 }
@@ -235,7 +235,7 @@ select option:before {
 .pulsing {
   animation-duration: var(--duration);
   animation-iteration-count: infinite;
-   animation-direction: alternate;
+  /*animation-direction: alternate;*/
   animation-name: var(--anim);
 }
 

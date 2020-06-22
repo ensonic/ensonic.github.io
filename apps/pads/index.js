@@ -131,7 +131,7 @@ function arrayToHexStr(data) {
 // for midi clock analysis
 var cur_ts = 0, prev_ts = 0;
 var bpm_counter = 0;
-var bpm = 10000000.0;
+var anim_duration = 0.1; // dummy value
 
 function midiMessageReceived(event) {
   // MIDI commands we care about.
@@ -294,9 +294,10 @@ function midiMessageReceived(event) {
     if (bpm_counter == 23) {
       prev_ts = cur_ts;
       cur_ts = timestamp;
-      bpm = (60.0 * 1000.0) / (cur_ts - prev_ts);
-      // Only use if value < 1000
-      console.log("bpm : " + bpm);
+      var bpm = (60.0 * 1000.0) / (cur_ts - prev_ts);
+      // bpm -> x beats per minute => animation-duration: (60/bpm)s;
+      anim_duration = 60.0/bpm;
+      //console.log("bpm : " + bpm + ", dur (s): " + anim_duration);
       bpm_counter = 0;
     } else {
       bpm_counter++;    
@@ -425,7 +426,6 @@ function createMatirx() {
   const xfs = 0.25;
 
   console.log("window.w/h: " + window.innerWidth + ", " + window.innerHeight);
-
   var xs = Math.floor((window.innerWidth - margin)/9);
   var ys = Math.floor((window.innerHeight - margin)/9);
   //var ms = Math.min(xs,ys);
@@ -449,12 +449,12 @@ function createMatirx() {
         pad.innerHTML = text;
         // set inverted colors
         pad.style.color = '#000';
-        pad.style.backgroundColor = '#777';
+        pad.style.backgroundColor = '#333';
       } else {
         pad.style.fontSize = Math.trunc(ys * yfs) + 'px';
         pad.innerHTML = '&nbsp';
         // set normal colors
-        pad.style.color = '#777';
+        pad.style.color = '#333';
         pad.style.backgroundColor = '#000';
       }
       container.appendChild(pad);
@@ -537,7 +537,7 @@ function indexColor(color_ix) {
 }
 
 function setPadColor(lighting_type, led_ix, color1, color2) {
-    /* handle lighting_type:
+    /* lighting_type:
      * 0: static color
      * 1: flashing color (color2/color1, modulated with rectangle)
      * 2: pulsing color (color2 is black, modulated with triangle)
@@ -546,33 +546,28 @@ function setPadColor(lighting_type, led_ix, color1, color2) {
     if (pad !== null) {
       pad.style.setProperty('--color1', color1);
       pad.style.setProperty('--color2', color2);
-      if (bpm < 1000) {
-        /* bpm -> x beats per minute
-         * we want pulsing on each of the quarters of the beat.
-         * => animation-duration: ((60/4)/bpm)s;
-         */
-        pad.style.setProperty('--duration', ((60.0/4.0)/bpm) + 's');
-      }
-      pad.classList.remove("flashing");
-      pad.classList.remove("pulsing");
-      var anim = "";
+      pad.style.setProperty('--duration', anim_duration + 's');
+      var anim = '';
       switch (lighting_type) {
+        case 0:
+          pad.className = 'pad';
+          break;
         case 1:
-          pad.classList.add("flashing");
-          anim = "flash";
+          pad.className = 'pad flashing';
+          anim = 'flash';
           break;
         case 2:
-          pad.classList.add("pulsing");
-          anim = "pulse";
+          pad.className = 'pad pulsing';
+          anim = 'pulse';
           break;
       }
 
       if (padLabels[led_ix]) {
         pad.style.color = color1;
-        anim = "fg-" + anim;
+        anim = 'fg-' + anim;
       } else {
         pad.style.backgroundColor = color1;
-        anim = "bg-" + anim;
+        anim = 'bg-' + anim;
       }
       pad.style.setProperty('--anim', anim);
     } else {
