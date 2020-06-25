@@ -20,6 +20,10 @@ pinned app.
 * [midi keyboard](apps/keys/index.html)
   * Based on these [webmidi-examples](https://webmidi-examples.glitch.me/) and
     this [piano keyboard](https://www.freecodecamp.org/news/javascript-piano-keyboard/)
+* [midi pad matrix](apps/pads/index.html)
+  * A launchpad style button matrix. So far it only has been tested in conjunction with
+    [DrivenByMoss](http://www.mossgrabers.de/Software/Bitwig/Bitwig.html) and
+    [Bitwig Studio](https://www.bitwig.com/en/bitwig-studio).
 
 To serve an app for local development, run:
 
