@@ -1,6 +1,13 @@
 ## apps
 
-* extract midi code into a apps/common for reuse?
+* extract cookie/midi code into a apps/common for reuse?
+
+## apps/skel
+
+* rethink the menu button
+  * mabe have the hamburger icon on the first (actual app) page, then only add
+    the settings/help/etc to the menu and when on a menu page change the
+    hamburger icon to a 'return' icon that gets you straight back to the main page
 
 ## apps/keys
 
@@ -32,4 +39,14 @@ Links:
 
 ## apps/pads
 
-* make a launchpad clone: 8x8 matrix + 16 control buttons
+* add settings to customize labels to better fit with driven-by-moss
+  * this would also mean that we label the 8x8 pads when pressing shift
+  * for that we can probably use a layer and just change the visibility
+* use Navigator.vibrate() as a metronome?
+  https://developer.mozilla.org/de/docs/Web/API/Navigator/vibrate
+* color the borders too?
+  * if we'd use hsl() instead rgb(), we could better deal with extreme colors like black and white
+
+## apps/lens
+
+* extract midi monitor code to a separate app and remove the tab from the other apps

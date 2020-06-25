@@ -24,6 +24,7 @@ pinned app.
 To serve an app for local development, run:
 
 ```bash
-cd apps/<appname>
+cd apps
 python3 -m http.server 8000
 ```
+and then open http://localhost:8000/<appname>/
