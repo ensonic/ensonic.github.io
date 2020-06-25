@@ -471,16 +471,31 @@ function indexColor(color_ix) {
       by
       int [] c = color.toIntRGB255();         
       System.out.printf("    |* %03d *| 'rgb(%d,%d,%d)',\n", colorIndex, c[0], c[1], c[2]);
+
+      then swapped 1/2, see https://github.com/git-moss/DrivenByMoss/issues/196
+
+      daw colors:
+        06: RED,
+        10: AMBER,
+        14: YELLOW,
+        26: SPRING,
+        34: CYAN,
+        42: OCEAN,
+        54: MAGENTA,
+        58: PINK
+
+      FIXME: 06,10 are the same
    */
+
    
    const padColors = [
      /* 000 */ 'rgb(0,0,0)',
-     /* 001 */ 'rgb(201,201,201)',
-     /* 002 */ 'rgb(128,128,128)',
+     /* 001 */ 'rgb(128,128,128)',
+     /* 002 */ 'rgb(201,201,201)',
      /* 003 */ 'rgb(255,255,255)',
      /* 004 */ 'rgb(236,97,87)',
-     /* 005 */ 'rgb(217,46,36)',
-     /* 006 */ 'rgb(255,131,62)',
+     /* 005 */ 'rgb(255,46,36)',   // modified, was 217,46,36
+     /* 006 */ 'rgb(180,25,10)',   // modified, was 255,131,62
      /* 007 */ 'rgb(39,4,1)',
      /* 008 */ 'rgb(45,34,21)',
      /* 009 */ 'rgb(217,157,16)',
@@ -576,4 +591,14 @@ function setPadColor(lighting_type, led_ix, color1, color2) {
     } else {
       console.log('Unhandled note "' + led_ix + '"')
     }
+}
+
+/* for testing the colors */
+function testColors() {
+  var c=0;
+  for (y=8;y>0;y--) {
+    for (x=1;x<=8;x++) {
+      setPadColor(0, y*10+x, indexColor(c++));
+    }
+  }
 }
