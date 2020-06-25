@@ -131,7 +131,7 @@ function arrayToHexStr(data) {
 // for midi clock analysis
 var cur_ts = 0, prev_ts = 0;
 var bpm_counter = 0;
-var anim_duration = 0.1; // dummy value
+var anim_duration = 60.0/120.0; // pulse/flash at 120 bpm if no midi clock is received
 
 function midiMessageReceived(event) {
   // MIDI commands we care about.
