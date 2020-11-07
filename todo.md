@@ -20,6 +20,10 @@
     * highlight: shade keys in scale
     * filter: highlight + only send notes for keys in scale
   * scale selection is key + {major, minor, ... }
+  * what about scale-detection? 
+    * press a bunch of keys and show possible scales
+    * or listen to midi in?
+    * might need a reset button to flush the keys in the current filter
 * pitch-bend and mod wheel visibility, should we show both all the time?
   * maybe add check-boxes to show/hide them (store via settings)
   * or add a button above to cycle though the configured controllers {pb,mod,...}, when cycling we should store/restore the previous value
@@ -46,6 +50,8 @@ Links:
   https://developer.mozilla.org/de/docs/Web/API/Navigator/vibrate
 * color the borders too?
   * if we'd use hsl() instead rgb(), we could better deal with extreme colors like black and white
+* can be use the WebAnimation API to sync the color animations?
+  https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API
 
 ## apps/lens
 
