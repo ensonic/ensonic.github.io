@@ -1,6 +1,4 @@
-// Names of the two caches used in this version of the service worker.
-// Change to v2, etc. when you update any of the local resources, which will
-// in turn trigger the install event again.
+// Name of the cache based on git-sha.
 const ID='$Id$'
 const PRECACHE = 'skel-' + ID.split(' ')[1];
 
