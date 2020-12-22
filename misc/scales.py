@@ -286,11 +286,10 @@ def gen_accidentals(g, lx, ly, acc, scale, shift):
       g.add(dwg.text(acc, insert=(lx, lys), **acc_text_style))
       lx += 2
 
-def gen_keyboard(g, lx, ly, scale):
+def gen_keyboard(g, lx, ly, h, scale):
   # TODO: color the keys in scale
   
   x = lx
-  h = text_height
   for i in range(8):
     g.add(dwg.rect(insert=(x,ly), size=(10, h), **w_key_style))
     x += 10
@@ -300,13 +299,20 @@ def gen_keyboard(g, lx, ly, scale):
   bk = [True, True, False, True, True, True, False]
 
   x = lx + 6
-  h = text_height * 0.7
+  h *= 0.7
   for i in range(7):
     if bk[k]:
       g.add(dwg.rect(insert=(x,ly), size=(8, h), **b_key_style))
     x += 10
     k = (k + 1) % 7
+  # handle last partial key
   if bk[k]:
+    g.add(dwg.rect(insert=(x,ly), size=(4, h), **b_key_style))
+
+  # handle first partial key
+  k = (bk_shift[scale.base] + 6) % 7
+  if bk[k]:
+    x = lx
     g.add(dwg.rect(insert=(x,ly), size=(4, h), **b_key_style))
 
 
@@ -321,8 +327,9 @@ def gen_scale(gx, gy, acc, scale):
   x += 6  # indent everything
 
   # 1 octave on keyboard
-  gen_keyboard(g, x + 10, y, scale)
-  y += text_height + inner_pad 
+  h = text_height * 1.3
+  gen_keyboard(g, x + 11, y, h, scale)
+  y += h + inner_pad 
 
   note_lines = '𝄀' + '𝄚' * 15 + '𝄀'
 
@@ -341,7 +348,7 @@ def gen_scale(gx, gy, acc, scale):
   g.add(dwg.text('𝄢', insert=(x, ly), **note_text_style))
   gen_accidentals(g, x + 6, ly, acc, scale, bass_clef_acc_shift)
   gen_notation(g, x + 15, ly, bass_clef_note_shift[scale.base])  
-  y += text_height + inner_pad
+  y += text_height
   
   w = (100 + inner_pad) 
   h = (y + inner_pad) - gy
