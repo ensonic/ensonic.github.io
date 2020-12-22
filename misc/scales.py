@@ -6,6 +6,11 @@
 # https://de.wikipedia.org/wiki/Unicodeblock_Notenschriftzeichen
 # https://de.wikipedia.org/wiki/Unicodeblock_Verschiedene_Symbole
 
+# TODO:
+# * localize
+# * generate a variant through inkscape that has the fonts resolved
+#   and maybe even generate a pdf
+
 import math
 import svgwrite
 import sys
@@ -48,9 +53,26 @@ staff_style = {
     'fill': 'none'
 }
 
+w_key_style = {
+    'stroke': svgwrite.rgb(0, 0, 0, '%'),
+    'stroke_width': 0.3,
+    'fill': 'none'
+}
+
+b_key_style = {
+    'stroke': svgwrite.rgb(0, 0, 0, '%'),
+    'stroke_width': 0.3,
+    'fill': svgwrite.rgb(0, 0, 0, '%'),
+}
+
+label_height = 5
+lable_text_style = {
+    'font_size': label_height,
+    'class': 'text'
+}
 
 text_height = 8
-text_style = {
+note_text_style = {
     'font_size': text_height,
     'class': 'text'
 }
@@ -155,6 +177,27 @@ scale_shift = {
   'h': 11, 
 }
 
+bk_shift = {  # black keys
+  'c': 0,
+  'cis': 0,
+  'des': 0,
+  'd': 1,
+  'dis': 1,
+  'es': 1,
+  'e': 2,
+  'f': 3,
+  'fis': 3,
+  'ges': 3,
+  'g': 4,
+  'gis': 4,
+  'as': 4,
+  'a': 5,
+  'ais': 5,
+  'b': 5,
+  'h': 6, 
+}
+
+
 notes_raised = ['c', 'cis', 'd', 'dis', 'e', 'f', 'fis', 'g', 'gis', 'a', 'ais', 'h']
 notes_lowered = ['c', 'des', 'd', 'es', 'e', 'f', 'ges', 'g', 'as', 'a', 'b', 'h']
 
@@ -178,7 +221,7 @@ class Scale:
     return base + '-' + self.name
 
 class Major(Scale):
-  name = 'Dur'
+  name = 'Maj.'
   steps = [ 0, 2, 2, 1, 2, 2, 2, 1 ]
 
   def title(self):
@@ -186,7 +229,7 @@ class Major(Scale):
 
 
 class Minor(Scale):
-  name = 'Moll'
+  name = 'Min.'
   steps = [ 0, 2, 1, 2, 2, 1, 2, 2 ]
 
   def title(self):
@@ -199,9 +242,6 @@ def new_group(gx, gy, title):
   y = gy + inner_pad
 
   g = dwg.add(dwg.g(id='g_' + title.lower().replace(' ','_')))
-  ly = y + (text_height - 1)
-  g.add(dwg.text(title, insert=(x, ly), **text_style))
-  y += text_height + inner_pad 
 
   return (g,x,y)
     
@@ -214,7 +254,7 @@ def gen_notation(g, lx, ly, shift):
     if ((i + shift) % 2 == 1) and ((lys > (ly + hn_height)) or (lys < (ly - (7 * hn_height)))):
         lyh = lys - (hn_height - 0.1)
         g.add(dwg.line(start=(lx - 0.8 , lyh), end=(lx + 4, lyh), **staff_style))
-    g.add(dwg.text('𝅝	', insert=(lx, lys), **text_style))
+    g.add(dwg.text('𝅝	', insert=(lx, lys), **note_text_style))
     lx += 10
     lys -= hn_height
 
@@ -246,33 +286,63 @@ def gen_accidentals(g, lx, ly, acc, scale, shift):
       g.add(dwg.text(acc, insert=(lx, lys), **acc_text_style))
       lx += 2
 
+def gen_keyboard(g, lx, ly, scale):
+  # TODO: color the keys in scale
+  
+  x = lx
+  h = text_height
+  for i in range(8):
+    g.add(dwg.rect(insert=(x,ly), size=(10, h), **w_key_style))
+    x += 10
+
+  # start on a white key
+  k = bk_shift[scale.base]
+  bk = [True, True, False, True, True, True, False]
+
+  x = lx + 6
+  h = text_height * 0.7
+  for i in range(7):
+    if bk[k]:
+      g.add(dwg.rect(insert=(x,ly), size=(8, h), **b_key_style))
+    x += 10
+    k = (k + 1) % 7
+  if bk[k]:
+    g.add(dwg.rect(insert=(x,ly), size=(4, h), **b_key_style))
+
 
 def gen_scale(gx, gy, acc, scale):
   # TODO: mark positions of haltone steps?
   
   (g,x,y) = new_group(gx, gy, scale.title())
+  
+  # title  
+  ly = y + (label_height - 1)
+  g.add(dwg.text(scale.title(), insert=(x, ly), **lable_text_style))
+  x += 6  # indent everything
+
+  # 1 octave on keyboard
+  gen_keyboard(g, x + 10, y, scale)
+  y += text_height + inner_pad 
+
   note_lines = '𝄀' + '𝄚' * 15 + '𝄀'
 
   # 1 octave in violine key ('g' on 2nd line from below
   ly = y + (text_height - 1)
-  g.add(dwg.text(note_lines, insert=(x, ly), **text_style))
-  g.add(dwg.text('𝄞', insert=(x, ly), **text_style))
+  g.add(dwg.text(note_lines, insert=(x, ly), **note_text_style))
+  g.add(dwg.text('𝄞', insert=(x, ly), **note_text_style))
   gen_accidentals(g, x + 6, ly, acc, scale, violine_clef_acc_shift)
   # using ly we get the 'f'-key
-  gen_notation(g, x+15, ly, violine_clef_note_shift[scale.base])
+  gen_notation(g, x + 15, ly, violine_clef_note_shift[scale.base])
   y += text_height + inner_pad
   
   # 1 octave in bass key ('f' on the 4th line from below
   ly = y + (text_height - 1)
-  g.add(dwg.text(note_lines, insert=(x, ly), **text_style))
-  g.add(dwg.text('𝄢', insert=(x, ly), **text_style))
+  g.add(dwg.text(note_lines, insert=(x, ly), **note_text_style))
+  g.add(dwg.text('𝄢', insert=(x, ly), **note_text_style))
   gen_accidentals(g, x + 6, ly, acc, scale, bass_clef_acc_shift)
-  gen_notation(g, x+15, ly, bass_clef_note_shift[scale.base])  
+  gen_notation(g, x + 15, ly, bass_clef_note_shift[scale.base])  
   y += text_height + inner_pad
   
-  # 1 octave on keyboard
-  # TODO: draw keyboard
-
   w = (100 + inner_pad) 
   h = (y + inner_pad) - gy
   g.add(dwg.rect(insert=(gx,gy), size=(w, h), **frame_style))
