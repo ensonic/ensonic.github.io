@@ -32,3 +32,11 @@ cd apps
 python3 -m http.server 8000
 ```
 and then open http://localhost:8000/<appname>/
+
+### Music theory
+
+In order to have more music theory for reference in a compact form, I am working
+on some cheat sheets. Each of them comes with the code to generate them.
+
+* [scales](misc/scales.svg]
+
