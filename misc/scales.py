@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-# eog scales.svg
+# inkscape scales.svg
+# eog scales_notext.svg
 #
 # for musical symbols see:
 # https://en.wikipedia.org/wiki/Musical_Symbols_(Unicode_block)
@@ -9,6 +10,10 @@
 # TODO:
 # * localize
 # * generate a variant through inkscape that has the fonts resolved
+#   some older version:
+#     inkscape -z --vacuum-defs -T -f scales.svg -l scale_notxt.svg
+#   inkscape 1.0.1
+#     inkscape --vacuum-defs -T scales.svg -l -o scale_notxt.svg
 #   and maybe even generate a pdf
 
 import math
@@ -331,7 +336,7 @@ def gen_scale(gx, gy, acc, scale):
   gen_keyboard(g, x + 11, y, h, scale)
   y += h + inner_pad 
 
-  note_lines = '𝄀' + '𝄚' * 15 + '𝄀'
+  note_lines = '𝄀' + '𝄚' * 14 + '𝄀'
 
   # 1 octave in violine key ('g' on 2nd line from below
   ly = y + (text_height - 1)
