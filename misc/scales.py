@@ -13,7 +13,7 @@
 #   some older version:
 #     inkscape -z --vacuum-defs -T -f scales.svg -l scale_notxt.svg
 #   inkscape 1.0.1
-#     inkscape --vacuum-defs -T scales.svg -l -o scale_notxt.svg
+#     inkscape --vacuum-defs -T scales.svg -l -o scales_notxt.svg
 #   and maybe even generate a pdf
 
 import math
