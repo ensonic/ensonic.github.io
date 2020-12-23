@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-# inkscape scales.svg
-# eog scales_notext.svg
+# inkscape scales_{flat|sharp}.svg
+# eog scales_{flat|sharp}_notext.svg
 #
 # for musical symbols see:
 # https://en.wikipedia.org/wiki/Musical_Symbols_(Unicode_block)
@@ -376,7 +376,7 @@ def gen_scale(gx, gy, acc, scale):
   ly = y + (text_height - 1)
   g.add(dwg.text(note_lines, insert=(x, ly), **note_text_style))
   g.add(dwg.text('𝄞', insert=(x, ly), **note_text_style))
-  gen_accidentals(g, x + 6, ly, acc, scale, violine_clef_acc_shift)
+  gen_accidentals(g, x + 4, ly, acc, scale, violine_clef_acc_shift)
   # using ly we get the 'f'-key
   gen_notation(g, x + 15, ly, violine_clef_note_shift[scale.base])
   y += text_height + inner_pad
@@ -385,7 +385,7 @@ def gen_scale(gx, gy, acc, scale):
   ly = y + (text_height - 1)
   g.add(dwg.text(note_lines, insert=(x, ly), **note_text_style))
   g.add(dwg.text('𝄢', insert=(x, ly), **note_text_style))
-  gen_accidentals(g, x + 6, ly, acc, scale, bass_clef_acc_shift)
+  gen_accidentals(g, x + 4, ly, acc, scale, bass_clef_acc_shift)
   gen_notation(g, x + 15, ly, bass_clef_note_shift[scale.base])  
   y += text_height
   
@@ -403,12 +403,14 @@ def render_page(base_file_name, scale_groups):
   dwg = svgwrite.Drawing(base_file_name + '.svg', **page_size)
   dwg.defs.add(dwg.style(STYLES))
   
-  # TODO: add quint increase/decrease to the side
 
   x = frame_pad
-  y = 0   # TODO: when doing multiple pages, restore 'frame_pad' and add page title
+  y = frame_pad
+  # TODO: add a page title?
+
   for sg in scale_groups:
-    # -3 quint
+    # TODO: add quint increase/decrease to the side
+
     (w,h) = gen_scale(x, y, sg.acc, sg.major)
     x += w
     (w,h) = gen_scale(x, y, sg.acc, sg.minor)
@@ -429,18 +431,24 @@ def render_page(base_file_name, scale_groups):
 def main():
   ScaleGroup = namedtuple('ScaleGroup', ['acc','major','minor'])
   
-  scale_groups = [
-    ScaleGroup('♭', Major('as'), Minor('f')),   # -4 quints
-    ScaleGroup('♭', Major('es'), Minor('c')),   # -3 quints
-    ScaleGroup('♭', Major('b'), Minor('g')),    # -2 quints
-    ScaleGroup('♭', Major('f'), Minor('d')),    # -1 quint
-    ScaleGroup('', Major('c'), Minor('a')),     # +/- 0 (no accidentals)
-    ScaleGroup('♯', Major('g'), Minor('e')),    # +1 quint
-    ScaleGroup('♯', Major('d'), Minor('h')),    # +2 quints
-    ScaleGroup('♯', Major('a'), Minor('fis'))   # +3 quints
-  ]
-  # TODO: running out of space maybe make it two pages on for the '#' and one for the 'b's
-  render_page('scales', scale_groups)
+  render_page('scales_flat', [
+    ScaleGroup('', Major('c'), Minor('a')),      # +/- 0 (no accidentals)
+    ScaleGroup('♭', Major('f'), Minor('d')),     # -1 quint
+    ScaleGroup('♭', Major('b'), Minor('g')),     # -2 quints
+    ScaleGroup('♭', Major('es'), Minor('c')),    # -3 quints
+    ScaleGroup('♭', Major('as'), Minor('f')),    # -4 quints
+    ScaleGroup('♭', Major('des'), Minor('b')),   # -5 quints
+    ScaleGroup('♭', Major('ges'), Minor('es'))   # -6 quints
+    ])
+  render_page('scales_sharp', [
+    ScaleGroup('', Major('c'), Minor('a')),      # +/- 0 (no accidentals)
+    ScaleGroup('♯', Major('g'), Minor('e')),     # +1 quint
+    ScaleGroup('♯', Major('d'), Minor('h')),     # +2 quints
+    ScaleGroup('♯', Major('a'), Minor('fis')),   # +3 quints
+    ScaleGroup('♯', Major('e'), Minor('cis')),   # +4 quints
+    ScaleGroup('♯', Major('h'), Minor('gis')),   # +5 quints
+    ScaleGroup('♯', Major('fis'), Minor('dis'))  # +6 quints
+    ])
 
 if __name__ == '__main__':
   main()

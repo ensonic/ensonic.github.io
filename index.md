@@ -38,5 +38,6 @@ and then open http://localhost:8000/<appname>/
 In order to have more music theory for reference in a compact form, I am working
 on some cheat sheets. Each of them comes with the code to generate them.
 
-* [scales](misc/scales.svg), [scales with text resolved](misc/scales_notxt.svg)
+* [scales flat](misc/scales_flat.svg), [scales flat (no fonts)](misc/scales_flat_notxt.svg)
+* [scales shaarp](misc/scales_shaarp.svg), [scales shaarp (no fonts)](misc/scales_shaarp_notxt.svg)
 
