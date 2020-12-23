@@ -82,39 +82,39 @@
     </g>
     <path
        id="rect10"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="M 23,6 H 33 V 16.4 H 23 Z" />
     <path
        id="rect12"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.3"
        d="M 33,6 H 43 V 16.4 H 33 Z" />
     <path
        id="rect14"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="M 43,6 H 53 V 16.4 H 43 Z" />
     <path
        id="rect16"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="M 53,6 H 63 V 16.4 H 53 Z" />
     <path
        id="rect18"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.3"
        d="M 63,6 H 73 V 16.4 H 63 Z" />
     <path
        id="rect20"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.3"
        d="M 73,6 H 83 V 16.4 H 73 Z" />
     <path
        id="rect22"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="M 83,6 H 93 V 16.4 H 83 Z" />
     <path
        id="rect24"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 93,6 h 10 V 16.4 H 93 Z" />
     <path
        id="rect26"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 29,6 h 8 v 7.28 h -8 z" />
     <path
        id="rect28"
@@ -122,11 +122,11 @@
        d="m 49,6 h 8 v 7.28 h -8 z" />
     <path
        id="rect30"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 59,6 h 8 v 7.28 h -8 z" />
     <path
        id="rect32"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 69,6 h 8 v 7.28 h -8 z" />
     <path
        id="rect34"
@@ -134,7 +134,7 @@
        d="m 89,6 h 8 v 7.28 h -8 z" />
     <path
        id="rect36"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 99,6 h 4 v 7.28 h -4 z" />
     <path
        id="rect38"
@@ -442,7 +442,7 @@
     </g>
     <path
        id="line76"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:none;stroke-width:0.3"
        d="M 26.200001,39.023811 H 31" />
     <g
        aria-label="𝅝"
@@ -466,7 +466,7 @@
     </g>
     <path
        id="line82"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:none;stroke-width:0.3"
        d="M 46.200001,37.5 H 51" />
     <g
        aria-label="𝅝"
@@ -530,7 +530,7 @@
     </g>
     <path
        id="rect96"
-       style="fill:none;stroke:#000000;stroke-width:0.5"
+       style="fill:none;stroke:#777777;stroke-width:0.3"
        d="M 3,3 H 106 V 41.400002 H 3 Z" />
   </g>
   <g
@@ -573,35 +573,35 @@
     </g>
     <path
        id="rect103"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 126,6 h 10 v 10.4 h -10 z" />
     <path
        id="rect105"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 136,6 h 10 v 10.4 h -10 z" />
     <path
        id="rect107"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.3"
        d="m 146,6 h 10 v 10.4 h -10 z" />
     <path
        id="rect109"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 156,6 h 10 v 10.4 h -10 z" />
     <path
        id="rect111"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 166,6 h 10 v 10.4 h -10 z" />
     <path
        id="rect113"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.3"
        d="m 176,6 h 10 v 10.4 h -10 z" />
     <path
        id="rect115"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.3"
        d="m 186,6 h 10 v 10.4 h -10 z" />
     <path
        id="rect117"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 196,6 h 10 v 10.4 h -10 z" />
     <path
        id="rect119"
@@ -609,7 +609,7 @@
        d="m 132,6 h 8 v 7.28 h -8 z" />
     <path
        id="rect121"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 142,6 h 8 v 7.28 h -8 z" />
     <path
        id="rect123"
@@ -617,11 +617,11 @@
        d="m 162,6 h 8 v 7.28 h -8 z" />
     <path
        id="rect125"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 172,6 h 8 v 7.28 h -8 z" />
     <path
        id="rect127"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 182,6 h 8 v 7.28 h -8 z" />
     <path
        id="rect129"
@@ -739,7 +739,7 @@
     </g>
     <path
        id="line141"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:none;stroke-width:0.3"
        d="M 129.2,28.023809 H 134" />
     <g
        aria-label="𝅝"
@@ -1003,7 +1003,7 @@
     </g>
     <path
        id="line183"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:none;stroke-width:0.3"
        d="M 199.2,29.880953 H 204" />
     <g
        aria-label="𝅝"
@@ -1017,7 +1017,7 @@
     </g>
     <path
        id="rect187"
-       style="fill:none;stroke:#000000;stroke-width:0.5"
+       style="fill:none;stroke:#777777;stroke-width:0.3"
        d="M 106,3 H 209 V 41.400002 H 106 Z" />
   </g>
   <g
@@ -1060,39 +1060,39 @@
     </g>
     <path
        id="rect194"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="M 23,44.400002 H 33 V 54.800001 H 23 Z" />
     <path
        id="rect196"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.3"
        d="M 33,44.400002 H 43 V 54.800001 H 33 Z" />
     <path
        id="rect198"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="M 43,44.400002 H 53 V 54.800001 H 43 Z" />
     <path
        id="rect200"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="M 53,44.400002 H 63 V 54.800001 H 53 Z" />
     <path
        id="rect202"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.3"
        d="M 63,44.400002 H 73 V 54.800001 H 63 Z" />
     <path
        id="rect204"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="M 73,44.400002 H 83 V 54.800001 H 73 Z" />
     <path
        id="rect206"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="M 83,44.400002 H 93 V 54.800001 H 83 Z" />
     <path
        id="rect208"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 93,44.400002 h 10 V 54.800001 H 93 Z" />
     <path
        id="rect210"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 29,44.400002 h 8 v 7.28 h -8 z" />
     <path
        id="rect212"
@@ -1100,7 +1100,7 @@
        d="m 49,44.400002 h 8 v 7.28 h -8 z" />
     <path
        id="rect214"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 59,44.400002 h 8 v 7.28 h -8 z" />
     <path
        id="rect216"
@@ -1112,7 +1112,7 @@
        d="m 89,44.400002 h 8 v 7.28 h -8 z" />
     <path
        id="rect220"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 99,44.400002 h 4 v 7.28 h -4 z" />
     <path
        id="rect222"
@@ -1280,7 +1280,7 @@
     </g>
     <path
        id="line244"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:none;stroke-width:0.3"
        d="M 86.199997,57.280952 H 91" />
     <g
        aria-label="𝅝"
@@ -1484,7 +1484,7 @@
     </g>
     <path
        id="rect274"
-       style="fill:none;stroke:#000000;stroke-width:0.5"
+       style="fill:none;stroke:#777777;stroke-width:0.3"
        d="M 3,41.400002 H 106 V 79.800003 H 3 Z" />
   </g>
   <g
@@ -1527,35 +1527,35 @@
     </g>
     <path
        id="rect281"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 126,44.400002 h 10 v 10.399999 h -10 z" />
     <path
        id="rect283"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 136,44.400002 h 10 v 10.399999 h -10 z" />
     <path
        id="rect285"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.3"
        d="m 146,44.400002 h 10 v 10.399999 h -10 z" />
     <path
        id="rect287"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 156,44.400002 h 10 v 10.399999 h -10 z" />
     <path
        id="rect289"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 166,44.400002 h 10 v 10.399999 h -10 z" />
     <path
        id="rect291"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.3"
        d="m 176,44.400002 h 10 v 10.399999 h -10 z" />
     <path
        id="rect293"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 186,44.400002 h 10 v 10.399999 h -10 z" />
     <path
        id="rect295"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 196,44.400002 h 10 v 10.399999 h -10 z" />
     <path
        id="rect297"
@@ -1563,7 +1563,7 @@
        d="m 132,44.400002 h 8 v 7.28 h -8 z" />
     <path
        id="rect299"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 142,44.400002 h 8 v 7.28 h -8 z" />
     <path
        id="rect301"
@@ -1571,7 +1571,7 @@
        d="m 162,44.400002 h 8 v 7.28 h -8 z" />
     <path
        id="rect303"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 172,44.400002 h 8 v 7.28 h -8 z" />
     <path
        id="rect305"
@@ -1947,7 +1947,7 @@
     </g>
     <path
        id="rect359"
-       style="fill:none;stroke:#000000;stroke-width:0.5"
+       style="fill:none;stroke:#777777;stroke-width:0.3"
        d="M 106,41.400002 H 209 V 79.800003 H 106 Z" />
   </g>
   <g
@@ -1990,35 +1990,35 @@
     </g>
     <path
        id="rect366"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 23,82.800003 h 10 v 10.4 H 23 Z" />
     <path
        id="rect368"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 33,82.800003 h 10 v 10.4 H 33 Z" />
     <path
        id="rect370"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 43,82.800003 h 10 v 10.4 H 43 Z" />
     <path
        id="rect372"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.3"
        d="m 53,82.800003 h 10 v 10.4 H 53 Z" />
     <path
        id="rect374"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 63,82.800003 h 10 v 10.4 H 63 Z" />
     <path
        id="rect376"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 73,82.800003 h 10 v 10.4 H 73 Z" />
     <path
        id="rect378"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 83,82.800003 h 10 v 10.4 H 83 Z" />
     <path
        id="rect380"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 93,82.800003 h 10 v 10.4 H 93 Z" />
     <path
        id="rect382"
@@ -2030,7 +2030,7 @@
        d="m 39,82.800003 h 8 v 7.28 h -8 z" />
     <path
        id="rect386"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 49,82.800003 h 8 v 7.28 h -8 z" />
     <path
        id="rect388"
@@ -2386,7 +2386,7 @@
     </g>
     <path
        id="rect438"
-       style="fill:none;stroke:#000000;stroke-width:0.5"
+       style="fill:none;stroke:#777777;stroke-width:0.3"
        d="M 3,79.800003 H 106 V 118.2 H 3 Z" />
   </g>
   <g
@@ -2429,35 +2429,35 @@
     </g>
     <path
        id="rect445"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 126,82.800003 h 10 v 10.4 h -10 z" />
     <path
        id="rect447"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 136,82.800003 h 10 v 10.4 h -10 z" />
     <path
        id="rect449"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 146,82.800003 h 10 v 10.4 h -10 z" />
     <path
        id="rect451"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 156,82.800003 h 10 v 10.4 h -10 z" />
     <path
        id="rect453"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 166,82.800003 h 10 v 10.4 h -10 z" />
     <path
        id="rect455"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.3"
        d="m 176,82.800003 h 10 v 10.4 h -10 z" />
     <path
        id="rect457"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 186,82.800003 h 10 v 10.4 h -10 z" />
     <path
        id="rect459"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 196,82.800003 h 10 v 10.4 h -10 z" />
     <path
        id="rect461"
@@ -2473,7 +2473,7 @@
        d="m 162,82.800003 h 8 v 7.28 h -8 z" />
     <path
        id="rect467"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 172,82.800003 h 8 v 7.28 h -8 z" />
     <path
        id="rect469"
@@ -2809,7 +2809,7 @@
     </g>
     <path
        id="line515"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:none;stroke-width:0.3"
        d="M 189.2,106.68095 H 194" />
     <g
        aria-label="𝅝"
@@ -2833,7 +2833,7 @@
     </g>
     <path
        id="rect521"
-       style="fill:none;stroke:#000000;stroke-width:0.5"
+       style="fill:none;stroke:#777777;stroke-width:0.3"
        d="M 106,79.800003 H 209 V 118.2 H 106 Z" />
   </g>
   <g
@@ -2876,35 +2876,35 @@
     </g>
     <path
        id="rect528"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 23,121.2 h 10 v 10.4 H 23 Z" />
     <path
        id="rect530"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 33,121.2 h 10 v 10.4 H 33 Z" />
     <path
        id="rect532"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 43,121.2 h 10 v 10.4 H 43 Z" />
     <path
        id="rect534"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 53,121.2 h 10 v 10.4 H 53 Z" />
     <path
        id="rect536"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 63,121.2 h 10 v 10.4 H 63 Z" />
     <path
        id="rect538"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 73,121.2 h 10 v 10.4 H 73 Z" />
     <path
        id="rect540"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 83,121.2 h 10 v 10.4 H 83 Z" />
     <path
        id="rect542"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 93,121.2 h 10 v 10.4 H 93 Z" />
     <path
        id="rect544"
@@ -3012,7 +3012,7 @@
     </g>
     <path
        id="line560"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:none;stroke-width:0.3"
        d="M 26.200001,143.22382 H 31" />
     <g
        aria-label="𝅝"
@@ -3246,7 +3246,7 @@
     </g>
     <path
        id="line596"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:none;stroke-width:0.3"
        d="M 96.199997,145.08095 H 101" />
     <g
        aria-label="𝅝"
@@ -3260,7 +3260,7 @@
     </g>
     <path
        id="rect600"
-       style="fill:none;stroke:#000000;stroke-width:0.5"
+       style="fill:none;stroke:#777777;stroke-width:0.3"
        d="m 3,118.2 h 103 v 38.4 H 3 Z" />
   </g>
   <g
@@ -3303,35 +3303,35 @@
     </g>
     <path
        id="rect607"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 126,121.2 h 10 v 10.4 h -10 z" />
     <path
        id="rect609"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 136,121.2 h 10 v 10.4 h -10 z" />
     <path
        id="rect611"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 146,121.2 h 10 v 10.4 h -10 z" />
     <path
        id="rect613"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 156,121.2 h 10 v 10.4 h -10 z" />
     <path
        id="rect615"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 166,121.2 h 10 v 10.4 h -10 z" />
     <path
        id="rect617"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 176,121.2 h 10 v 10.4 h -10 z" />
     <path
        id="rect619"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 186,121.2 h 10 v 10.4 h -10 z" />
     <path
        id="rect621"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 196,121.2 h 10 v 10.4 h -10 z" />
     <path
        id="rect623"
@@ -3513,7 +3513,7 @@
     </g>
     <path
        id="line655"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:none;stroke-width:0.3"
        d="M 199.2,134.08095 H 204" />
     <g
        aria-label="𝅝"
@@ -3687,7 +3687,7 @@
     </g>
     <path
        id="rect679"
-       style="fill:none;stroke:#000000;stroke-width:0.5"
+       style="fill:none;stroke:#777777;stroke-width:0.3"
        d="m 106,118.2 h 103 v 38.4 H 106 Z" />
   </g>
   <g
@@ -3730,35 +3730,35 @@
     </g>
     <path
        id="rect686"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 23,159.60001 h 10 v 10.4 H 23 Z" />
     <path
        id="rect688"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 33,159.60001 h 10 v 10.4 H 33 Z" />
     <path
        id="rect690"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 43,159.60001 h 10 v 10.4 H 43 Z" />
     <path
        id="rect692"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 53,159.60001 h 10 v 10.4 H 53 Z" />
     <path
        id="rect694"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 63,159.60001 h 10 v 10.4 H 63 Z" />
     <path
        id="rect696"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 73,159.60001 h 10 v 10.4 H 73 Z" />
     <path
        id="rect698"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.3"
        d="m 83,159.60001 h 10 v 10.4 H 83 Z" />
     <path
        id="rect700"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 93,159.60001 h 10 v 10.4 H 93 Z" />
     <path
        id="rect702"
@@ -3778,7 +3778,7 @@
        d="m 69,159.60001 h 8 v 7.28 h -8 z" />
     <path
        id="rect710"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 89,159.60001 h 8 v 7.28 h -8 z" />
     <path
        id="rect712"
@@ -3786,7 +3786,7 @@
        d="m 99,159.60001 h 4 v 7.28 h -4 z" />
     <path
        id="rect714"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 23,159.60001 h 4 v 7.28 h -4 z" />
     <g
        aria-label="𝄀𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄀"
@@ -4130,7 +4130,7 @@
     </g>
     <path
        id="rect760"
-       style="fill:none;stroke:#000000;stroke-width:0.5"
+       style="fill:none;stroke:#777777;stroke-width:0.3"
        d="m 3,156.60001 h 103 v 38.4 H 3 Z" />
   </g>
   <g
@@ -4173,39 +4173,39 @@
     </g>
     <path
        id="rect767"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 126,159.60001 h 10 v 10.4 h -10 z" />
     <path
        id="rect769"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.3"
        d="m 136,159.60001 h 10 v 10.4 h -10 z" />
     <path
        id="rect771"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 146,159.60001 h 10 v 10.4 h -10 z" />
     <path
        id="rect773"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 156,159.60001 h 10 v 10.4 h -10 z" />
     <path
        id="rect775"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 166,159.60001 h 10 v 10.4 h -10 z" />
     <path
        id="rect777"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 176,159.60001 h 10 v 10.4 h -10 z" />
     <path
        id="rect779"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 186,159.60001 h 10 v 10.4 h -10 z" />
     <path
        id="rect781"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 196,159.60001 h 10 v 10.4 h -10 z" />
     <path
        id="rect783"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 142,159.60001 h 8 v 7.28 h -8 z" />
     <path
        id="rect785"
@@ -4489,7 +4489,7 @@
     </g>
     <path
        id="line823"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:none;stroke-width:0.3"
        d="M 129.2,192.62381 H 134" />
     <g
        aria-label="𝅝"
@@ -4573,7 +4573,7 @@
     </g>
     <path
        id="rect841"
-       style="fill:none;stroke:#000000;stroke-width:0.5"
+       style="fill:none;stroke:#777777;stroke-width:0.3"
        d="m 106,156.60001 h 103 v 38.4 H 106 Z" />
   </g>
   <g
@@ -4616,35 +4616,35 @@
     </g>
     <path
        id="rect848"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 23,198 h 10 v 10.4 H 23 Z" />
     <path
        id="rect850"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 33,198 h 10 v 10.4 H 33 Z" />
     <path
        id="rect852"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.3"
        d="m 43,198 h 10 v 10.4 H 43 Z" />
     <path
        id="rect854"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 53,198 h 10 v 10.4 H 53 Z" />
     <path
        id="rect856"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 63,198 h 10 v 10.4 H 63 Z" />
     <path
        id="rect858"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 73,198 h 10 v 10.4 H 73 Z" />
     <path
        id="rect860"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.3"
        d="m 83,198 h 10 v 10.4 H 83 Z" />
     <path
        id="rect862"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 93,198 h 10 v 10.4 H 93 Z" />
     <path
        id="rect864"
@@ -4652,7 +4652,7 @@
        d="m 29,198 h 8 v 7.28 h -8 z" />
     <path
        id="rect866"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 49,198 h 8 v 7.28 h -8 z" />
     <path
        id="rect868"
@@ -4664,7 +4664,7 @@
        d="m 69,198 h 8 v 7.28 h -8 z" />
     <path
        id="rect872"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 89,198 h 8 v 7.28 h -8 z" />
     <path
        id="rect874"
@@ -4672,7 +4672,7 @@
        d="m 99,198 h 4 v 7.28 h -4 z" />
     <path
        id="rect876"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 23,198 h 4 v 7.28 h -4 z" />
     <g
        aria-label="𝄀𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄀"
@@ -5016,7 +5016,7 @@
     </g>
     <path
        id="line922"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:none;stroke-width:0.3"
        d="M 86.199997,221.88095 H 91" />
     <g
        aria-label="𝅝"
@@ -5040,7 +5040,7 @@
     </g>
     <path
        id="rect928"
-       style="fill:none;stroke:#000000;stroke-width:0.5"
+       style="fill:none;stroke:#777777;stroke-width:0.3"
        d="m 3,195 h 103 v 38.4 H 3 Z" />
   </g>
   <g
@@ -5083,39 +5083,39 @@
     </g>
     <path
        id="rect935"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 126,198 h 10 v 10.4 h -10 z" />
     <path
        id="rect937"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.3"
        d="m 136,198 h 10 v 10.4 h -10 z" />
     <path
        id="rect939"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 146,198 h 10 v 10.4 h -10 z" />
     <path
        id="rect941"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 156,198 h 10 v 10.4 h -10 z" />
     <path
        id="rect943"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.3"
        d="m 166,198 h 10 v 10.4 h -10 z" />
     <path
        id="rect945"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 176,198 h 10 v 10.4 h -10 z" />
     <path
        id="rect947"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 186,198 h 10 v 10.4 h -10 z" />
     <path
        id="rect949"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 196,198 h 10 v 10.4 h -10 z" />
     <path
        id="rect951"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 142,198 h 8 v 7.28 h -8 z" />
     <path
        id="rect953"
@@ -5123,7 +5123,7 @@
        d="m 152,198 h 8 v 7.28 h -8 z" />
     <path
        id="rect955"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 172,198 h 8 v 7.28 h -8 z" />
     <path
        id="rect957"
@@ -5299,7 +5299,7 @@
     </g>
     <path
        id="line983"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:none;stroke-width:0.3"
        d="M 189.2,210.88095 H 194" />
     <g
        aria-label="𝅝"
@@ -5503,7 +5503,7 @@
     </g>
     <path
        id="rect1013"
-       style="fill:none;stroke:#000000;stroke-width:0.5"
+       style="fill:none;stroke:#777777;stroke-width:0.3"
        d="m 106,195 h 103 v 38.4 H 106 Z" />
   </g>
   <g
@@ -5546,35 +5546,35 @@
     </g>
     <path
        id="rect1020"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 23,236.39999 h 10 v 10.4 H 23 Z" />
     <path
        id="rect1022"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 33,236.39999 h 10 v 10.4 H 33 Z" />
     <path
        id="rect1024"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.3"
        d="m 43,236.39999 h 10 v 10.4 H 43 Z" />
     <path
        id="rect1026"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 53,236.39999 h 10 v 10.4 H 53 Z" />
     <path
        id="rect1028"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 63,236.39999 h 10 v 10.4 H 63 Z" />
     <path
        id="rect1030"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.3"
        d="m 73,236.39999 h 10 v 10.4 H 73 Z" />
     <path
        id="rect1032"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.3"
        d="m 83,236.39999 h 10 v 10.4 H 83 Z" />
     <path
        id="rect1034"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 93,236.39999 h 10 v 10.4 H 93 Z" />
     <path
        id="rect1036"
@@ -5582,7 +5582,7 @@
        d="m 29,236.39999 h 8 v 7.28 h -8 z" />
     <path
        id="rect1038"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 49,236.39999 h 8 v 7.28 h -8 z" />
     <path
        id="rect1040"
@@ -5590,11 +5590,11 @@
        d="m 59,236.39999 h 8 v 7.28 h -8 z" />
     <path
        id="rect1042"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 79,236.39999 h 8 v 7.28 h -8 z" />
     <path
        id="rect1044"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 89,236.39999 h 8 v 7.28 h -8 z" />
     <path
        id="rect1046"
@@ -5602,7 +5602,7 @@
        d="m 99,236.39999 h 4 v 7.28 h -4 z" />
     <path
        id="rect1048"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 23,236.39999 h 4 v 7.28 h -4 z" />
     <g
        aria-label="𝄀𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄀"
@@ -5786,7 +5786,7 @@
     </g>
     <path
        id="line1074"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:none;stroke-width:0.3"
        d="M 96.199997,249.28094 H 101" />
     <g
        aria-label="𝅝"
@@ -5990,7 +5990,7 @@
     </g>
     <path
        id="rect1104"
-       style="fill:none;stroke:#000000;stroke-width:0.5"
+       style="fill:none;stroke:#777777;stroke-width:0.3"
        d="M 3,233.39999 H 106 V 271.8 H 3 Z" />
   </g>
   <g
@@ -6037,43 +6037,43 @@
     </g>
     <path
        id="rect1111"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.3"
        d="m 126,236.39999 h 10 v 10.4 h -10 z" />
     <path
        id="rect1113"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.3"
        d="m 136,236.39999 h 10 v 10.4 h -10 z" />
     <path
        id="rect1115"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 146,236.39999 h 10 v 10.4 h -10 z" />
     <path
        id="rect1117"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 156,236.39999 h 10 v 10.4 h -10 z" />
     <path
        id="rect1119"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.3"
        d="m 166,236.39999 h 10 v 10.4 h -10 z" />
     <path
        id="rect1121"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 176,236.39999 h 10 v 10.4 h -10 z" />
     <path
        id="rect1123"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ccbbaa;stroke:#000000;stroke-width:0.3"
        d="m 186,236.39999 h 10 v 10.4 h -10 z" />
     <path
        id="rect1125"
-       style="fill:none;stroke:#000000;stroke-width:0.3"
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.3"
        d="m 196,236.39999 h 10 v 10.4 h -10 z" />
     <path
        id="rect1127"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 132,236.39999 h 8 v 7.28 h -8 z" />
     <path
        id="rect1129"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 142,236.39999 h 8 v 7.28 h -8 z" />
     <path
        id="rect1131"
@@ -6081,7 +6081,7 @@
        d="m 152,236.39999 h 8 v 7.28 h -8 z" />
     <path
        id="rect1133"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 172,236.39999 h 8 v 7.28 h -8 z" />
     <path
        id="rect1135"
@@ -6089,7 +6089,7 @@
        d="m 182,236.39999 h 8 v 7.28 h -8 z" />
     <path
        id="rect1137"
-       style="fill:#000000;stroke:#000000;stroke-width:0.3"
+       style="fill:#776655;stroke:#000000;stroke-width:0.3"
        d="m 202,236.39999 h 4 v 7.28 h -4 z" />
     <g
        aria-label="𝄀𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄚𝄀"
@@ -6473,7 +6473,7 @@
     </g>
     <path
        id="rect1191"
-       style="fill:none;stroke:#000000;stroke-width:0.5"
+       style="fill:none;stroke:#777777;stroke-width:0.3"
        d="M 106,233.39999 H 209 V 271.8 H 106 Z" />
   </g>
 </svg>

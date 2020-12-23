@@ -46,27 +46,34 @@ inner_pad = 3
 
 # styles
 frame_style = {
-    'stroke': svgwrite.rgb(0, 0, 0, '%'),
-    'stroke_width': 0.5,
+    'stroke': '#777777',
+    'stroke_width': 0.3,
     'fill': 'none'
 }
 
 staff_style = {
-    'stroke': svgwrite.rgb(0, 0, 0, '%'),
     'stroke_width': 0.3,
     'fill': 'none'
 }
 
 w_key_style = {
-    'stroke': svgwrite.rgb(0, 0, 0, '%'),
+    'stroke': '#000000',
     'stroke_width': 0.3,
-    'fill': 'none'
+    'fill': '#ffffff'
+}
+w_key_sel_style = {
+  **w_key_style,
+  'fill': '#ccbbaa'
 }
 
 b_key_style = {
-    'stroke': svgwrite.rgb(0, 0, 0, '%'),
+    'stroke': '#000000',
     'stroke_width': 0.3,
-    'fill': svgwrite.rgb(0, 0, 0, '%'),
+    'fill': '#000000'
+}
+b_key_sel_style = {
+  **b_key_style,
+  'fill': '#776655'
 }
 
 label_height = 4
@@ -223,9 +230,15 @@ class Scale:
   
   def __init__(self, base):
     self.base = base
+    bn =  scale_shift[self.base]
+    self.key_nums = []
+    for s in self.steps:
+      bn = (bn + s) % 12
+      self.key_nums.append(bn)
   
   def title(self):
     return self.base + '-' + self.kind
+   
 
 class Major(Scale):
   kind = 'Major'
@@ -276,14 +289,8 @@ def gen_accidentals(g, lx, ly, acc, scale, shift):
     notes = notes_raised
     order = order_raised
   accs = []
-  # debug
-  print(scale.title())
-  # debug
   for i in range(7):
     k = (k + scale.steps[i]) % 12
-    # debug
-    print("  %s : %s" % (IS_BLACK[k], notes[k]))
-    # debug
     if IS_BLACK[k]:
       accs.append(notes[k])
 
@@ -294,35 +301,53 @@ def gen_accidentals(g, lx, ly, acc, scale, shift):
       lx += 2
 
 def gen_keyboard(g, lx, ly, h, scale):
-  # TODO: color the keys in scale
-  
   # get note numbers for current scale
-  # c-maj: 0,2,4,5,7,9,11,12
+  k_num = scale.key_nums
+  
+  k = bk_shift[scale.base]
+  wk_num = [0,2,4,5,7,9,11]
   
   x = lx
+  s = (10, h)
   for i in range(8):
-    g.add(dwg.rect(insert=(x,ly), size=(10, h), **w_key_style))
+    if wk_num[k] in k_num:
+      g.add(dwg.rect(insert=(x,ly), size=s, **w_key_sel_style))
+    else:
+      g.add(dwg.rect(insert=(x,ly), size=s, **w_key_style))
     x += 10
+    k = (k + 1) % 7
 
   k = bk_shift[scale.base]
-  bk = [True, True, False, True, True, True, False]
+  bk_num = [1,3,-1,6,8,10,-1]
 
   x = lx + 6
   h *= 0.7
+  s = (8, h)
   for i in range(7):
-    if bk[k]:
-      g.add(dwg.rect(insert=(x,ly), size=(8, h), **b_key_style))
+    if bk_num[k] != -1:
+      if bk_num[k] in k_num:
+        g.add(dwg.rect(insert=(x,ly), size=s, **b_key_sel_style))
+      else:
+        g.add(dwg.rect(insert=(x,ly), size=s, **b_key_style))
     x += 10
     k = (k + 1) % 7
+    
+  s = (4, h)
   # handle last partial key
-  if bk[k]:
-    g.add(dwg.rect(insert=(x,ly), size=(4, h), **b_key_style))
+  if bk_num[k] != -1:
+    if bk_num[k] in k_num:
+      g.add(dwg.rect(insert=(x,ly), size=s, **b_key_sel_style))
+    else:
+      g.add(dwg.rect(insert=(x,ly), size=s, **b_key_style))
 
   # handle first partial key
   k = (bk_shift[scale.base] + 6) % 7
-  if bk[k]:
+  if bk_num[k] != -1:
     x = lx
-    g.add(dwg.rect(insert=(x,ly), size=(4, h), **b_key_style))
+    if bk_num[k] in k_num:
+      g.add(dwg.rect(insert=(x,ly), size=s, **b_key_sel_style))
+    else:
+      g.add(dwg.rect(insert=(x,ly), size=s, **b_key_style))
 
 
 def gen_scale(gx, gy, acc, scale):
