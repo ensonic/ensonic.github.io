@@ -9,24 +9,18 @@
 
 # TODO:
 # * localize
-# * generate a variant through inkscape that has the fonts resolved
-#   some older version:
-#     inkscape -z --vacuum-defs -T -f scales.svg -l scale_notxt.svg
-#   inkscape 1.0.1
-#     inkscape --vacuum-defs -T scales.svg -l -o scales_notxt.svg
-#   and maybe even generate a pdf
+# * maybe even generate a pdf
+#     inkscape scales.svg --export-pdf=scales.pdf
+#  might need pdftk to concat the two pages
 
 import math
+import subprocess
 import svgwrite
 import sys
 
 from collections import namedtuple
 
 dwg = None
-
-# inconsolata: not supporting bold, '0' are marked to distinguish from 'O'
-# andale mono: same
-# monospace: '0' is marked and '-' taking up too much space
 
 # changing 'weight' is not smooth :/, going down a bit might just switch to a different font
 STYLES = """.text {
@@ -43,6 +37,12 @@ STYLES = """.text {
 """
 
 # layout
+page_size = {
+    # A4 paper
+    'size': ('210mm', '297mm'),
+    'viewBox': ('0 0 210 297'),
+}
+
 frame_pad = 2.7
 inner_pad = 2.7
 
@@ -397,24 +397,36 @@ def gen_scale(gx, gy, acc, scale):
   return (w,h)
 
 
-def main():
+def render_page(base_file_name, scale_groups):
   global dwg
-
-  file_name = 'scales.svg'
-
-  page_size = {
-      # A4 paper
-      'size': ('210mm', '297mm'),
-      'viewBox': ('0 0 210 297'),
-  }
-  dwg = svgwrite.Drawing(file_name, **page_size)
+  
+  dwg = svgwrite.Drawing(base_file_name + '.svg', **page_size)
   dwg.defs.add(dwg.style(STYLES))
-
+  
   # TODO: add quint increase/decrease to the side
 
   x = frame_pad
-  y = 0
+  y = 0   # TODO: when doing multiple pages, restore 'frame_pad' and add page title
+  for sg in scale_groups:
+    # -3 quint
+    (w,h) = gen_scale(x, y, sg.acc, sg.major)
+    x += w
+    (w,h) = gen_scale(x, y, sg.acc, sg.minor)
+    x += w
 
+    x = frame_pad
+    y += h
+
+  dwg.save()
+  try:
+    subprocess.run([
+      'inkscape','--vacuum-defs', '-T', base_file_name + '.svg', 
+      '-l', '-o', base_file_name + '_notxt.svg'
+      ])
+  except:
+    pass
+
+def main():
   ScaleGroup = namedtuple('ScaleGroup', ['acc','major','minor'])
   
   scale_groups = [
@@ -428,19 +440,7 @@ def main():
     ScaleGroup('♯', Major('a'), Minor('fis'))   # +3 quints
   ]
   # TODO: running out of space maybe make it two pages on for the '#' and one for the 'b's
-  
-  for sg in scale_groups:
-    # -3 quint
-    (w,h) = gen_scale(x, y, sg.acc, sg.major)
-    x += w
-    (w,h) = gen_scale(x, y, sg.acc, sg.minor)
-    x += w
-
-    x = frame_pad
-    y += h
-
-  dwg.save()
-
+  render_page('scales', scale_groups)
 
 if __name__ == '__main__':
   main()
