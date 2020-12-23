@@ -28,10 +28,9 @@ dwg = None
 
 # changing 'weight' is not smooth :/, going down a bit might just switch to a different font
 STYLES = """.text {
-  font-family: 'FreeSerif';
+  font-family: 'Sans';
   font-weight: 500;
   font-synthesis: weight;
-  font-stretch: 65%;
   fill: #000000;
   paint-order: stroke;
   stroke: #000000;
@@ -70,15 +69,17 @@ b_key_style = {
     'fill': svgwrite.rgb(0, 0, 0, '%'),
 }
 
-label_height = 5
+label_height = 4
 lable_text_style = {
     'font_size': label_height,
+    'font-family': 'Sans',
     'class': 'text'
 }
 
 text_height = 8
 note_text_style = {
     'font_size': text_height,
+    'font-family': 'FreeSerif',
     'class': 'text'
 }
 hn_height = text_height / 10.5   # half note height: 5 lines * 2 positions
@@ -86,6 +87,7 @@ hn_height = text_height / 10.5   # half note height: 5 lines * 2 positions
 # The chart for accidentials have somehow a different size??
 acc_text_style = {
     'font_size': text_height / 2,
+    'font-family': 'FreeSerif',
     'class': 'text'
 }
 
@@ -216,29 +218,29 @@ IS_BLACK = [ False, True, False, True, False, False, True, False, True, False, T
 # music theory
 
 class Scale:
-  name = ''
+  kind = ''
   steps = []
   
   def __init__(self, base):
     self.base = base
   
   def title(self):
-    return base + '-' + self.name
+    return self.base + '-' + self.kind
 
 class Major(Scale):
-  name = 'Maj.'
+  kind = 'Major'
   steps = [ 0, 2, 2, 1, 2, 2, 2, 1 ]
 
   def title(self):
-    return self.base.capitalize() + '-' + self.name
+    return self.base.capitalize() + '-' + self.kind
 
 
 class Minor(Scale):
-  name = 'Min.'
+  kind = 'Minor'
   steps = [ 0, 2, 1, 2, 2, 1, 2, 2 ]
 
   def title(self):
-    return self.base + '-' + self.name
+    return self.base + '-' + self.kind
 
 # layout helpers
 
@@ -294,12 +296,14 @@ def gen_accidentals(g, lx, ly, acc, scale, shift):
 def gen_keyboard(g, lx, ly, h, scale):
   # TODO: color the keys in scale
   
+  # get note numbers for current scale
+  # c-maj: 0,2,4,5,7,9,11,12
+  
   x = lx
   for i in range(8):
     g.add(dwg.rect(insert=(x,ly), size=(10, h), **w_key_style))
     x += 10
 
-  # start on a white key
   k = bk_shift[scale.base]
   bk = [True, True, False, True, True, True, False]
 
@@ -328,7 +332,8 @@ def gen_scale(gx, gy, acc, scale):
   
   # title  
   ly = y + (label_height - 1)
-  g.add(dwg.text(scale.title(), insert=(x, ly), **lable_text_style))
+  g.add(dwg.text(scale.base, insert=(x, ly), **lable_text_style))
+  g.add(dwg.text(scale.kind, insert=(x, ly + 1 + label_height), **lable_text_style))
   x += 6  # indent everything
 
   # 1 octave on keyboard
