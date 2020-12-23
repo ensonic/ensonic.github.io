@@ -20,6 +20,8 @@ import math
 import svgwrite
 import sys
 
+from collections import namedtuple
+
 dwg = None
 
 # inconsolata: not supporting bold, '0' are marked to distinguish from 'O'
@@ -41,8 +43,8 @@ STYLES = """.text {
 """
 
 # layout
-frame_pad = 3
-inner_pad = 3
+frame_pad = 2.7
+inner_pad = 2.7
 
 # styles
 frame_style = {
@@ -362,9 +364,11 @@ def gen_scale(gx, gy, acc, scale):
   x += 6  # indent everything
 
   # 1 octave on keyboard
-  h = text_height * 1.3
+  h = text_height * 1.25
   gen_keyboard(g, x + 11, y, h, scale)
   y += h + inner_pad 
+  
+  # TODO: maybe add note names?  
 
   note_lines = '𝄀' + '𝄚' * 14 + '𝄀'
 
@@ -409,67 +413,31 @@ def main():
   # TODO: add quint increase/decrease to the side
 
   x = frame_pad
-  y = frame_pad
+  y = 0
 
-  # -3 quint
-  (w,h) = gen_scale(x, y, '♭', Major('es'))
-  x += w
-  (w,h) = gen_scale(x, y, '♭', Minor('c'))
-  x += w
-
-  x = frame_pad
-  y += h
-
-  # -2 quint
-  (w,h) = gen_scale(x, y, '♭', Major('b'))
-  x += w
-  (w,h) = gen_scale(x, y, '♭', Minor('g'))
-  x += w
-
-  x = frame_pad
-  y += h
-
-  # -1 quint
-  (w,h) = gen_scale(x, y, '♭', Major('f'))
-  x += w
-  (w,h) = gen_scale(x, y, '♭', Minor('d'))
-  x += w
-
-  x = frame_pad
-  y += h
-
-  # base row (no accidentals)
-  (w,h) = gen_scale(x, y, '', Major('c'))
-  x += w
-  (w,h) = gen_scale(x, y, '', Minor('a'))
-  x += w
+  ScaleGroup = namedtuple('ScaleGroup', ['acc','major','minor'])
   
-  x = frame_pad
-  y += h
+  scale_groups = [
+    ScaleGroup('♭', Major('as'), Minor('f')),   # -4 quints
+    ScaleGroup('♭', Major('es'), Minor('c')),   # -3 quints
+    ScaleGroup('♭', Major('b'), Minor('g')),    # -2 quints
+    ScaleGroup('♭', Major('f'), Minor('d')),    # -1 quint
+    ScaleGroup('', Major('c'), Minor('a')),     # +/- 0 (no accidentals)
+    ScaleGroup('♯', Major('g'), Minor('e')),    # +1 quint
+    ScaleGroup('♯', Major('d'), Minor('h')),    # +2 quints
+    ScaleGroup('♯', Major('a'), Minor('fis'))   # +3 quints
+  ]
+  # TODO: running out of space maybe make it two pages on for the '#' and one for the 'b's
+  
+  for sg in scale_groups:
+    # -3 quint
+    (w,h) = gen_scale(x, y, sg.acc, sg.major)
+    x += w
+    (w,h) = gen_scale(x, y, sg.acc, sg.minor)
+    x += w
 
-  # +1 quint
-  (w,h) = gen_scale(x, y, '♯', Major('g'))
-  x += w
-  (w,h) = gen_scale(x, y, '♯', Minor('e'))
-  x += w
-
-  x = frame_pad
-  y += h
-
-  # +2 quint
-  (w,h) = gen_scale(x, y, '♯', Major('d'))
-  x += w
-  (w,h) = gen_scale(x, y, '♯', Minor('h'))
-  x += w
-
-  x = frame_pad
-  y += h
-
-  # +3 quint
-  (w,h) = gen_scale(x, y, '♯', Major('a'))
-  x += w
-  (w,h) = gen_scale(x, y, '♯', Minor('fis'))
-  x += w
+    x = frame_pad
+    y += h
 
   dwg.save()
 
