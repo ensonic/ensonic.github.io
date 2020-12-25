@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 # inkscape scales_{flat|sharp}.svg
 # eog scales_{flat|sharp}_notext.svg
+# evince scales.pdf
+#
+# for some of the conversion you need to have inkscape and pdftk installed
 #
 # for musical symbols see:
 # https://en.wikipedia.org/wiki/Musical_Symbols_(Unicode_block)
@@ -9,9 +12,6 @@
 
 # TODO:
 # * localize
-# * maybe even generate a pdf
-#     inkscape scales.svg --export-pdf=scales.pdf
-#  might need pdftk to concat the two pages
 
 import math
 import subprocess
@@ -425,6 +425,9 @@ def render_page(base_file_name, scale_groups):
       'inkscape','--vacuum-defs', '-T', base_file_name + '.svg', 
       '-l', '-o', base_file_name + '_notxt.svg'
       ])
+    subprocess.run([
+      'inkscape', base_file_name + '.svg', '--export-pdf=' + base_file_name + '.pdf'
+      ])
   except:
     pass
 
@@ -449,6 +452,14 @@ def main():
     ScaleGroup('♯', Major('h'), Minor('gis')),   # +5 quints
     ScaleGroup('♯', Major('fis'), Minor('dis'))  # +6 quints
     ])
+  try:
+    subprocess.run([
+      'pdftk', 'scales_flat.pdf', 'scales_sharp.pdf', 'cat', 'output', 'scales.pdf'
+      ])
+  except:
+    pass
+    
+  
 
 if __name__ == '__main__':
   main()
