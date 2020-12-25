@@ -150,7 +150,7 @@ violine_clef_acc_shift = {
   'es': -6,
   'e': -6,
   'fis': -7,
-  'ges': -8,
+  'ges': -1,
   'gis': -8,
   'as': -2,
   'ais': -2,
@@ -165,7 +165,7 @@ bass_clef_acc_shift = {
   'es': -4,
   'e': -4,
   'fis': -5,
-  'ges': -6,
+  'ges': 1,
   'gis': -6,
   'as': 0,
   'ais': 0,
@@ -219,10 +219,6 @@ notes_lowered = ['c', 'des', 'd', 'es', 'e', 'f', 'ges', 'g', 'as', 'a', 'b', 'h
 
 order_raised = ['fis', 'cis', 'gis', 'dis', 'ais', 'his']
 order_lowered = ['b', 'es', 'as', 'des', 'ges', 'ces', 'fes']
-
-
-IS_BLACK = [ False, True, False, True, False, False, True, False, True, False, True, False ]
-
 
 # music theory
 
@@ -284,6 +280,9 @@ def gen_accidentals(g, lx, ly, acc, scale, shift):
   if acc == '':
     return
 
+  # TODO: this is not what we need, we need to know wheter the note is raised or lowered 
+  IS_BLACK = [ False, True, False, True, False, False, True, False, True, False, True, False ]
+
   k = scale_shift[scale.base]
   notes = notes_lowered
   order = order_lowered
@@ -300,7 +299,7 @@ def gen_accidentals(g, lx, ly, acc, scale, shift):
     if n in accs:    
       lys = (ly + (hn_height * shift[n]))
       g.add(dwg.text(acc, insert=(lx, lys), **acc_text_style))
-      lx += 2
+      lx += 1.8
 
 def gen_keyboard(g, lx, ly, h, scale):
   # get note numbers for current scale
