@@ -1,11 +1,11 @@
 ## Ensonic's articles and web app experiemnts
 
-On this page I'll host some articles and publish some web experiemnts.
+On this page I'll host some articles and publish some web app experiments.
 
 ### Web app experiments
 
-When you open any of those below in a modern browser (tested with chome) you
-should get a banner asking wheter you'd like to install the app. If such a 
+When you open any of those below in a modern browser (tested with chrome) you
+should get a banner asking whether you'd like to install the app. If such a 
 banner does not show up, open the 3-dots menu on the top-right and select
 "Install 'App Name'" / or "Add as a desktop shortcut". When you start the app
 though the newly created shortcut they will open in fullscreen and work
