@@ -2,6 +2,8 @@
 
 On this page I'll host some articles and publish some web app experiments.
 
+{:toc}
+
 ### Web app experiments
 
 When you open any of those below in a modern browser (tested with chrome) you
