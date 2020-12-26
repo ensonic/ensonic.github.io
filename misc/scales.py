@@ -261,12 +261,8 @@ class Minor(Scale):
 # layout helpers
 
 def new_group(gx, gy, title):
-  x = gx + inner_pad
-  y = gy + inner_pad
-
   g = dwg.add(dwg.g(id='g_' + title.lower().replace(' ','_')))
-
-  return (g,x,y)
+  return (g, gx + inner_pad, gy + inner_pad)
     
 
 def gen_notation(g, lx, ly, shift):
