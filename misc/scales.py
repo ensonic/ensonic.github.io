@@ -270,6 +270,7 @@ def gen_notation(g, lx, ly, shift):
     lx += 10
     lys -= hn_height
 
+
 def gen_accidentals(g, lx, ly, accs, scale, shift):
   if accs == '':
     return
@@ -286,6 +287,7 @@ def gen_accidentals(g, lx, ly, accs, scale, shift):
     lys = (ly + (hn_height * shift[n]))
     g.add(dwg.text(acc, insert=(lx, lys), **acc_text_style))
     lx += 1.5
+
 
 def gen_keyboard(g, lx, ly, h, scale):
   # get note numbers for current scale
@@ -387,7 +389,6 @@ def render_page(base_file_name, scale_groups):
   
   dwg = svgwrite.Drawing(base_file_name + '.svg', **page_size)
   dwg.defs.add(dwg.style(STYLES))
-  
 
   x = frame_pad
   y = frame_pad
@@ -415,6 +416,7 @@ def render_page(base_file_name, scale_groups):
       ])
   except:
     pass
+
 
 def main():
   ScaleGroup = namedtuple('ScaleGroup', ['acc','major','minor'])
