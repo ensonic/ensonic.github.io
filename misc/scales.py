@@ -22,20 +22,6 @@ from collections import namedtuple
 
 dwg = None
 
-# changing 'weight' is not smooth :/, going down a bit might just switch to a different font
-STYLES = """.text {
-  font-family: 'Sans';
-  font-weight: 500;
-  font-synthesis: weight;
-  fill: #000000;
-  paint-order: stroke;
-  stroke: #000000;
-  stroke-width: 0.1px;
-  stroke-linecap: butt;
-  stroke-linejoin: miter;
-}
-"""
-
 # layout
 page_size = {
     # A4 paper
@@ -47,20 +33,31 @@ frame_pad = 2.7
 inner_pad = 2.7
 
 # styles
+STYLES = """.text {
+  font-family: 'Sans';
+  fill: #000000;
+}
+.notes {
+  font-family: 'FreeSerif';
+  fill: #000000;
+}
+"""
+
 frame_style = {
     'stroke': '#777777',
-    'stroke_width': 0.3,
+    'stroke-width': 0.3,
     'fill': 'none'
 }
 
 staff_style = {
-    'stroke_width': 0.3,
+    'stroke': '#000000',
+    'stroke-width': 0.2,
     'fill': 'none'
 }
 
 w_key_style = {
     'stroke': '#000000',
-    'stroke_width': 0.3,
+    'stroke-width': 0.3,
     'fill': '#ffffff'
 }
 w_key_sel_style = {
@@ -70,7 +67,7 @@ w_key_sel_style = {
 
 b_key_style = {
     'stroke': '#000000',
-    'stroke_width': 0.3,
+    'stroke-width': 0.3,
     'fill': '#000000'
 }
 b_key_sel_style = {
@@ -80,26 +77,22 @@ b_key_sel_style = {
 
 label_height = 4
 lable_text_style = {
-    'font_size': label_height,
-    'font-family': 'Sans',
+    'font-size': label_height,
     'class': 'text'
 }
 
 text_height = 8
 note_text_style = {
-    'font_size': text_height,
-    'font-family': 'FreeSerif',
-    'class': 'text'
+    'font-size': text_height,
+    'class': 'notes'
 }
 hn_height = text_height / 10.5   # half note height: 5 lines * 2 positions
 
-# The chart for accidentials have somehow a different size??
+# the chars for accidentials have somehow a different size??
 acc_text_style = {
-    'font_size': text_height / 2,
-    'font-family': 'FreeSerif',
-    'class': 'text'
+    'font-size': text_height / 2,
+    'class': 'notes'
 }
-
 
 # tables
 
@@ -218,8 +211,8 @@ bk_shift = {  # black keys
 }
 
 
-notes_raised = ['c', 'cis', 'd', 'dis', 'e', 'f', 'fis', 'g', 'gis', 'a', 'ais', 'h']
-notes_lowered = ['c', 'des', 'd', 'es', 'e', 'f', 'ges', 'g', 'as', 'a', 'b', 'h']
+notes_raised = ['c', 'cis', 'd', 'dis', 'e', 'f', 'fis', 'g', 'gis', 'a', 'ais', 'h', 'his']
+notes_lowered = ['c', 'des', 'd', 'es', 'e', 'f', 'ges', 'g', 'as', 'a', 'b', 'h', 'ces']
 
 # the accidentials appear in the oder on the 'circle of fifths'
 order_raised = ['fis', 'cis', 'gis', 'dis', 'ais', 'eis', 'his']
@@ -292,7 +285,7 @@ def gen_accidentals(g, lx, ly, accs, scale, shift):
   for n in order[:len(accs)]:
     lys = (ly + (hn_height * shift[n]))
     g.add(dwg.text(acc, insert=(lx, lys), **acc_text_style))
-    lx += 1.7
+    lx += 1.5
 
 def gen_keyboard(g, lx, ly, h, scale):
   # get note numbers for current scale
@@ -368,7 +361,7 @@ def gen_scale(gx, gy, accs, scale):
   ly = y + (text_height - 1)
   g.add(dwg.text(note_lines, insert=(x, ly), **note_text_style))
   g.add(dwg.text('𝄞', insert=(x, ly), **note_text_style))
-  gen_accidentals(g, x + 3.75, ly, accs, scale, violine_clef_acc_shift)
+  gen_accidentals(g, x + 5, ly, accs, scale, violine_clef_acc_shift)
   # using ly we get the 'f'-key
   gen_notation(g, x + 15, ly, violine_clef_note_shift[scale.base])
   y += text_height + inner_pad
@@ -377,7 +370,7 @@ def gen_scale(gx, gy, accs, scale):
   ly = y + (text_height - 1)
   g.add(dwg.text(note_lines, insert=(x, ly), **note_text_style))
   g.add(dwg.text('𝄢', insert=(x, ly), **note_text_style))
-  gen_accidentals(g, x + 3.75, ly, accs, scale, bass_clef_acc_shift)
+  gen_accidentals(g, x + 5, ly, accs, scale, bass_clef_acc_shift)
   gen_notation(g, x + 15, ly, bass_clef_note_shift[scale.base])  
   y += text_height
   
