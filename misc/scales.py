@@ -144,11 +144,13 @@ bass_clef_note_shift = {
 }
 
 violine_clef_acc_shift = {
+  'ces': -4,
   'cis': -4,
   'des': -5,
   'dis': -5,
   'es': -6,
-  'e': -6,
+  'eis': -6,
+  'fes': -7,
   'fis': -7,
   'ges': -1,
   'gis': -8,
@@ -159,11 +161,13 @@ violine_clef_acc_shift = {
 }
 
 bass_clef_acc_shift = {
+  'ces': -2,
   'cis': -2,
   'des': -3,
   'dis': -3,
   'es': -4,
-  'e': -4,
+  'eis': -4,
+  'fes': -5,
   'fis': -5,
   'ges': 1,
   'gis': -6,
@@ -217,7 +221,8 @@ bk_shift = {  # black keys
 notes_raised = ['c', 'cis', 'd', 'dis', 'e', 'f', 'fis', 'g', 'gis', 'a', 'ais', 'h']
 notes_lowered = ['c', 'des', 'd', 'es', 'e', 'f', 'ges', 'g', 'as', 'a', 'b', 'h']
 
-order_raised = ['fis', 'cis', 'gis', 'dis', 'ais', 'his']
+# the accidentials appear in the oder on the 'circle of fifths'
+order_raised = ['fis', 'cis', 'gis', 'dis', 'ais', 'eis', 'his']
 order_lowered = ['b', 'es', 'as', 'des', 'ges', 'ces', 'fes']
 
 # music theory
@@ -276,30 +281,22 @@ def gen_notation(g, lx, ly, shift):
     lx += 10
     lys -= hn_height
 
-def gen_accidentals(g, lx, ly, acc, scale, shift):
-  if acc == '':
+def gen_accidentals(g, lx, ly, accs, scale, shift):
+  if accs == '':
     return
+    
+  acc = accs[0]
 
-  # TODO: this is not what we need, we need to know wheter the note is raised or lowered 
-  IS_BLACK = [ False, True, False, True, False, False, True, False, True, False, True, False ]
-
-  k = scale_shift[scale.base]
   notes = notes_lowered
   order = order_lowered
   if acc == '♯':
     notes = notes_raised
     order = order_raised
-  accs = []
-  for i in range(7):
-    k = (k + scale.steps[i]) % 12
-    if IS_BLACK[k]:
-      accs.append(notes[k])
-
-  for n in order:
-    if n in accs:    
-      lys = (ly + (hn_height * shift[n]))
-      g.add(dwg.text(acc, insert=(lx, lys), **acc_text_style))
-      lx += 1.8
+    
+  for n in order[:len(accs)]:
+    lys = (ly + (hn_height * shift[n]))
+    g.add(dwg.text(acc, insert=(lx, lys), **acc_text_style))
+    lx += 1.7
 
 def gen_keyboard(g, lx, ly, h, scale):
   # get note numbers for current scale
@@ -351,12 +348,12 @@ def gen_keyboard(g, lx, ly, h, scale):
       g.add(dwg.rect(insert=(x,ly), size=s, **b_key_style))
 
 
-def gen_scale(gx, gy, acc, scale):
+def gen_scale(gx, gy, accs, scale):
   # TODO: mark positions of haltone steps?
   
   (g,x,y) = new_group(gx, gy, scale.title())
   
-  # title  
+  # scale name
   ly = y + (label_height - 1)
   g.add(dwg.text(scale.base, insert=(x, ly), **lable_text_style))
   g.add(dwg.text(scale.kind, insert=(x, ly + 1 + label_height), **lable_text_style))
@@ -371,20 +368,20 @@ def gen_scale(gx, gy, acc, scale):
 
   note_lines = '𝄀' + '𝄚' * 14 + '𝄀'
 
-  # 1 octave in violine key ('g' on 2nd line from below
+  # 1 octave in violine key ('g' on 2nd line from below)
   ly = y + (text_height - 1)
   g.add(dwg.text(note_lines, insert=(x, ly), **note_text_style))
   g.add(dwg.text('𝄞', insert=(x, ly), **note_text_style))
-  gen_accidentals(g, x + 4, ly, acc, scale, violine_clef_acc_shift)
+  gen_accidentals(g, x + 3.75, ly, accs, scale, violine_clef_acc_shift)
   # using ly we get the 'f'-key
   gen_notation(g, x + 15, ly, violine_clef_note_shift[scale.base])
   y += text_height + inner_pad
   
-  # 1 octave in bass key ('f' on the 4th line from below
+  # 1 octave in bass key ('f' on the 4th line from below)
   ly = y + (text_height - 1)
   g.add(dwg.text(note_lines, insert=(x, ly), **note_text_style))
   g.add(dwg.text('𝄢', insert=(x, ly), **note_text_style))
-  gen_accidentals(g, x + 4, ly, acc, scale, bass_clef_acc_shift)
+  gen_accidentals(g, x + 3.75, ly, accs, scale, bass_clef_acc_shift)
   gen_notation(g, x + 15, ly, bass_clef_note_shift[scale.base])  
   y += text_height
   
@@ -434,22 +431,22 @@ def main():
   ScaleGroup = namedtuple('ScaleGroup', ['acc','major','minor'])
   
   render_page('scales_flat', [
-    ScaleGroup('', Major('c'), Minor('a')),      # +/- 0 (no accidentals)
-    ScaleGroup('♭', Major('f'), Minor('d')),     # -1 quint
-    ScaleGroup('♭', Major('b'), Minor('g')),     # -2 quints
-    ScaleGroup('♭', Major('es'), Minor('c')),    # -3 quints
-    ScaleGroup('♭', Major('as'), Minor('f')),    # -4 quints
-    ScaleGroup('♭', Major('des'), Minor('b')),   # -5 quints
-    ScaleGroup('♭', Major('ges'), Minor('es'))   # -6 quints
+    ScaleGroup('', Major('c'), Minor('a')),        # +/- 0 (no accidentals)
+    ScaleGroup('♭'*1, Major('f'), Minor('d')),     # -1 quint
+    ScaleGroup('♭'*2, Major('b'), Minor('g')),     # -2 quints
+    ScaleGroup('♭'*3, Major('es'), Minor('c')),    # -3 quints
+    ScaleGroup('♭'*4, Major('as'), Minor('f')),    # -4 quints
+    ScaleGroup('♭'*5, Major('des'), Minor('b')),   # -5 quints
+    ScaleGroup('♭'*6, Major('ges'), Minor('es'))   # -6 quints
     ])
   render_page('scales_sharp', [
-    ScaleGroup('', Major('c'), Minor('a')),      # +/- 0 (no accidentals)
-    ScaleGroup('♯', Major('g'), Minor('e')),     # +1 quint
-    ScaleGroup('♯', Major('d'), Minor('h')),     # +2 quints
-    ScaleGroup('♯', Major('a'), Minor('fis')),   # +3 quints
-    ScaleGroup('♯', Major('e'), Minor('cis')),   # +4 quints
-    ScaleGroup('♯', Major('h'), Minor('gis')),   # +5 quints
-    ScaleGroup('♯', Major('fis'), Minor('dis'))  # +6 quints
+    ScaleGroup('', Major('c'), Minor('a')),        # +/- 0 (no accidentals)
+    ScaleGroup('♯'*1, Major('g'), Minor('e')),     # +1 quint
+    ScaleGroup('♯'*2, Major('d'), Minor('h')),     # +2 quints
+    ScaleGroup('♯'*3, Major('a'), Minor('fis')),   # +3 quints
+    ScaleGroup('♯'*4, Major('e'), Minor('cis')),   # +4 quints
+    ScaleGroup('♯'*5, Major('h'), Minor('gis')),   # +5 quints
+    ScaleGroup('♯'*6, Major('fis'), Minor('dis'))  # +6 quints
     ])
   try:
     subprocess.run([
@@ -457,8 +454,7 @@ def main():
       ])
   except:
     pass
-    
-  
+
 
 if __name__ == '__main__':
   main()
