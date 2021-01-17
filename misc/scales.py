@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+#
+# requires gnu-free-fornts
+#
 # inkscape scales_{flat|sharp}.svg
 # eog scales_{flat|sharp}_notext.svg
 # evince scales.pdf
@@ -79,6 +82,11 @@ label_height = 4
 lable_text_style = {
     'font-size': label_height,
     'class': 'text'
+}
+
+center_label_text_style = {
+  **lable_text_style,
+  'text-anchor': 'middle'
 }
 
 text_height = 8
@@ -347,33 +355,32 @@ def gen_scale(gx, gy, accs, scale):
   # scale name
   ly = y + (label_height - 1)
   g.add(dwg.text(scale.base, insert=(x, ly), **lable_text_style))
-  g.add(dwg.text(scale.kind, insert=(x, ly + 1 + label_height), **lable_text_style))
-  x += 6  # indent everything
+  x += 2  # indent everything
 
   # 1 octave on keyboard
   h = text_height * 1.25
-  gen_keyboard(g, x + 11, y, h, scale)
+  gen_keyboard(g, x + 14, y, h, scale)
   y += h + inner_pad 
   
   # TODO: maybe add note names?  
 
-  note_lines = '𝄀' + '𝄚' * 14 + '𝄀'
+  note_lines = '𝄀' + '𝄚' * 15 + '𝄀'
 
   # 1 octave in violine key ('g' on 2nd line from below)
   ly = y + (text_height - 1)
   g.add(dwg.text(note_lines, insert=(x, ly), **note_text_style))
   g.add(dwg.text('𝄞', insert=(x, ly), **note_text_style))
-  gen_accidentals(g, x + 5, ly, accs, scale, violine_clef_acc_shift)
+  gen_accidentals(g, x + 6, ly, accs, scale, violine_clef_acc_shift)
   # using ly we get the 'f'-key
-  gen_notation(g, x + 15, ly, violine_clef_note_shift[scale.base])
+  gen_notation(g, x + 18, ly, violine_clef_note_shift[scale.base])
   y += text_height + inner_pad
   
   # 1 octave in bass key ('f' on the 4th line from below)
   ly = y + (text_height - 1)
   g.add(dwg.text(note_lines, insert=(x, ly), **note_text_style))
   g.add(dwg.text('𝄢', insert=(x, ly), **note_text_style))
-  gen_accidentals(g, x + 5, ly, accs, scale, bass_clef_acc_shift)
-  gen_notation(g, x + 15, ly, bass_clef_note_shift[scale.base])  
+  gen_accidentals(g, x + 6, ly, accs, scale, bass_clef_acc_shift)
+  gen_notation(g, x + 18, ly, bass_clef_note_shift[scale.base])  
   y += text_height
   
   w = (100 + inner_pad) 
@@ -384,7 +391,7 @@ def gen_scale(gx, gy, accs, scale):
   return (w,h)
 
 
-def render_page(base_file_name, scale_groups):
+def render_page(base_file_name, title, scale_groups):
   global dwg
   
   dwg = svgwrite.Drawing(base_file_name + '.svg', **page_size)
@@ -392,7 +399,9 @@ def render_page(base_file_name, scale_groups):
 
   x = frame_pad
   y = frame_pad
-  # TODO: add a page title?
+  dwg.add(dwg.text(title, insert=(105, y + label_height), **center_label_text_style))
+  # leave space for column title after we know the width
+  y += 2 * (label_height + frame_pad)
 
   for sg in scale_groups:
     # TODO: add quint increase/decrease to the side
@@ -404,6 +413,13 @@ def render_page(base_file_name, scale_groups):
 
     x = frame_pad
     y += h
+
+  # add colimn titles
+  x = frame_pad + w / 2
+  y = frame_pad + 2 * label_height
+  dwg.add(dwg.text('major', insert=(x, y), **center_label_text_style))
+  x += w
+  dwg.add(dwg.text('minor', insert=(x, y), **center_label_text_style))
 
   dwg.save()
   try:
@@ -419,9 +435,13 @@ def render_page(base_file_name, scale_groups):
 
 
 def main():
+  # the parallel scale is major with 3 semitones down (minor third)
   ScaleGroup = namedtuple('ScaleGroup', ['acc','major','minor'])
   
-  render_page('scales_flat', [
+  # each next scale:
+  # * starts with a quint down
+  # * has the 7th tone lowered by a semitone
+  render_page('scales_flat', 'flat scales', [
     ScaleGroup('', Major('c'), Minor('a')),        # +/- 0 (no accidentals)
     ScaleGroup('♭'*1, Major('f'), Minor('d')),     # -1 quint
     ScaleGroup('♭'*2, Major('b'), Minor('g')),     # -2 quints
@@ -430,7 +450,11 @@ def main():
     ScaleGroup('♭'*5, Major('des'), Minor('b')),   # -5 quints
     ScaleGroup('♭'*6, Major('ges'), Minor('es'))   # -6 quints
     ])
-  render_page('scales_sharp', [
+
+  # each next scale:
+  # * starts with a quint up
+  # * has the 4th tone raised by a semitone
+  render_page('scales_sharp', 'sharp scales', [
     ScaleGroup('', Major('c'), Minor('a')),        # +/- 0 (no accidentals)
     ScaleGroup('♯'*1, Major('g'), Minor('e')),     # +1 quint
     ScaleGroup('♯'*2, Major('d'), Minor('h')),     # +2 quints
