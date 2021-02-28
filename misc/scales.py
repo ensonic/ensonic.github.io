@@ -139,8 +139,9 @@ violine_clef_note_shift = {
     'as': -2,
     'a': -2,
     'ais': -2,
-    'h': -3,
+    'bes': -3,
     'b': -3,
+    'bis': -3,
 }
 
 bass_clef_note_shift = {
@@ -159,8 +160,9 @@ bass_clef_note_shift = {
     'as': 0,
     'a': 0,
     'ais': 0,
-    'h': -1,
+    'bes': -1,
     'b': -1,
+    'bis': -1,
 }
 
 violine_clef_acc_shift = {
@@ -176,8 +178,8 @@ violine_clef_acc_shift = {
     'gis': -8,
     'as': -2,
     'ais': -2,
-    'b': -3,
-    'h': -3,
+    'bes': -3,
+    'bis': -3,
 }
 
 bass_clef_acc_shift = {
@@ -193,8 +195,8 @@ bass_clef_acc_shift = {
     'gis': -6,
     'as': 0,
     'ais': 0,
-    'b': -1,
-    'h': -1,
+    'bes': -1,
+    'bis': -1,
 }
 
 scale_shift = {
@@ -213,8 +215,9 @@ scale_shift = {
     'as': 8,
     'a': 9,
     'ais': 10,
-    'b': 10,
-    'h': 11,
+    'bes': 10,
+    'b': 11,
+    'bis': 11,
 }
 
 bk_shift = {  # black keys
@@ -233,15 +236,16 @@ bk_shift = {  # black keys
     'as': 4,
     'a': 5,
     'ais': 5,
-    'b': 5,
-    'h': 6,
+    'bes': 5,
+    'b': 6,
+    'bis': 6,
 }
 
 
 
-# the accidentials appear in the oder on the 'circle of fifths'
+# the accidentials appear in the order on the 'circle of fifths'
 order_raised = ['fis', 'cis', 'gis', 'dis', 'ais', 'eis', 'his']
-order_lowered = ['b', 'es', 'as', 'des', 'ges', 'ces', 'fes']
+order_lowered = ['bes', 'es', 'as', 'des', 'ges', 'ces', 'fes']
 
 # poor mans translations
 # https://en.wikipedia.org/wiki/Key_signature_names_and_translations
@@ -515,10 +519,10 @@ def main():
     render_page('scales_flat', _['flat scales'], [
         ScaleGroup('', Major('c'), Minor('a')),        # +/- 0 (no accidentals)
         ScaleGroup('♭'*1, Major('f'), Minor('d')),     # -1 quint
-        ScaleGroup('♭'*2, Major('b'), Minor('g')),     # -2 quints
+        ScaleGroup('♭'*2, Major('bes'), Minor('g')),   # -2 quints
         ScaleGroup('♭'*3, Major('es'), Minor('c')),    # -3 quints
         ScaleGroup('♭'*4, Major('as'), Minor('f')),    # -4 quints
-        ScaleGroup('♭'*5, Major('des'), Minor('b')),   # -5 quints
+        ScaleGroup('♭'*5, Major('des'), Minor('bes')), # -5 quints
         ScaleGroup('♭'*6, Major('ges'), Minor('es'))   # -6 quints
     ])
 
@@ -528,10 +532,10 @@ def main():
     render_page('scales_sharp', _['sharp scales'], [
         ScaleGroup('', Major('c'), Minor('a')),        # +/- 0 (no accidentals)
         ScaleGroup('♯'*1, Major('g'), Minor('e')),     # +1 quint
-        ScaleGroup('♯'*2, Major('d'), Minor('h')),     # +2 quints
+        ScaleGroup('♯'*2, Major('d'), Minor('b')),     # +2 quints
         ScaleGroup('♯'*3, Major('a'), Minor('fis')),   # +3 quints
         ScaleGroup('♯'*4, Major('e'), Minor('cis')),   # +4 quints
-        ScaleGroup('♯'*5, Major('h'), Minor('gis')),   # +5 quints
+        ScaleGroup('♯'*5, Major('b'), Minor('gis')),   # +5 quints
         ScaleGroup('♯'*6, Major('fis'), Minor('dis'))  # +6 quints
     ])
     try:
