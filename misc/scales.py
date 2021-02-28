@@ -40,6 +40,10 @@ STYLES = """.text {
   font-family: 'Sans';
   fill: #000000;
 }
+.w_text {
+  font-family: 'Sans';
+  fill: #ffffff;
+}
 .notes {
   font-family: 'FreeSerif';
   fill: #000000;
@@ -64,8 +68,9 @@ w_key_style = {
     'fill': '#ffffff'
 }
 w_key_sel_style = {
-    **w_key_style,
-    'fill': '#ccbbaa'
+    'stroke': '#eeeeee',
+    'stroke-width': 0.3,
+    'fill': '#dddddd'
 }
 
 b_key_style = {
@@ -74,18 +79,31 @@ b_key_style = {
     'fill': '#000000'
 }
 b_key_sel_style = {
-    **b_key_style,
-    'fill': '#776655'
+    'stroke': '#222222',
+    'stroke-width': 0.3,
+    'fill': '#333333'
 }
 
 label_height = 4
-lable_text_style = {
+label_text_style = {
     'font-size': label_height,
     'class': 'text'
 }
 
 center_label_text_style = {
-    **lable_text_style,
+    **label_text_style,
+    'text-anchor': 'middle'
+}
+
+notename_height = 3
+w_notename_text_style = {
+    'font-size': notename_height * 0.9,
+    'class': 'text',
+    'text-anchor': 'middle'
+}
+b_notename_text_style = {
+    'font-size': notename_height * 0.9,
+    'class': 'w_text',
     'text-anchor': 'middle'
 }
 
@@ -302,72 +320,83 @@ def gen_accidentals(g, lx, ly, accs, scale, shift):
         lx += 1.5
 
 
-def gen_keyboard(g, lx, ly, h, scale):
+def gen_keyboard(g, lx, ly, h, accs, scale):
+    acc = ''
+    if accs != '':
+        acc = accs[0]
+    notes = notes_lowered
+    if acc == '♯':
+        notes = notes_raised
+
     # get note numbers for current scale
     k_num = scale.key_nums
 
     k = bk_shift[scale.base]
     wk_num = [0, 2, 4, 5, 7, 9, 11]
-
+    
+    lyh = ly + h - 4
+    lyht = lyh + (notename_height - 0.5)
+    
     x = lx
     s = (10, h)
+    sh = (8, notename_height)
     for i in range(8):
+        g.add(dwg.rect(insert=(x, ly), size=s, **w_key_style))
         if wk_num[k] in k_num:
-            g.add(dwg.rect(insert=(x, ly), size=s, **w_key_sel_style))
-        else:
-            g.add(dwg.rect(insert=(x, ly), size=s, **w_key_style))
+            g.add(dwg.rect(insert=(x+1,lyh), size=sh, **w_key_sel_style))
+            dwg.add(dwg.text(notes[wk_num[k]], insert=(x+5, lyht), **w_notename_text_style))
         x += 10
         k = (k + 1) % 7
 
     k = bk_shift[scale.base]
     bk_num = [1, 3, -1, 6, 8, 10, -1]
 
+    h -= 5
+    lyh = ly + h - 4
+    lyht = lyh + (notename_height - 0.5)
     x = lx + 6
-    h *= 0.7
     s = (8, h)
+    sh = (6, notename_height)
     for i in range(7):
         if bk_num[k] != -1:
+            g.add(dwg.rect(insert=(x, ly), size=s, **b_key_style))
             if bk_num[k] in k_num:
-                g.add(dwg.rect(insert=(x, ly), size=s, **b_key_sel_style))
-            else:
-                g.add(dwg.rect(insert=(x, ly), size=s, **b_key_style))
+                g.add(dwg.rect(insert=(x+1,lyh), size=sh, **b_key_sel_style))
+                dwg.add(dwg.text(notes[bk_num[k]], insert=(x+4, lyht), **b_notename_text_style))
         x += 10
         k = (k + 1) % 7
 
     s = (4, h)
+    sh = (3, notename_height)
     # handle last partial key
     if bk_num[k] != -1:
+        g.add(dwg.rect(insert=(x, ly), size=s, **b_key_style))
         if bk_num[k] in k_num:
-            g.add(dwg.rect(insert=(x, ly), size=s, **b_key_sel_style))
-        else:
-            g.add(dwg.rect(insert=(x, ly), size=s, **b_key_style))
+            g.add(dwg.rect(insert=(x+1,lyh), size=sh, **b_key_sel_style))
 
     # handle first partial key
     k = (bk_shift[scale.base] + 6) % 7
     if bk_num[k] != -1:
         x = lx
+        g.add(dwg.rect(insert=(x, ly), size=s, **b_key_style))
         if bk_num[k] in k_num:
-            g.add(dwg.rect(insert=(x, ly), size=s, **b_key_sel_style))
-        else:
-            g.add(dwg.rect(insert=(x, ly), size=s, **b_key_style))
-
+            g.add(dwg.rect(insert=(x,lyh), size=sh, **b_key_sel_style))
+   
 
 def gen_scale(gx, gy, accs, scale):
-    # TODO: mark positions of haltone steps?
+    # TODO: mark positions of halftone steps (bracket, triangle) - mayybe have pattern in title)?
 
     (g, x, y) = new_group(gx, gy, scale.title())
 
     # scale name
     ly = y + (label_height - 1)
-    g.add(dwg.text(scale.base, insert=(x, ly), **lable_text_style))
+    g.add(dwg.text(scale.base, insert=(x, ly), **label_text_style))
     x += 2  # indent everything
 
     # 1 octave on keyboard
-    h = text_height * 1.25
-    gen_keyboard(g, x + 14, y, h, scale)
+    h = text_height * 1.4
+    gen_keyboard(g, x + 14, y, h, accs, scale)
     y += h + inner_pad
-
-    # TODO: maybe add note names?
 
     note_lines = '𝄀' + '𝄚' * 15 + '𝄀'
 
@@ -423,8 +452,10 @@ def render_page(base_file_name, title, scale_groups):
     # add colimn titles
     x = frame_pad + w / 2
     y = frame_pad + 2 * label_height
+    # TODO: add rules? '⊓⊓∧⊓⊓⊓∧'
     dwg.add(dwg.text('major', insert=(x, y), **center_label_text_style))
     x += w
+    # TODO: add rules? '⊓∧⊓⊓⊓∧⊓'
     dwg.add(dwg.text('minor', insert=(x, y), **center_label_text_style))
 
     dwg.save()
