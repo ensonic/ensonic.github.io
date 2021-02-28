@@ -1,22 +1,23 @@
 #!/usr/bin/python3
 #
-# requires gnu-free-fornts
+# Requires gnu-free-fornts.
+# For some of the conversion you need to have inkscape and pdftk installed.
 #
+# To render a specific language run:
+# LANG=de_DE.utf8 ./scales.py
+#
+# View the results by running:
 # inkscape scales_{flat|sharp}.svg
 # eog scales_{flat|sharp}_notext.svg
 # evince scales.pdf
-#
-# for some of the conversion you need to have inkscape and pdftk installed
 #
 # for musical symbols see:
 # https://en.wikipedia.org/wiki/Musical_Symbols_(Unicode_block)
 # https://de.wikipedia.org/wiki/Unicodeblock_Notenschriftzeichen
 # https://de.wikipedia.org/wiki/Unicodeblock_Verschiedene_Symbole
 
-# TODO:
-# * localize
-
 import math
+import os
 import subprocess
 import svgwrite
 import sys
@@ -237,16 +238,38 @@ bk_shift = {  # black keys
 }
 
 
-notes_raised = ['c', 'cis', 'd', 'dis', 'e', 'f',
-                'fis', 'g', 'gis', 'a', 'ais', 'h', 'his']
-notes_lowered = ['c', 'des', 'd', 'es', 'e',
-                 'f', 'ges', 'g', 'as', 'a', 'b', 'h', 'ces']
 
 # the accidentials appear in the oder on the 'circle of fifths'
 order_raised = ['fis', 'cis', 'gis', 'dis', 'ais', 'eis', 'his']
 order_lowered = ['b', 'es', 'as', 'des', 'ges', 'ces', 'fes']
 
-# music theory
+# poor mans translations
+# https://en.wikipedia.org/wiki/Key_signature_names_and_translations
+texts = {
+    'en': {
+        'flat scales': 'flat scales',
+        'major': 'major',
+        'minor': 'minor',
+        'sharp scales': 'sharp scales',
+        '_lowered': ['c', 'des', 'd', 'es', 'e',
+                 'f', 'ges', 'g', 'as', 'a', 'bes', 'b', 'ces'],
+        '_raised': ['c', 'cis', 'd', 'dis', 'e', 'f',
+                'fis', 'g', 'gis', 'a', 'ais', 'b', 'bis'],
+    },
+    'de': {
+        'flat scales': 'Be Tonarten',
+        'major': 'Dur',
+        'minor': 'Moll',
+        'sharp scales': 'Kreuz Tonarten',
+        '_lowered': ['c', 'des', 'd', 'es', 'e',
+                 'f', 'ges', 'g', 'as', 'a', 'b', 'h', 'ces'],
+        '_raised': ['c', 'cis', 'd', 'dis', 'e', 'f',
+                'fis', 'g', 'gis', 'a', 'ais', 'h', 'his'],
+    }
+}
+_ = None
+notes_lowered = None
+notes_raised = None
 
 
 class Scale:
@@ -333,18 +356,19 @@ def gen_keyboard(g, lx, ly, h, accs, scale):
 
     k = bk_shift[scale.base]
     wk_num = [0, 2, 4, 5, 7, 9, 11]
-    
+
     lyh = ly + h - 4
     lyht = lyh + (notename_height - 0.5)
-    
+
     x = lx
     s = (10, h)
     sh = (8, notename_height)
     for i in range(8):
         g.add(dwg.rect(insert=(x, ly), size=s, **w_key_style))
         if wk_num[k] in k_num:
-            g.add(dwg.rect(insert=(x+1,lyh), size=sh, **w_key_sel_style))
-            dwg.add(dwg.text(notes[wk_num[k]], insert=(x+5, lyht), **w_notename_text_style))
+            g.add(dwg.rect(insert=(x+1, lyh), size=sh, **w_key_sel_style))
+            dwg.add(dwg.text(notes[wk_num[k]], insert=(
+                x+5, lyht), **w_notename_text_style))
         x += 10
         k = (k + 1) % 7
 
@@ -361,8 +385,9 @@ def gen_keyboard(g, lx, ly, h, accs, scale):
         if bk_num[k] != -1:
             g.add(dwg.rect(insert=(x, ly), size=s, **b_key_style))
             if bk_num[k] in k_num:
-                g.add(dwg.rect(insert=(x+1,lyh), size=sh, **b_key_sel_style))
-                dwg.add(dwg.text(notes[bk_num[k]], insert=(x+4, lyht), **b_notename_text_style))
+                g.add(dwg.rect(insert=(x+1, lyh), size=sh, **b_key_sel_style))
+                dwg.add(dwg.text(notes[bk_num[k]], insert=(
+                    x+4, lyht), **b_notename_text_style))
         x += 10
         k = (k + 1) % 7
 
@@ -372,7 +397,7 @@ def gen_keyboard(g, lx, ly, h, accs, scale):
     if bk_num[k] != -1:
         g.add(dwg.rect(insert=(x, ly), size=s, **b_key_style))
         if bk_num[k] in k_num:
-            g.add(dwg.rect(insert=(x+1,lyh), size=sh, **b_key_sel_style))
+            g.add(dwg.rect(insert=(x+1, lyh), size=sh, **b_key_sel_style))
 
     # handle first partial key
     k = (bk_shift[scale.base] + 6) % 7
@@ -380,8 +405,8 @@ def gen_keyboard(g, lx, ly, h, accs, scale):
         x = lx
         g.add(dwg.rect(insert=(x, ly), size=s, **b_key_style))
         if bk_num[k] in k_num:
-            g.add(dwg.rect(insert=(x,lyh), size=sh, **b_key_sel_style))
-   
+            g.add(dwg.rect(insert=(x, lyh), size=sh, **b_key_sel_style))
+
 
 def gen_scale(gx, gy, accs, scale):
     # TODO: mark positions of halftone steps (bracket, triangle) - mayybe have pattern in title)?
@@ -453,10 +478,10 @@ def render_page(base_file_name, title, scale_groups):
     x = frame_pad + w / 2
     y = frame_pad + 2 * label_height
     # TODO: add rules? '⊓⊓∧⊓⊓⊓∧'
-    dwg.add(dwg.text('major', insert=(x, y), **center_label_text_style))
+    dwg.add(dwg.text(_['major'], insert=(x, y), **center_label_text_style))
     x += w
     # TODO: add rules? '⊓∧⊓⊓⊓∧⊓'
-    dwg.add(dwg.text('minor', insert=(x, y), **center_label_text_style))
+    dwg.add(dwg.text(_['minor'], insert=(x, y), **center_label_text_style))
 
     dwg.save()
     try:
@@ -472,13 +497,22 @@ def render_page(base_file_name, title, scale_groups):
 
 
 def main():
+    # poor mans translations
+    lang = os.environ['LANG'].split('.')[0]
+    if '_' in lang:
+        lang = lang.split('_')[0]
+    global _, notes_lowered, notes_raised
+    _ = texts.get(lang, 'en')
+    notes_lowered = _['_lowered']
+    notes_raised = _['_raised']
+
     # the parallel scale is major with 3 semitones down (minor third)
     ScaleGroup = namedtuple('ScaleGroup', ['acc', 'major', 'minor'])
 
     # each next scale:
     # * starts with a quint down
     # * has the 7th tone lowered by a semitone
-    render_page('scales_flat', 'flat scales', [
+    render_page('scales_flat', _['flat scales'], [
         ScaleGroup('', Major('c'), Minor('a')),        # +/- 0 (no accidentals)
         ScaleGroup('♭'*1, Major('f'), Minor('d')),     # -1 quint
         ScaleGroup('♭'*2, Major('b'), Minor('g')),     # -2 quints
@@ -491,7 +525,7 @@ def main():
     # each next scale:
     # * starts with a quint up
     # * has the 4th tone raised by a semitone
-    render_page('scales_sharp', 'sharp scales', [
+    render_page('scales_sharp', _['sharp scales'], [
         ScaleGroup('', Major('c'), Minor('a')),        # +/- 0 (no accidentals)
         ScaleGroup('♯'*1, Major('g'), Minor('e')),     # +1 quint
         ScaleGroup('♯'*2, Major('d'), Minor('h')),     # +2 quints
