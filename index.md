@@ -67,6 +67,10 @@ sudo rpm -U --test bitwig-studio-$V-2.x86_64.rpm
 sudo rpm -U bitwig-studio-$V-2.x86_64.rpm
 ```
 
-I am using the stock gnome desktop. I installed this [cpufreq](https://github.com/konkor/cpufreq) add-on
-to switch the govenor to performance mode. This gives less jitter on the dsp graph.
+I am using the stock gnome desktop. I installed this [cpufreq](https://github.com/konkor/cpufreq)
+add-on to switch the govenor to performance mode. This gives less jitter on the dsp graph.
+
+And I used the [realtime-config quick-scan](https://github.com/raboof/realtimeconfigquickscan)
+script to tweak some system settings. I am not using a preempt-rt kernel though, for composing
+5.8 ms latency are more than enough.
 
