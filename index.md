@@ -47,3 +47,26 @@ on some cheat sheets. Each of them comes with the code to generate them.
   * two page pdf:
     * [scales flat and sharp](misc/scales.pdf)
 
+### Bitwig Studio on OpenSuse
+
+I am using [Bitwig Studio](https://www.bitwig.com/) on [openSUSE Tumbleweed](https://get.opensuse.org/tumbleweed/).
+
+Since the Bitwig Studio packages are made for Ubuntu, they need to be converted from deb to rpm:
+
+```bash
+V="3.3"
+# converting deb to rpm (warning, its slow)
+sudo alien -rv bitwig-studio-$V.deb
+
+# installing
+sudo rpm -i --test bitwig-studio-$V-2.x86_64.rpm
+sudo rpm -i bitwig-studio-$V-2.x86_64.rpm
+
+# upgrading
+sudo rpm -U --test bitwig-studio-$V-2.x86_64.rpm
+sudo rpm -U bitwig-studio-$V-2.x86_64.rpm
+```
+
+I am using the stock gnome desktop. I installed this [cpufreq](https://github.com/konkor/cpufreq) add-on
+to switch the govenor to performance mode. This gives less jitter on the dsp graph.
+
