@@ -47,6 +47,45 @@ on some cheat sheets. Each of them comes with the code to generate them.
   * two page pdf:
     * [scales flat and sharp](misc/scales.pdf)
 
+### Using a Joystick/controller for midi
+
+In my studio I am using the Novation lLunchpad X a lot. For me it is compact
+and gives me 8 octaves. Occacionally I am missing a pitchbend / modwheel though.
+A few days a good I discovered an old usb joystick with 3 axis - two for the
+actual joystick and one thruster (that does not revert back to 0). Using such a
+device as a midi controller is not a new idea at all. Here is how I've set it up:
+
+```bash
+> cat /etc/modules-load.d/90-virmidi.conf 
+snd_virmidi
+
+> cat /etc/modprobe.d/virmidi.conf
+options snd-virmidi midi_devs=1
+
+> cat /etc/udev/rules.d/90-midijoystick.rules
+# Bus 001 Device 004: ID 06a3:0502 Saitek PLC ST200 Stick
+SUBSYSTEMS=="input", ENV{ID_VENDOR_ID}=="06a3",ENV{ID_MODEL_ID}=="0502", TAG+="systemd", ENV{SYSTEMD_WANTS}="midijoystick.service"
+
+> cat /lib/systemd/system/midijoystick.service 
+[Unit]
+Description=usb joystick to aseq midi deamon
+
+[Service]
+ExecStart=/usr/bin/aseqjoy -0 10 -1 11 -2 1
+ExecStartPost=/bin/sh -c "/usr/bin/sleep 2s && /usr/bin/aconnect Joystick0:0 'Virtual Raw MIDI 0-0':0"
+```
+
+The example above uses [a version of seqjoy with some patches](https://github.com/ensonic/aseqjoy)
+to better support gaming devices and to be able to send pitch bend changes.
+You will need to adjust `/etc/udev/rules.d/90-midijoystick.rules` and put the
+values for your joystick/gamepad there (use the `lsusb` command to find the
+vendor- and model-id values). 
+
+The whole setup will start aseqjoy automatically when you connect the device
+and will also run `aconnect` to feed the values into `virmidi`. The `virmidi`
+setup is required for Bitwig Studio, since that has no support for the alsa
+sequencer api.
+
 ### Bitwig Studio on OpenSuse
 
 I am using [Bitwig Studio](https://www.bitwig.com/) on [openSUSE Tumbleweed](https://get.opensuse.org/tumbleweed/).
