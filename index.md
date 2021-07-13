@@ -49,9 +49,9 @@ on some cheat sheets. Each of them comes with the code to generate them.
 
 ### Using a Joystick/controller for midi
 
-In my studio I am using the Novation lLunchpad X a lot. For me it is compact
-and gives me 8 octaves. Occacionally I am missing a pitchbend / modwheel though.
-A few days a good I discovered an old usb joystick with 3 axis - two for the
+In my studio I am using the Novation Launchpad X a lot. It is compact
+and gives me 8 octaves to play. Occacionally I am missing a pitchbend / modwheel
+though. A few days a good I discovered an old usb joystick with 3 axis - two for the
 actual joystick and one thruster (that does not revert back to 0). Using such a
 device as a midi controller is not a new idea at all. Here is how I've set it up:
 
