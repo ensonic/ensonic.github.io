@@ -56,11 +56,16 @@ actual joystick and one thruster (that does not revert back to 0). Using such a
 device as a midi controller is not a new idea at all. Here is how I've set it up:
 
 ```bash
-> cat /etc/modules-load.d/90-virmidi.conf 
+> cat /etc/modules-load.d/virmidi.conf 
 snd_virmidi
 
-> cat /etc/modprobe.d/virmidi.conf
+> cat /etc/modprobe.d/90-virmidi.conf
 options snd-virmidi midi_devs=1
+# or if you need multiple devices:
+options snd-virmidi enable=1,1 midi_devs=1,1 index=10,11 id=VirMIDI10,VirMIDI11
+
+# Apply the options (command below is for OpenSuse, might be different for other distros)
+> sudo mkinitrd
 
 > cat /etc/udev/rules.d/90-midijoystick.rules
 # Bus 001 Device 004: ID 06a3:0502 Saitek PLC ST200 Stick
