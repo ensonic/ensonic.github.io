@@ -43,7 +43,7 @@ on some cheat sheets. Each of them comes with the code to generate them.
 * scales: minor major scales with violin and bass cleff and keyboard mapping
   * single page svg (the notxt variant has fonts converted to shapes):
     * [scales flat](misc/scales_flat.svg), [scales flat (no fonts)](misc/scales_flat_notxt.svg)
-    * [scales shaarp](misc/scales_shaarp.svg), [scales shaarp (no fonts)](misc/scales_shaarp_notxt.svg)
+    * [scales sharp](misc/scales_sharp.svg), [scales sharp (no fonts)](misc/scales_sharp_notxt.svg)
   * two page pdf:
     * [scales flat and sharp](misc/scales.pdf)
 
