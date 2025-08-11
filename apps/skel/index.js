@@ -33,7 +33,7 @@ function hideMenu() {
 }
   
 function openPage(evt, pageName) {
-  var i, tabcontent, tablinks;
+  var i;
   pages = document.getElementsByClassName("pagecontent");
   for (i = 0; i < pages.length; i++) {
     pages[i].style.display = "none";
