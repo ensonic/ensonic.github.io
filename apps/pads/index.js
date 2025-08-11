@@ -21,8 +21,8 @@ function initUI() {
     }
   }
 
-  createMatirx();
-  window.addEventListener('resize', createMatirx, {passive: true});
+  createMatrix();
+  window.addEventListener('resize', createMatrix, {passive: true});
 
   connectMidi();
 }
@@ -43,7 +43,7 @@ function hideMenu() {
 }
   
 function openPage(evt, pageName) {
-  var i, tabcontent, tablinks;
+  var i;
   pages = document.getElementsByClassName("pagecontent");
   for (i = 0; i < pages.length; i++) {
     pages[i].style.display = "none";
@@ -344,7 +344,7 @@ function sendMidiControlChange(controller, value) {
   midiOut[selectOut.selectedIndex].send(msg);
 }
 
-// settiings
+// settings
 
 function saveDefaults() {
   // one cookie can take up to 4096 bytes
@@ -416,13 +416,13 @@ function handlePadUp(e) {
   this.style.borderStyle = 'outset';
 }
 
-function createMatirx() {
+function createMatrix() {
   var container = document.getElementById('pad-matrix');
   container.innerHTML = '';
 
-  /* consider layouts with rectangullar pads to make things better fit the screen */ 
+  /* consider layouts with rectangular pads to make things better fit the screen */ 
 
-  /* 8 times grid spacing + 9 times border + 2 times pagecontent margin + 1 unknown top marging */
+  /* 8 times grid spacing + 9 times border + 2 times page-content margin + 1 unknown top margin */
   const margin = (8 * 2) + (9 * 6) + (2 * 12) + 20;
   /* fon-scaling factors, determined by experiments */
   const yfs = 0.75;

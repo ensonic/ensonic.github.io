@@ -42,7 +42,7 @@ function hideMenu() {
 }
   
 function openPage(evt, pageName) {
-  var i, tabcontent, tablinks;
+  var i;
   pages = document.getElementsByClassName("pagecontent");
   for (i = 0; i < pages.length; i++) {
     pages[i].style.display = "none";
@@ -189,7 +189,7 @@ function sendMidiControlChange(controller, value) {
   midiOut[selectOut.selectedIndex].send(msg);
 }
 
-// settiings
+// settings
 
 function saveDefaults() {
   // one cookie can take up to 4096 bytes
@@ -322,7 +322,7 @@ function PianoKeyboard() {
   // Change octave
   var changeOctave = function(x) {
     __octave += x | 0;
-    // TODO: if we only show one or two octaves, bump upper limmit
+    // TODO: if we only show one or two octaves, bump upper limit
     __octave = Math.min(5, Math.max(1, __octave));
 
     var octaveName = document.getElementsByName('oct-label');
