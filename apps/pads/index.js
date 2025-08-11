@@ -549,42 +549,42 @@ function indexColor(color_ix) {
 }
 
 function setPadColor(lighting_type, led_ix, color1, color2) {
-    /* lighting_type:
-     * 0: static color
-     * 1: flashing color (color2/color1, modulated with rectangle)
-     * 2: pulsing color (color2 is black, modulated with triangle)
-     */
-    var pad = document.getElementById('pad-' + led_ix);
-    if (pad !== null) {
-      pad.style.setProperty('--color1', color1);
-      pad.style.setProperty('--color2', color2);
-      pad.style.setProperty('--duration', anim_duration + 's');
-      var anim = '';
-      switch (lighting_type) {
-        case 0:
-          pad.className = 'pad';
-          break;
-        case 1:
-          pad.className = 'pad flashing';
-          anim = 'flash';
-          break;
-        case 2:
-          pad.className = 'pad pulsing';
-          anim = 'pulse';
-          break;
-      }
-
-      if (padLabels[led_ix]) {
-        pad.style.color = color1;
-        anim = 'fg-' + anim;
-      } else {
-        pad.style.backgroundColor = color1;
-        anim = 'bg-' + anim;
-      }
-      pad.style.setProperty('--anim', anim);
-    } else {
-      console.log('Unhandled note "' + led_ix + '"')
+  /* lighting_type:
+    * 0: static color
+    * 1: flashing color (color2/color1, modulated with rectangle)
+    * 2: pulsing color (color2 is black, modulated with triangle)
+    */
+  var pad = document.getElementById('pad-' + led_ix);
+  if (pad !== null) {
+    pad.style.setProperty('--color1', color1);
+    pad.style.setProperty('--color2', color2);
+    pad.style.setProperty('--duration', anim_duration + 's');
+    var anim = '';
+    switch (lighting_type) {
+      case 0:
+        pad.className = 'pad';
+        break;
+      case 1:
+        pad.className = 'pad flashing';
+        anim = 'flash';
+        break;
+      case 2:
+        pad.className = 'pad pulsing';
+        anim = 'pulse';
+        break;
     }
+
+    if (padLabels[led_ix]) {
+      pad.style.color = color1;
+      anim = 'fg-' + anim;
+    } else {
+      pad.style.backgroundColor = color1;
+      anim = 'bg-' + anim;
+    }
+    pad.style.setProperty('--anim', anim);
+  } else {
+    console.log('Unhandled note "' + led_ix + '"')
+  }
 }
 
 /* for testing the colors */
